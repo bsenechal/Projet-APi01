@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-	<title>Magnetic - Stunning Responsive HTML5/CSS3 Photography Template</title>
+	<title>Le BOOK</title>
 	<meta charset="utf-8">
 	<meta name="author" content="pixelhint.com">
 	<meta name="description" content="Magnetic is a stunning responsive HTML5/CSS3 photography/portfolio website  template"/>
@@ -26,11 +26,8 @@
 		<div id="menu_icon"></div>
 		<nav>
 			<ul>
-				<li><a href="index.html">Home</a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">The Team</a></li>
-				<li><a href="#">Journal</a></li>
-				<li><a href="contact.html">Contact Us</a></li>
+				<li><a href="${pageContext.request.contextPath}/">Accueil</a></li>
+				<li><a href="${pageContext.request.contextPath}/admin">Administration</a></li>
 				<li><c:url value="/j_spring_security_logout" var="logoutUrl" /></li>
 			</ul>
 		</nav><!-- end navigation menu -->
