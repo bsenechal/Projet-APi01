@@ -39,35 +39,19 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User getUserById(int id) {
 		Session session = this.sessionFactory.getCurrentSession();		
-		User p = (User) session.load(User.class, new Integer(id));
-		return p;
+		User u = (User) session.load(User.class, new Integer(id));
+		return u;
 	}
 
 	@Override
-	public void removeUser(String username) {
+	public void removeUser(int id) {
 		Session session = this.sessionFactory.getCurrentSession();
-		User p = (User) session.load(User.class, new String(username));
-		if(null != p){
-			session.delete(p);
+		User u = (User) session.load(User.class, id);
+		if(null != u){
+			session.delete(u);
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	public User findByUserName(String username) {
-
-		List<User> users = new ArrayList<User>();
-
-		users = getSessionFactory().getCurrentSession().createQuery("from User where username=?")
-				.setParameter(0, username).list();
-
-		if (users.size() > 0) {
-			return users.get(0);
-		} else {
-			return null;
-		}
-
-	}
-
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}

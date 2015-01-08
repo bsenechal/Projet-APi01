@@ -1,5 +1,8 @@
 package com.utc.api01.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -33,22 +36,22 @@ public class UserController {
 	
 	@RequestMapping(value= "/admin/user/add", method = RequestMethod.POST)
 	public String addUser(@ModelAttribute("user") User u){
-		
+		u.setCreationDate(new SimpleDateFormat("YYYY-MM-DD").format(new Date()));
 		this.userService.addUser(u);
 		
 		return "redirect:/admin/users";
 	}
 	
-	@RequestMapping("/admin/remove/{login}")
-    public String removeUser(@PathVariable("login") String login){
+	@RequestMapping("/admin/remove/{idUser}")
+    public String removeUser(@PathVariable("idUser") int id){
 		
-        this.userService.removeUser(login);
+        this.userService.removeUser(id);
         return "redirect:/admin/users";
     }
  
-    @RequestMapping("/admin/edit/{login}")
-    public String editUser(@PathVariable("login") String login, Model model){
-		model.addAttribute("user", this.userService.fingByUsername(login));
+    @RequestMapping("/admin/edit/{idUser}")
+    public String editUser(@PathVariable("idUser") int idUser, Model model){
+		model.addAttribute("user", this.userService.getUserById(idUser));
         return "editUser";
     }
 	

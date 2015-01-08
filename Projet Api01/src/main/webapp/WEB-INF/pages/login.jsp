@@ -7,18 +7,19 @@
 <title>Connexion</title>
 </head>
 <body>
+<div class="page-header">
+	<h1>Connexion</h1>
+</div>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">.
 			<div class="jumbotron">
-
 				<div class="container-fluid">
-				  	<h2>Connexion</h2>
 					<form name='loginForm' action="<c:url value='/j_spring_security_check' />" method='POST'>
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					  <div class="form-group">
-					    <label for="exampleInputEmail1">Login</label>
-					    <input type="text" path="username" name="username" class="form-control" id="inputLogin" placeholder="Login">
+					    <label for="inputEmail">Email</label>
+					    <input type="email" path="username" name="username" class="form-control" id="inputEmail" placeholder="Email">
 					  </div>
 					  <div class="form-group">
 					    <label for="exampleInputPassword1">Mot de passe</label>

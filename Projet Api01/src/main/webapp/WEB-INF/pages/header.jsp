@@ -20,7 +20,7 @@
 
 	<header>
 		<div class="logo">
-			<a href="index.html"><img src="${pageContext.request.contextPath}/resources/img/logo.png" title="Magnetic" alt="Magnetic"/></a>
+			<a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/resources/img/logo.png" title="Le book" alt="Le book"/></a>
 		</div><!-- end logo -->
 
 		<div id="menu_icon"></div>

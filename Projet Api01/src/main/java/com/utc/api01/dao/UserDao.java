@@ -35,13 +35,6 @@ public interface UserDao {
 	 * Supprime un utilisateur
 	 * @param id
 	 */
-	public void removeUser(String username);
-	
-	/**
-	 * Recherche un utilisateur par login
-	 * @param username
-	 * @return
-	 */
-	public User findByUserName(String username);
+	public void removeUser(int id);
 
 }

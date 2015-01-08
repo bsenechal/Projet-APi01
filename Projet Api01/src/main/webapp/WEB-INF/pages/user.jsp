@@ -39,21 +39,25 @@
 						<div class="table-responsive">
 						  <table class="table">
 						    <tr>
-								<th>Login</th>
-								<th>Nom</th>
-								<th>Prenom</th>
 								<th>Email</th>
+								<th>Nom</th>
+								<th>Prénom</th>
+								<th>Téléphone</th>
+								<th>Date de création</th>
+								<th>Rôle</th>
 								<th></th>
 								<th></th>
 							</tr>
 							<c:forEach items="${listUsers}" var="user">
 								<tr>
-									<td>${user.username}</td>
+									<td>${user.email}</td>
 									<td>${user.firstname}</td>
 									<td>${user.lastname}</td>
-									<td>${user.email}</td>
-									<td><a href="<c:url value='/admin/edit/${user.username}' />" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-									<td><a href="<c:url value='/admin/remove/${user.username}' />" ><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
+									<td>${user.telephone}</td>
+									<td>${user.creationDate}</td>
+									<td>${user.role}</td>
+									<td><a href="<c:url value='/admin/edit/${user.idUser}' />" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+									<td><a href="<c:url value='/admin/remove/${user.idUser}' />" ><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
 								</tr>
 							</c:forEach>
 						  </table>
@@ -64,10 +68,10 @@
 			    	<br />
 			    	<div class="container-fluid">
 				    	<form:form  commandName="user" id="user-form" class="form-horizontal" role="form" action='${pageContext.request.contextPath}/admin/user/add'>
-				    	  <div class="form-group">
-						    <label for="labelLogin" class="col-sm-2 control-label">Login</label>
+				    	   <div class="form-group">
+						    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
 						    <div class="col-sm-10">
-						      <form:input path="username" type="text" class="form-control" id="inputLogin" placeholder="Login"/>
+						      <form:input path="email" type="email" class="form-control" id="inputEmail3" placeholder="Email"/>
 						    </div>
 						  </div>
 				    	  <div class="form-group">
@@ -79,13 +83,13 @@
 						  <div class="form-group">
 						    <label for="labelPrenom" class="col-sm-2 control-label">Prénom</label>
 						    <div class="col-sm-10">
-						      <form:input path="firstname" type="text" class="form-control" id="inputPrenom" placeholder="Prenom"/>
+						      <form:input path="firstname" type="text" class="form-control" id="inputPrenom" placeholder="Prénom"/>
 						    </div>
 						  </div>
 						  <div class="form-group">
-						    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+						    <label for="labelTelephone" class="col-sm-2 control-label">Téléphone</label>
 						    <div class="col-sm-10">
-						      <form:input path="email" type="email" class="form-control" id="inputEmail3" placeholder="Email"/>
+						      <form:input path="telephone" type="text" class="form-control" id="inputTelephone" placeholder="Téléphone"/>
 						    </div>
 						  </div>
 						  <div class="form-group">
