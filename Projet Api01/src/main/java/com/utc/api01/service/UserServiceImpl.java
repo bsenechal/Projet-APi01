@@ -10,7 +10,7 @@ import com.utc.api01.model.User;
 import com.utc.api01.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements GeneriqueService<User>{
 	
 	private UserDao userDao;
 
@@ -18,33 +18,55 @@ public class UserServiceImpl implements UserService {
 		this.userDao = userDao;
 	}
 
-	@Override
 	@Transactional
 	public void addUser(User u) {
 		this.userDao.addUser(u);
 	}
 
-	@Override
 	@Transactional
 	public void updateUser(User u) {
 		this.userDao.updateUser(u);
 	}
 
-	@Override
 	@Transactional
 	public List<User> listUsers() {
 		return this.userDao.listUsers();
 	}
 
-	@Override
 	@Transactional
 	public User getUserById(int id) {
 		return this.userDao.getUserById(id);
 	}
 
-	@Override
 	@Transactional
 	public void removeUser(int id) {
 		this.userDao.removeUser(id);
+	}
+
+	@Override
+	public void add(User u) {
+		addUser(u);
+		
+	}
+
+	@Override
+	public void update(User u) {
+		update(u);
+		
+	}
+
+	@Override
+	public List<User> list() {
+		return listUsers();
+	}
+
+	@Override
+	public User getById(int id) {
+		return getUserById(id);
+	}
+
+	@Override
+	public void remove(int id) {
+		removeUser(id);		
 	}
 }

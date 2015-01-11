@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 
 import com.utc.api01.model.User;
 
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl implements GeneriqueDao<User> {
 
 	private SessionFactory sessionFactory;
 
@@ -17,34 +17,34 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void addUser(User u) {
+	public void add(User u) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.persist(u);
 	}
 
 	@Override
-	public void updateUser(User u) {
+	public void update(User u) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.update(u);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> listUsers() {
+	public List<User> list() {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<User> usersList = session.createQuery("from User").list();
 		return usersList;
 	}
 
 	@Override
-	public User getUserById(int id) {
+	public User getById(int id) {
 		Session session = this.sessionFactory.getCurrentSession();		
 		User u = (User) session.load(User.class, new Integer(id));
 		return u;
 	}
 
 	@Override
-	public void removeUser(int id) {
+	public void remove(int id) {
 		Session session = this.sessionFactory.getCurrentSession();
 		User u = (User) session.load(User.class, id);
 		if(null != u){
