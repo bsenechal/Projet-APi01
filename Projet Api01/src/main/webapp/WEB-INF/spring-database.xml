@@ -29,12 +29,18 @@
 	        </property>
 	</bean>
 
-	<bean id="userDao" class="com.utc.api01.dao.UserDaoImpl">
+	<bean id="userDao" class="com.utc.api01.dao.GeneriqueDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
+		<constructor-arg>
+        	<value>com.utc.api01.model.User</value>
+    	</constructor-arg>
 	</bean>
 	
-	<bean id="userService" class="com.utc.api01.service.UserServiceImpl">
-		<property name="userDao" ref="userDao"></property>
+	<bean id="userService" class="com.utc.api01.service.GeneriqueServiceImpl">
+		<property name="dao" ref="userDao"></property>
+		<constructor-arg>
+        	<value>com.utc.api01.model.User</value>
+    	</constructor-arg>
 	</bean>
 
 	<bean id="transactionManager"
