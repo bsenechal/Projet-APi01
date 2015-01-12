@@ -5,24 +5,9 @@
 
 <jsp:include page="header.jsp"/>
 
-<section class="main clearfix">	
-
-	<section class="top">	
-			<div class="wrapper content_header clearfix">
-				<div class="work_nav">
-							
-					<ul class="btn clearfix">
-						<li><a href="#" class="previous" data-title="Previous"></a></li>
-						<li><a href="index.html" class="grid" data-title="Portfolio"></a></li>
-						<li><a href="#" class="next" data-title="Next"></a></li>
-					</ul>							
-					
-				</div><!-- end work_nav -->
-				<h1 class="title">Modification de l'utilisateur "${user.firstname} ${user.lastname}"</h1>
-			</div>		
-		</section><!-- end top -->
-	<section class="wrapper">
-		<div class="content">
+<div class="content">
+	<div class="wrap">
+		<div class="single-page">
     	<form:form commandName="user" class="form-horizontal" role="form" action='${pageContext.request.contextPath}/admin/saveEdit'>
 		    <input type="hidden" name="idUser" value="${user.idUser}" />
 		    <div class="form-group">
@@ -68,6 +53,7 @@
 						  </div>
 		</form:form>
 		</div>
-		</section>
+	</div>
+</div>
 </body>
 </html>

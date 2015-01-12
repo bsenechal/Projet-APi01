@@ -5,15 +5,18 @@
 <jsp:include page="header.jsp"/>
 
 <body>
-<section class="main clearfix">	
-	<div class="content">
-		<h2>Page d'administration</h2>
-		
-		<ul class="list-group">
-		  <li class="list-group-item"><a href="${pageContext.request.contextPath}/admin/users">Gestion des utilisateurs</a></li>
-		</ul>
+<div class="content">
+	<div class="wrap">
+		<div class="single-page">
+			<div class="page-header">
+				<h1>Page d'administration</h1>
+			</div>
+			<ul class="list-group">
+			  <li class="list-group-item"><a href="${pageContext.request.contextPath}/admin/users">Gestion des utilisateurs</a></li>
+			</ul>
+		</div>
 	</div>
-</section>
+</div>
 </body>
 
 </html>

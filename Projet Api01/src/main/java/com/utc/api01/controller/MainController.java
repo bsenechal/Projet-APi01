@@ -30,10 +30,8 @@ public class MainController {
 	public ModelAndView adminPage() {
 
 		ModelAndView model = new ModelAndView();
-		model.addObject("title", "Spring Security + Hibernate Example");
-		model.addObject("message", "This page is for ROLE_ADMIN only!");
-		model.setViewName("admin");
 
+		model.setViewName("admin");
 		return model;
 
 	}
@@ -44,9 +42,9 @@ public class MainController {
 
 		ModelAndView model = new ModelAndView();
 		if (error != null) {
-			model.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
+			model.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));			
 		}
-
+		
 		if (logout != null) {
 			model.addObject("msg", "You've been logged out successfully.");
 		}
