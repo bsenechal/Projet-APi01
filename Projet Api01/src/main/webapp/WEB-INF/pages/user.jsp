@@ -6,24 +6,12 @@
 
 <jsp:include page="header.jsp"/>
 
-<section class="main clearfix">	
-
-	<section class="top">	
-			<div class="wrapper content_header clearfix">
-				<div class="work_nav">
-							
-					<ul class="btn clearfix">
-						<li><a href="#" class="previous" data-title="Previous"></a></li>
-						<li><a href="index.html" class="grid" data-title="Portfolio"></a></li>
-						<li><a href="#" class="next" data-title="Next"></a></li>
-					</ul>							
-					
-				</div><!-- end work_nav -->
-				<h1 class="title">Gestion des utilisateurs</h1>
+<div class="content">
+	<div class="wrap">
+		<div class="single-page">
+			<div class="page-header">
+				<h1>Gestion des utilisateurs</h1>
 			</div>		
-		</section><!-- end top -->
-	<section class="wrapper">
-		<div class="content">
 			<div role="tabpanel">
 			
 			  <!-- Nav tabs -->
@@ -39,12 +27,12 @@
 						<div class="table-responsive">
 						  <table class="table">
 						    <tr>
-								<th>Email</th>
-								<th>Nom</th>
-								<th>Prénom</th>
-								<th>Téléphone</th>
-								<th>Date de création</th>
-								<th>Rôle</th>
+								<th><b>Email</b></th>
+								<th><b>Nom</b></th>
+								<th><b>Prénom</b><th>
+								<th><b>Téléphone</b></th>
+								<th><b>Date de création</b></th>
+								<th><b>Rôle</b></th>
 								<th></th>
 								<th></th>
 							</tr>
@@ -115,5 +103,5 @@
 			  </div>
 			</div>
 		</div>
-	</section>
-</section>
+	</div>
+</div>
