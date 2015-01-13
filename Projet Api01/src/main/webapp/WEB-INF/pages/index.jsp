@@ -5,6 +5,9 @@
 		<div class="content">
 			<div class="wrap">
 			 <div id="main" role="main">
+			 
+				 <jsp:include page="messages.jsp"/>
+			 
 			      <ul id="tiles">
 			        <!-- These are our grid blocks -->
 			        <li onclick="location.href='single-page.html';">

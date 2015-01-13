@@ -8,6 +8,9 @@
 <div class="content">
 	<div class="wrap">
 		<div class="single-page">
+		
+			<jsp:include page="messages.jsp"/>
+			
 			<div class="page-header">
 				<h1>Page d'administration</h1>
 			</div>

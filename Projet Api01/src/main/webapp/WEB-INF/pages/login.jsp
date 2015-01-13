@@ -6,7 +6,9 @@
 <div class="content">
 	<div class="wrap">
 		<div class="single-page">
+		
 			<jsp:include page="messages.jsp"/>
+			
 			<div class="page-header">
 				<h1>Connexion</h1>
 			</div>	
@@ -19,11 +21,11 @@
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								  <div class="form-group">
 								    <label for="inputEmail">Email</label>
-								    <input type="email" path="username" name="username" class="form-control" id="inputEmail" placeholder="Email">
+								    <input type="email" name="username" class="form-control" id="inputEmail" placeholder="Email">
 								  </div>
 								  <div class="form-group">
 								    <label for="exampleInputPassword1">Mot de passe</label>
-								    <input type="password" path="password" name="password" class="form-control" id="inputPassword" placeholder="Mot de passe">
+								    <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Mot de passe">
 								  </div>
 								  <button type="submit" name="submit" class="btn btn-primary">Connexion</button>
 								</form>	 

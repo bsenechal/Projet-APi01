@@ -3,7 +3,10 @@ package com.utc.api01.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -30,13 +33,32 @@ public class User{
 	private String email;
 	
 	@Column(name = "TELEPHONE")
-	private int telephone;
+	private Integer telephone;
 	
 	@Column(name = "CREATION_DATE")
 	private String creationDate;
 	
-	@Column(name = "ROLE")
-	private String role;
+	@ManyToOne
+	@JoinColumn(name="IDAUTOR", table="AUTOR", nullable = false, updatable = false, insertable = false)
+	@Column(name = "idAutor")
+	private Integer role;
+	
+	@Transient
+	private String confirmation;
+	
+	/**
+	 * @return the confirmation
+	 */
+	public String getConfirmation() {
+		return confirmation;
+	}
+
+	/**
+	 * @param confirmation the confirmation to set
+	 */
+	public void setConfirmation(String confirmation) {
+		this.confirmation = confirmation;
+	}
 
 	/**
 	 * @return the idUser
@@ -125,14 +147,14 @@ public class User{
 	/**
 	 * @return the telephone
 	 */
-	public int getTelephone() {
+	public Integer getTelephone() {
 		return telephone;
 	}
 
 	/**
 	 * @param telephone the telephone to set
 	 */
-	public void setTelephone(int telephone) {
+	public void setTelephone(Integer telephone) {
 		this.telephone = telephone;
 	}
 
@@ -153,14 +175,14 @@ public class User{
 	/**
 	 * @return the role
 	 */
-	public String getRole() {
+	public Integer getRole() {
 		return role;
 	}
 
 	/**
 	 * @param role the role to set
 	 */
-	public void setRole(String role) {
+	public void setRole(Integer role) {
 		this.role = role;
 	}
 
@@ -178,7 +200,7 @@ public class User{
 	 */
 	public User(int idUser, String login, String password, boolean enabled,
 			String firstname, String lastname, String email, int telephone,
-			String creationDate, String role) {
+			String creationDate, Integer role) {
 		super();
 		this.idUser = idUser;
 		this.password = password;

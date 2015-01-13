@@ -40,14 +40,14 @@ public class GeneriqueDaoImpl<MaClasse> implements GeneriqueDao<MaClasse>{
 	@SuppressWarnings("unchecked")
 	public List<MaClasse> list() {
 		Session session = this.sessionFactory.getCurrentSession();
-		List<MaClasse> list = session.createQuery("from User").list();
+		List<MaClasse> list = session.createQuery("from "+this.tClass.getName()).list();
 		return list;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public MaClasse getById(int id) {
-		Session session = this.sessionFactory.getCurrentSession();		
+		Session session = this.sessionFactory.openSession();		
 		MaClasse c = (MaClasse) session.load(this.tClass, new Integer(id));
 		return c;
 	}

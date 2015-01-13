@@ -46,7 +46,7 @@ public class MainController {
 		}
 		
 		if (logout != null) {
-			model.addObject("msg", "You've been logged out successfully.");
+			model.addObject("msg", "Vous avez correctement été déconnecté.");
 		}
 		model.setViewName("login");
 
@@ -61,11 +61,11 @@ public class MainController {
 
 		String error = "";
 		if (exception instanceof BadCredentialsException) {
-			error = "Invalid username and password!";
+			error = "L'adresse email n'est pas correcte";
 		} else if (exception instanceof LockedException) {
 			error = exception.getMessage();
 		} else {
-			error = "Invalid username and password!";
+			error = "L'adresse email et le mot de passe de correspondent pas !";
 		}
 
 		return error;
@@ -81,7 +81,6 @@ public class MainController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
 			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-			System.out.println(userDetail);
 
 			model.addObject("username", userDetail.getUsername());
 

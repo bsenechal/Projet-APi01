@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.utc.api01.model.User;
 import com.utc.api01.service.GeneriqueService;
@@ -29,17 +30,38 @@ public class UserController {
 	
 	@RequestMapping(value = "/admin/users", method = RequestMethod.GET)
 	public String listUsers(Model model) {
-		model.addAttribute("user", new User());
 		model.addAttribute("listUsers", this.userService.list());
 		return "user";
 	}
 	
+	@RequestMapping(value = "/admin/addUser", method = RequestMethod.GET)
+	public String addUser(Model model) {
+		model.addAttribute("user", new User());
+		model.addAttribute("url", "user/add");
+		return "editUser";
+	}
+	
+	
 	@RequestMapping(value= "/admin/user/add", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute("user") User u){
-		u.setCreationDate(new SimpleDateFormat("YYYY-MM-DD").format(new Date()));
-		this.userService.add(u);
+	public ModelAndView addUser(@ModelAttribute("user") User u){
+		ModelAndView model = new ModelAndView();
 		
-		return "redirect:/admin/users";
+		model.setViewName("editUser");
+		
+		if (u.getEmail() == null || u.getFirstname() == null || u.getLastname() == null || u.getTelephone() == null || u.getPassword() == null) {
+			model.addObject("error", "Vous devez remplir tous les champs");
+		} else if (u.getPassword() != u.getPassword()) {
+			model.addObject("error", "Les mots de passe ne correspondent pas");
+		}
+		else {
+			u.setCreationDate(new SimpleDateFormat("YYYY-MM-DD").format(new Date()));
+			this.userService.add(u);		
+			model.addObject("msg", "L'utilisateur " + u.getFirstname() + " " + u.getLastname() + " a correctement été ajouté");
+			model.setViewName("user");
+//			model.addAllObjects("listUsers", this.userService.list());
+		}
+
+		return model;
 	}
 	
 	@RequestMapping("/admin/remove/{idUser}")
@@ -50,9 +72,13 @@ public class UserController {
     }
  
     @RequestMapping("/admin/edit/{idUser}")
-    public String editUser(@PathVariable("idUser") int idUser, Model model){
-		model.addAttribute("user", this.userService.getById(idUser));
-        return "editUser";
+    public ModelAndView editUser(@PathVariable("idUser") int idUser){
+    	ModelAndView model = new ModelAndView();
+    	User u =  this.userService.getById(idUser);
+    	
+		model.addObject("user", u);
+		model.setViewName("editUser");
+        return model;
     }
 	
     @RequestMapping(value= "/admin/saveEdit", method = RequestMethod.POST)
