@@ -2,7 +2,9 @@ package com.utc.api01.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -45,7 +47,7 @@ public class UserController {
 	@RequestMapping(value= "/admin/user/add", method = RequestMethod.POST)
 	public ModelAndView addUser(@ModelAttribute("user") User u){
 		ModelAndView model = new ModelAndView();
-		
+	
 		model.setViewName("editUser");
 		
 		if (u.getEmail() == null || u.getFirstname() == null || u.getLastname() == null || u.getTelephone() == null || u.getPassword() == null) {

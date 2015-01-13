@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -77,13 +78,15 @@
 						<input type="text" /><input type="submit" value="" />
 					</form>
 				</div>
-				<div class="userinfo">
-					<div class="user">
-						<ul>
-							<li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/user-pic.png" title="user-name" /><span>Ipsum</span></a></li>
-						</ul>
+				<c:if test="${pageContext['request'].userPrincipal != null}">
+					<div class="userinfo">
+						<div class="user">
+							<ul>
+								<li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/user-pic.png" title="user-name" /><span><security:authentication property="principal.username"></security:authentication></span></a></li>
+							</ul>
+						</div>
 					</div>
-				</div>
+				</c:if>
 				<div class="clear"> </div>
 			</div>
 		</div>

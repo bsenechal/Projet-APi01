@@ -28,9 +28,9 @@
 	  <authentication-provider>
 		<jdbc-user-service data-source-ref="dataSource"
 		  users-by-username-query=
-		    "select email, password, enabled from user where email = ?"
+		    "SELECT email, password, enabled FROM user WHERE email = ?"
 		  authorities-by-username-query=
-		    "select email, RoleName  from user u, role r where u.fkRole = r.idRole email = ?" />
+		    "SELECT u.email, r.libelle  FROM user u, role r WHERE u.fkRole = r.idRole AND email = ?" />
 	  </authentication-provider>
 	</authentication-manager>
 </beans:beans>

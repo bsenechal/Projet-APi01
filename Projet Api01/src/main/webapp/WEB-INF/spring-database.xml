@@ -13,7 +13,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/projet_api01" />
 		<property name="username" value="root" />
-		<property name="password" value="password" />
+		<property name="password" value="" />
 	</bean>
 
 	<bean id="sessionFactory"     class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

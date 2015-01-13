@@ -50,7 +50,8 @@
 						<div class="col-sm-10">
 							<form:input path="role" type="text" class="form-control" id="inputRole" placeholder="Role"/>
 						</div>
-					</div>
+					</div>		
+					
 					<div class="form-group">
 						<label for="labelPass" class="col-sm-2 control-label">Mot de passe</label>
 						<div class="col-sm-10">
@@ -74,6 +75,11 @@
 						</div>
 					</div>
 			</form:form>
+			<nav>
+			  <ul class="pager">
+			    <li><a href="${pageContext.request.contextPath}/admin/users">Précédent</a></li>
+			  </ul>
+			</nav>
 		</div>
 	</div>
 </div>

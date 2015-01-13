@@ -163,7 +163,7 @@ a.boxclose{
 /*--userinfo--*/
 .userinfo{
 	float: right;
-	width: 15%;
+	width: 18%;
 	margin-top: 0.3em;
 }
 .user ul li{
@@ -673,7 +673,7 @@ span.mail a:hover{
 /*--media Quries for 1440px-monitors-*/
 @media only screen and (max-width:1440px) and (min-width:1366px) {
 	.wrap{
-		width:85%;
+		width:95%;
 	}
 }
 /*--//End-media Quries for 1440px-monitors-*/
@@ -693,7 +693,7 @@ span.mail a:hover{
 /*--media Quries for 1280px-monitors-*/
 @media only screen and (max-width:1280px) and (min-width:1024px) {
 	.wrap{
-		width:80%;
+		width:90%;
 	}
 	.footer {
 		bottom: 0px;
@@ -775,7 +775,7 @@ span.mail a:hover{
 		display:none;	
 	}
 	.userinfo {
-		width: 17%;
+		width: 25%;
 	}
 	.artical-content p {
 		font: normal 14px/22px 'Open Sans', sans-serif,Helvetica,sans-serif;

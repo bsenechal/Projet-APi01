@@ -2,6 +2,7 @@ package com.utc.api01.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -37,11 +38,10 @@ public class User{
 	
 	@Column(name = "CREATION_DATE")
 	private String creationDate;
-	
-	@ManyToOne
-	@JoinColumn(name="IDAUTOR", table="AUTOR", nullable = false, updatable = false, insertable = false)
-	@Column(name = "idAutor")
-	private Integer role;
+		
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="FKROLE")
+	private Role role;
 	
 	@Transient
 	private String confirmation;
@@ -175,14 +175,14 @@ public class User{
 	/**
 	 * @return the role
 	 */
-	public Integer getRole() {
+	public Role getRole() {
 		return role;
 	}
 
 	/**
 	 * @param role the role to set
 	 */
-	public void setRole(Integer role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
@@ -200,7 +200,7 @@ public class User{
 	 */
 	public User(int idUser, String login, String password, boolean enabled,
 			String firstname, String lastname, String email, int telephone,
-			String creationDate, Integer role) {
+			String creationDate, Role role) {
 		super();
 		this.idUser = idUser;
 		this.password = password;

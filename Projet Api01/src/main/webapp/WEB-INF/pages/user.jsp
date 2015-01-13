@@ -40,7 +40,7 @@
 							<td>${user.lastname}</td>
 							<td>${user.telephone}</td>
 							<td>${user.creationDate}</td>
-							<td>${user.role}</td>
+							<td>${user.role.libelle}</td>
 							<td><a href="<c:url value='/admin/edit/${user.idUser}' />" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
 							<td><a href="<c:url value='/admin/remove/${user.idUser}' />" ><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
 						</tr>
