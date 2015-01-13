@@ -13,22 +13,10 @@ CREATE TABLE `user` (
   PRIMARY KEY (`idUser`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
-CREATE TABLE `autor` (
-	`idAutor` int(11) NOT NULL AUTO_INCREMENT,
-	`name` varchar(45) NOT NULL,
-    PRIMARY KEY (`idAutor`)
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `type` (
-	`idType` int(11) NOT NULL AUTO_INCREMENT,
-	`name` varchar(45) NOT NULL,
-    PRIMARY KEY (`idType`)
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 CREATE TABLE `book` (
 	`idBook` int(11) NOT NULL AUTO_INCREMENT,
 	`title` varchar(45) NOT NULL,
-	`idAutor` varchar(45) NOT NULL REFERENCES autor(idAutor),
-    `idType` varchar(45) NOT NULL REFERENCES type(idType),
+	`autor` varchar(45) NOT NULL,
+    `type` varchar(45) NOT NULL,
     PRIMARY KEY (`idBook`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;

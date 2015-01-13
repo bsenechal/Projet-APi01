@@ -13,7 +13,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/projet_api01" />
 		<property name="username" value="root" />
-		<!-- <property name="password" value="password" /> -->
+		<property name="password" value="password" />
 	</bean>
 
 	<bean id="sessionFactory"     class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -40,6 +40,20 @@
 		<property name="dao" ref="userDao"></property>
 		<constructor-arg>
         	<value>com.utc.api01.model.User</value>
+    	</constructor-arg>
+	</bean>
+	
+	<bean id="bookDao" class="com.utc.api01.dao.GeneriqueDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<constructor-arg>
+        	<value>com.utc.api01.model.Book</value>
+    	</constructor-arg>
+	</bean>
+	
+	<bean id="bookService" class="com.utc.api01.service.GeneriqueServiceImpl">
+		<property name="dao" ref="bookDao"></property>
+		<constructor-arg>
+        	<value>com.utc.api01.model.Book</value>
     	</constructor-arg>
 	</bean>
 
