@@ -41,4 +41,10 @@ private GeneriqueService<Book> bookService;
 		model.addAttribute("book", this.bookService.getById(idBook));
         return "editBook";
     }
+	
+	@RequestMapping(value= "/book/update", method = RequestMethod.POST)
+    public String editAndSaveBook(@ModelAttribute("book") Book u){
+    	this.bookService.update(u);
+        return "redirect:/book/listing";
+    }
 }

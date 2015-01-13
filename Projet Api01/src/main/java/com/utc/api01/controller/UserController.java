@@ -77,7 +77,6 @@ public class UserController {
     public ModelAndView editUser(@PathVariable("idUser") int idUser){
     	ModelAndView model = new ModelAndView();
     	User u =  this.userService.getById(idUser);
-    	
 		model.addObject("user", u);
 		model.setViewName("editUser");
         return model;
