@@ -40,6 +40,11 @@ body{
 	top: 0;
 	z-index: 999;
 }
+
+.header .wrap {
+	width : 95% !important;
+}
+
 .logo{
 	float:left;
 }
@@ -48,7 +53,7 @@ body{
 }
 .nav-icon{
 	float: left;
-	margin: 0.6% 2% 0 8%;
+	margin: 0.6% 2% 0 5%;
 	width: 4.55%;
 }
 .nav-icon a span{
@@ -163,7 +168,7 @@ a.boxclose{
 /*--userinfo--*/
 .userinfo{
 	float: right;
-	width: 18%;
+	width: 20%;
 	margin-top: 0.3em;
 }
 .user ul li{
@@ -673,7 +678,7 @@ span.mail a:hover{
 /*--media Quries for 1440px-monitors-*/
 @media only screen and (max-width:1440px) and (min-width:1366px) {
 	.wrap{
-		width:95%;
+		width:85%;
 	}
 }
 /*--//End-media Quries for 1440px-monitors-*/
@@ -693,7 +698,7 @@ span.mail a:hover{
 /*--media Quries for 1280px-monitors-*/
 @media only screen and (max-width:1280px) and (min-width:1024px) {
 	.wrap{
-		width:90%;
+		width:80%;
 	}
 	.footer {
 		bottom: 0px;
@@ -775,7 +780,7 @@ span.mail a:hover{
 		display:none;	
 	}
 	.userinfo {
-		width: 25%;
+		width: 17%;
 	}
 	.artical-content p {
 		font: normal 14px/22px 'Open Sans', sans-serif,Helvetica,sans-serif;
@@ -1195,3 +1200,4 @@ span.mail a:hover{
 	}
 }
 /*--//End-media Quries for 320px-monitors-*/
+
