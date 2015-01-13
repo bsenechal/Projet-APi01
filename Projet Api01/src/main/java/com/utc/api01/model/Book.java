@@ -1,5 +1,6 @@
 package com.utc.api01.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,7 +11,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table( name = "USER" )
+@Table( name = "BOOK" )
 public class Book {
 	
 	@Id
@@ -20,15 +21,11 @@ public class Book {
 	@Column(name = "title")
 	private String title;
 	
-	@ManyToOne
-	@JoinColumn(name="IDAUTOR", table="AUTOR", nullable = false, updatable = false, insertable = false)
-	@Column(name = "idAutor")
-	private int idAutor;
+	@Column(name = "autor")
+	private String autor;
 	
-	@ManyToOne
-	@JoinColumn(name="IDTYPE", table="TYPE", nullable = false, updatable = false, insertable = false)
-	@Column(name = "idType")
-	private int idType;
+	@Column(name = "type")
+	private String type;
 
 	/**
 	 * @return the idBook
@@ -59,45 +56,54 @@ public class Book {
 	}
 
 	/**
-	 * @return the idAutor
+	 * @return the autor
 	 */
-	public int getIdAutor() {
-		return idAutor;
+	public String getAutor() {
+		return autor;
 	}
 
 	/**
-	 * @param idAutor the idAutor to set
+	 * @param autor the autor to set
 	 */
-	public void setIdAutor(int idAutor) {
-		this.idAutor = idAutor;
+	public void setAutor(String autor) {
+		this.autor = autor;
 	}
 
 	/**
-	 * @return the idType
+	 * @return the type
 	 */
-	public int getIdType() {
-		return idType;
+	public String getType() {
+		return type;
 	}
 
 	/**
-	 * @param idType the idType to set
+	 * @param type the type to set
 	 */
-	public void setIdType(int idType) {
-		this.idType = idType;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	/**
 	 * @param idBook
 	 * @param title
-	 * @param idAutor
-	 * @param idType
+	 * @param autor
+	 * @param type
 	 */
-	public Book(int idBook, String title, int idAutor, int idType) {
+	public Book(int idBook, String title, String autor, String type) {
 		super();
 		this.idBook = idBook;
 		this.title = title;
-		this.idAutor = idAutor;
-		this.idType = idType;
+		this.autor = autor;
+		this.type = type;
 	}
 
+	/**
+	 * 
+	 */
+	public Book() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
 }
