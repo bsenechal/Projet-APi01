@@ -19,13 +19,13 @@
 							<div class="container-fluid">
 								<form name='loginForm' action="<c:url value='/j_spring_security_check' />" method='POST'>
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-								  <div class="form-group">
+								  <div id="emailDiv" class="form-group">
 								    <label for="inputEmail">Email</label>
-								    <input type="email" name="username" class="form-control" id="inputEmail" placeholder="Email">
+								    <input type="email" name="username" class="form-control" id="email" placeholder="Email">
 								  </div>
-								  <div class="form-group">
+								  <div id="passwordDiv" class="form-group">
 								    <label for="exampleInputPassword1">Mot de passe</label>
-								    <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Mot de passe">
+								    <input type="password" name="password" class="form-control" id="password" placeholder="Mot de passe">
 								  </div>
 								  <button type="submit" name="submit" class="btn btn-primary">Connexion</button>
 								</form>	 
@@ -35,8 +35,9 @@
 				</div>
 			</div>
 		</div>	
+		<jsp:include page="footer.jsp"/>
 	</div>
 </div>
 </body>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/login.js"></script>
 </html>

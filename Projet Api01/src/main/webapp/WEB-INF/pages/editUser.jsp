@@ -21,47 +21,47 @@
 			
    			<form:form commandName="user" class="form-horizontal" role="form" action="${url}">
 		   		<form:input path="idUser" type="hidden" name="idUser" value="${user.idUser}" />
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+					<div id="emailDiv" class="form-group">
+						<label for="labelEmail" class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-10">
-							<form:input path="email" type="email" class="form-control" id="inputEmail3" placeholder="Email"/>
+							<form:input path="email" type="email" class="form-control" id="email" placeholder="Email"/>
 						</div>
 					</div>
-					<div class="form-group">
+					<div id="nomDiv" class="form-group">
 						<label for="labelNom" class="col-sm-2 control-label">Nom</label>
 						<div class="col-sm-10">
-							<form:input path="lastname" type="text" class="form-control" id="inputNom" placeholder="Nom"/>
+							<form:input path="lastname" type="text" class="form-control" id="nom" placeholder="Nom"/>
 						</div>
 					</div>
-					<div class="form-group">
+					<div id="prenomDiv" class="form-group">
 						<label for="labelPrenom" class="col-sm-2 control-label">Prénom</label>
 						<div class="col-sm-10">
-							<form:input path="firstname" type="text" class="form-control" id="inputPrenom" placeholder="Prénom"/>
+							<form:input path="firstname" type="text" class="form-control" id="prenom" placeholder="Prénom"/>
 						</div>
 					</div>
-					<div class="form-group">
+					<div id="telephoneDiv" class="form-group">
 						<label for="labelTelephone" class="col-sm-2 control-label">Téléphone</label>
 						<div class="col-sm-10">
-							<form:input path="telephone" type="text" class="form-control" id="inputTelephone" placeholder="Téléphone"/>
+							<form:input path="telephone" type="text" class="form-control" id="telephone" placeholder="Téléphone"/>
 						</div>
 					</div>
-					<div class="form-group">
+					<div id="roleDiv" class="form-group">
 						<label for="labelRole" class="col-sm-2 control-label">Role</label>
 						<div class="col-sm-10">
-							<form:input path="role" type="text" class="form-control" id="inputRole" placeholder="Role"/>
+							<form:input path="role" type="text" class="form-control" id="role" placeholder="Role"/>
 						</div>
 					</div>		
 					
-					<div class="form-group">
+					<div id="passwordDiv" class="form-group">
 						<label for="labelPass" class="col-sm-2 control-label">Mot de passe</label>
 						<div class="col-sm-10">
-							<form:input path="password" type="password" class="form-control" id="inputPass" placeholder="Mot de passe" />
+							<form:input path="password" type="password" class="form-control" id="password" placeholder="Mot de passe" />
 						</div>
 					</div>
-					<div class="form-group">
+					<div id="confirmationDiv" class="form-group">
 						<label for="labelConfirm" class="col-sm-2 control-label">Confirmation</label>
 						<div class="col-sm-10">
-							<form:input path="confirmation" type="password" class="form-control" id="inputConfirm" placeholder="Confirmation"/>
+							<form:input path="confirmation" type="password" class="form-control" id="confirmation" placeholder="Confirmation"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -81,7 +81,9 @@
 			  </ul>
 			</nav>
 		</div>
+		<jsp:include page="footer.jsp"/>
 	</div>
 </div>
 </body>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/editBook.js"></script>
 </html>

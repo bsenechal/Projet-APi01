@@ -2,6 +2,8 @@ package com.utc.api01.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
@@ -9,21 +11,29 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.utc.api01.model.Book;
+import com.utc.api01.service.GeneriqueService;
+
 @Controller
 public class MainController {
+	private GeneriqueService<Book> bookService;
 
+	@Autowired(required=true)
+	@Qualifier(value="bookService")
+	public void setUserService(GeneriqueService<Book> us){
+		this.bookService = us;
+	}
+	
 	@RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
-	public ModelAndView defaultPage() {
-
-		ModelAndView model = new ModelAndView();
-		model.setViewName("index");
-		return model;
-
+	public String defaultPage(Model model) {
+		model.addAttribute("listBook", this.bookService.list());
+		return "index";
 	}
 
 	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
@@ -33,7 +43,15 @@ public class MainController {
 
 		model.setViewName("admin");
 		return model;
+	}
+	
+	@RequestMapping(value = "/monCompte", method = RequestMethod.GET)
+	public ModelAndView monCompte() {
 
+		ModelAndView model = new ModelAndView();
+
+		model.setViewName("monCompte");
+		return model;
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -51,7 +69,6 @@ public class MainController {
 		model.setViewName("login");
 
 		return model;
-
 	}
 
 	// customize the error message

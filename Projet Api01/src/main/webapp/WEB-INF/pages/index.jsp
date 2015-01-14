@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="fr">
  <jsp:include page="header.jsp"/>
@@ -9,237 +11,25 @@
 				 <jsp:include page="messages.jsp"/>
 			 
 			      <ul id="tiles">
+			     	<c:forEach items="${listBook}" var="book">
 			        <!-- These are our grid blocks -->
-			        <li onclick="location.href='single-page.html';">
-			        	<img src="${pageContext.request.contextPath}/resources/images/img1.jpg" width="200" height="200">
+			        <li onclick="location.href='book/detail/${book.idBook}';">
+			        <img src="${pageContext.request.contextPath}/imageDisplay/${book.idBook}">
 			        	<div class="post-info">
 			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
+				        		<h3><a href="#">${book.title}</a></h3>
+				        		<span><a href="#"><label> </label>${book.type}</a></span>
+				        		<p>${book.description}</p>
 			        		</div>
 			        		<div class="post-info-rate-share">
 			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
 			        				<span> </span>
 			        			</div>
 			        			<div class="clear"> </div>
 			        		</div>
 			        	</div>
 			        </li>
-			        <li onclick="location.href='single-page.html';">
-			        	<img src="${pageContext.request.contextPath}/resources/images/img2.jpg" width="200" height="299">
-						<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-					</li>
-			        <li onclick="location.href='single-page.html';">
-			        	<img src="${pageContext.request.contextPath}/resources/images/img3.jpg" width="200" height="214">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <li onclick="location.href='single-page.html';">
-			        	<img src="${pageContext.request.contextPath}/resources/images/img4.jpg" width="200" height="333">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <!----//--->
-			        <li onclick="location.href='single-page.html';">
-			        	<img src="${pageContext.request.contextPath}/resources/images/img4.jpg" width="200" height="333">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <li onclick="location.href='single-page.html';">
-			        	<img src="${pageContext.request.contextPath}/resources/images/img3.jpg" width="200" height="214">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <li onclick="location.href='single-page.html';">
-			        	<img src="${pageContext.request.contextPath}/resources/images/img2.jpg" width="200" height="299">
-						<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-					</li>
-					  <li onclick="location.href='single-page.html';">
-			        	<img src="${pageContext.request.contextPath}/resources/images/img1.jpg" width="200" height="200">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <!----//--->
-			         <li onclick="location.href='single-page.html';">
-			        	<img src="${pageContext.request.contextPath}/resources/images/img1.jpg" width="200" height="200">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <li onclick="location.href='single-page.html';">
-			        	<img src="${pageContext.request.contextPath}/resources/images/img2.jpg" width="200" height="299">
-						<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-					</li>
-			        <li onclick="location.href='single-page.html';">
-			        	<img src="${pageContext.request.contextPath}/resources/images/img3.jpg" width="200" height="214">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <li onclick="location.href='single-page.html';">
-			        	<img src="${pageContext.request.contextPath}/resources/images/img4.jpg" width="200" height="333">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
+			        </c:forEach>
 			        <!-- End of grid blocks -->
 			      </ul>
 			    </div>
@@ -303,11 +93,7 @@
 		    })(jQuery);
 		  </script>
 		<!----//wookmark-scripts---->
-		<!----start-footer--->
-		<div class="footer">
-			<p>Design by <a href="http://w3layouts.com/">W3layouts</a></p>
-		</div>
-		<!----//End-footer--->
+ 		<jsp:include page="footer.jsp"/>
 		<!---//End-wrap---->
 	</body>
 </html>

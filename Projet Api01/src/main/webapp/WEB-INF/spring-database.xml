@@ -28,7 +28,7 @@
 	            </props>
 	        </property>
 	</bean>
-
+	
 	<bean id="userDao" class="com.utc.api01.dao.GeneriqueDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 		<constructor-arg>

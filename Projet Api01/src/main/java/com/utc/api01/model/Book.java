@@ -3,6 +3,7 @@ package com.utc.api01.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -23,6 +24,41 @@ public class Book {
 	
 	@Column(name = "type")
 	private String type;
+	
+	@Column(name = "description")
+	private String description;
+	
+	@Column(name = "image")
+	@Lob
+	private byte[] image;
+
+	/**
+	 * @return the image
+	 */
+	public byte[] getImage() {
+		return image;
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	/**
 	 * @return the idBook
@@ -99,7 +135,6 @@ public class Book {
 	 */
 	public Book() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	

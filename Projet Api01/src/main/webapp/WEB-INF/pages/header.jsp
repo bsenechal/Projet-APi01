@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -44,6 +45,7 @@
 		<!---//End-click-drop-down-menu----->
 		
 		<LINK rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/bootstrap/css/bootstrap.min.css">
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/css/bootstrap/js/bootstrap.min.js"></script>
 	</head>
 <body>
@@ -64,7 +66,15 @@
 								<div class="menu_box_list">
 									<ul>
 										<li><a href="${pageContext.request.contextPath}/">Accueil</a></li>
-										<li><a href="${pageContext.request.contextPath}/admin">Administration</a></li>
+										<li><a href="${pageContext.request.contextPath}/book/listing">Livres</a></li>
+										<sec:authorize access="hasRole('ROLE_ADMIN')"><li><a href="${pageContext.request.contextPath}/admin">Administration</a></li></sec:authorize>
+										<c:if test="${pageContext['request'].userPrincipal != null}"><li>
+											<c:url var="logoutUrl" value="j_spring_security_logout"/>
+											<form action="${logoutUrl}" method="post">
+											  <input type="submit" class="btn btn-primary" value="Log out" />
+											  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+											</form>
+										</li></c:if>
 										<div class="clear"> </div>
 									</ul>
 								</div>
@@ -78,15 +88,20 @@
 						<input type="text" /><input type="submit" value="" />
 					</form>
 				</div>
-				<c:if test="${pageContext['request'].userPrincipal != null}">
 					<div class="userinfo">
 						<div class="user">
 							<ul>
-								<li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/user-pic.png" title="user-name" /><span><security:authentication property="principal.username"></security:authentication></span></a></li>
+								<li>
+								<c:choose>
+									<c:when test="${pageContext['request'].userPrincipal != null}"><a href="${pageContext.request.contextPath}/monCompte"><img src="${pageContext.request.contextPath}/resources/images/user-pic.png" title="user-name" /><span><security:authentication property="principal.username"></security:authentication></span></a></c:when>
+									<c:otherwise><button type="submit" class="btn btn-primary" onclick='location.href ="${pageContext.request.contextPath}/login"'>Login</button></c:otherwise>
+								</c:choose>
+								</li>
 							</ul>
 						</div>
 					</div>
-				</c:if>
+				
+		
 				<div class="clear"> </div>
 			</div>
 		</div>

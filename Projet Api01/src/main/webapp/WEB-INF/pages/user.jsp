@@ -49,6 +49,7 @@
 				</div>
 			</c:if>    
     	</div>
+    	<jsp:include page="footer.jsp"/>
   	</div>
 </div>
 	
