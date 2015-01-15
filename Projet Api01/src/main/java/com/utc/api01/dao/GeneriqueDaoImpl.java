@@ -47,8 +47,9 @@ public class GeneriqueDaoImpl<MaClasse> implements GeneriqueDao<MaClasse>{
 	@Override
 	@SuppressWarnings("unchecked")
 	public MaClasse getById(int id) {
-		Session session = this.sessionFactory.openSession();		
-		MaClasse c = (MaClasse) session.load(this.tClass, new Integer(id));
+		Session session;
+		session = this.sessionFactory.getCurrentSession();	
+		MaClasse c = (MaClasse) session.get(this.tClass, new Integer(id));
 		return c;
 	}
 
