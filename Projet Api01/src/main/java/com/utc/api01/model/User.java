@@ -44,6 +44,23 @@ public class User{
 	private Role role;
 	
 	@Transient
+	private int roleUser;
+	
+	/**
+	 * @return the roleUser
+	 */
+	public int getRoleUser() {
+		return roleUser;
+	}
+
+	/**
+	 * @param roleUser the roleUser to set
+	 */
+	public void setRoleUser(int roleUser) {
+		this.roleUser = roleUser;
+	}
+
+	@Transient
 	private String confirmation;
 	
 	/**

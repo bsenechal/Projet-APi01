@@ -48,11 +48,15 @@
 					<div id="roleDiv" class="form-group">
 						<label for="labelRole" class="col-sm-2 control-label">Role</label>
 						<div class="col-sm-10">
-							<form:select path="role" class="form-control">
+							<select name="roleUser" class="form-control">
 								<c:forEach items="${listRole}" var="role">
-										<option value="${role.idRole}">${role.libelle}</option>
+									<c:choose>
+										<c:when test="${role.idRole == user.role.idRole}"><option value="${role.idRole}" selected>${role.libelle}</option></c:when>
+										<c:otherwise><option value="${role.idRole}">${role.libelle}</option></c:otherwise>
+									</c:choose>
+										
 								</c:forEach>
-							</form:select>
+							</select>
 						</div>
 					</div>		
 					
