@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.utc.api01.model.Role;
 import com.utc.api01.model.User;
 import com.utc.api01.service.GeneriqueService;
 
@@ -20,11 +21,18 @@ import com.utc.api01.service.GeneriqueService;
 public class UserController {
 	
 	private GeneriqueService<User> userService;
+	private GeneriqueService<Role> roleService;
 	
 	@Autowired(required=true)
 	@Qualifier(value="userService")
 	public void setUserService(GeneriqueService<User> us){
 		this.userService = us;
+	}
+	
+	@Autowired(required=true)
+	@Qualifier(value="roleService")
+	public void setRoleService(GeneriqueService<Role> r){
+		this.roleService = r;
 	}
 	
 	
@@ -37,7 +45,9 @@ public class UserController {
 	@RequestMapping(value = "/admin/addUser", method = RequestMethod.GET)
 	public String addUser(Model model) {
 		model.addAttribute("user", new User());
+		model.addAttribute("listRole", roleService.list());
 		model.addAttribute("url", "user/add");
+		
 		return "editUser";
 	}
 	

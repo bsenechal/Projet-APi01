@@ -26,7 +26,7 @@
 				    <tr>
 						<th><b>Email</b></th>
 						<th><b>Nom</b></th>
-						<th><b>Prénom</b><th>
+						<th><b>Prénom</b></th>
 						<th><b>Téléphone</b></th>
 						<th><b>Date de création</b></th>
 						<th><b>Rôle</b></th>

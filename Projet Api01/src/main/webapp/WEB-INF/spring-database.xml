@@ -50,13 +50,27 @@
     	</constructor-arg>
 	</bean>
 	
+	<bean id="roleService" class="com.utc.api01.service.GeneriqueServiceImpl">
+		<property name="dao" ref="roleDao"></property>
+		<constructor-arg>
+        	<value>com.utc.api01.model.Role</value>
+    	</constructor-arg>
+	</bean>
+
+	<bean id="roleDao" class="com.utc.api01.dao.GeneriqueDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<constructor-arg>
+        	<value>com.utc.api01.model.Role</value>
+    	</constructor-arg>
+	</bean>
+	
 	<bean id="bookService" class="com.utc.api01.service.GeneriqueServiceImpl">
 		<property name="dao" ref="bookDao"></property>
 		<constructor-arg>
         	<value>com.utc.api01.model.Book</value>
     	</constructor-arg>
 	</bean>
-
+	
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>

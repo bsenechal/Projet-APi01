@@ -48,7 +48,11 @@
 					<div id="roleDiv" class="form-group">
 						<label for="labelRole" class="col-sm-2 control-label">Role</label>
 						<div class="col-sm-10">
-							<form:input path="role" type="text" class="form-control" id="role" placeholder="Role"/>
+							<form:select path="role" class="form-control">
+								<c:forEach items="${listRole}" var="role">
+										<option value="${role.idRole}">${role.libelle}</option>
+								</c:forEach>
+							</form:select>
 						</div>
 					</div>		
 					
