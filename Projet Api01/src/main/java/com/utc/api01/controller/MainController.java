@@ -23,6 +23,7 @@ import com.utc.api01.service.GeneriqueService;
 @Controller
 public class MainController {
     private GeneriqueService<Book> bookService;
+    private static final String MSG_DECONNECTION = "Vous avez correctement été déconnecté.";
 
     @Autowired(required = true)
     @Qualifier(value = "bookService")
@@ -67,7 +68,7 @@ public class MainController {
         }
 
         if (logout != null) {
-            model.addObject("msg", "Vous avez correctement été déconnecté.");
+            model.addObject("msg", MSG_DECONNECTION);
         }
         model.setViewName("login");
 

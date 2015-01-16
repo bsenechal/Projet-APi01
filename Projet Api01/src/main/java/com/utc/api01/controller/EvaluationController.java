@@ -18,6 +18,9 @@ import com.utc.api01.service.GeneriqueService;
 public class EvaluationController {
     private GeneriqueService<Evaluation> evalService;
     private GeneriqueService<Question> questionService;
+    private static final String REDIRECT_EVALUATION = "evaluation";
+    private static final String REDIRECT_QUESTION = "question";
+    private static final String REDIRECT_EDITQUESTION = "editQuestion";
     
     @Autowired(required = true)
     @Qualifier(value = "evalService")
@@ -34,35 +37,34 @@ public class EvaluationController {
     @RequestMapping(value = "/admin/evaluations", method = RequestMethod.GET)
     public String listEvaluations(Model model) {
         model.addAttribute("listEvals", this.evalService.list());
-        return "evaluation";
+        return REDIRECT_EVALUATION;
     }
 
     @RequestMapping("/admin/evaluation/remove/{idEval}")
     public String removeEval(@PathVariable("idEval") int id) {
 
         this.evalService.remove(id);
-        return "redirect:/admin/evaluation";
+        return REDIRECT_EVALUATION;
     }
 
     @RequestMapping(value = "/admin/questions", method = RequestMethod.GET)
     public String listQuestions(Model model) {
         model.addAttribute("listQuestions", this.questionService.list());
-        return "question";
+        return REDIRECT_QUESTION;
     }
 
     @RequestMapping("/admin/questions/remove/{idQuest}")
     public String removeQuestion(@PathVariable("idQuest") int id) {
 
         this.questionService.remove(id);
-        return "redirect:/admin/question";
+        return REDIRECT_QUESTION;
     }
 
     @RequestMapping(value = "/admin/questions/addQuestion", method = RequestMethod.GET)
     public String addUser(Model model) {
         model.addAttribute("question", new Question());
         model.addAttribute("url", "addQuestion/save");
-
-        return "editQuestion";
+        return REDIRECT_EDITQUESTION;
     }
 
     @RequestMapping(value = "/admin/questions/addQuestion/save", method = RequestMethod.POST)
@@ -78,7 +80,7 @@ public class EvaluationController {
     public String editQuestion(@PathVariable("idQuestion") int id, Model model) {
         model.addAttribute("question", this.questionService.getById(id));
         model.addAttribute("url", "save");
-        return "editQuestion";
+        return REDIRECT_EDITQUESTION;
     }
 
     @RequestMapping(value = "/admin/questions/edit/save", method = RequestMethod.POST)

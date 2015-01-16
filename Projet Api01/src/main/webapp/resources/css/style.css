@@ -30,6 +30,12 @@ body{
 	width:80%;
 	margin:0 auto;
 }
+
+.error {
+     color: red; 
+     font-weight: bold;
+}
+    
 /*---start-header----*/
 .header{
 	background:url(../images/border.png) repeat-x 0px 0px #FFF;

@@ -15,7 +15,7 @@
 			</div>
 
 			<ul class="list-group">
-			  <li class="list-group-item"><a href="${pageContext.request.contextPath}/admin/users">Gestion des utilisateurs</a></li>
+			  <li class="list-group-item"><a href="${pageContext.request.contextPath}/admin/user/list">Gestion des utilisateurs</a></li>
 			  <li><br/></li>
 			  <li class="list-group-item"><a href="${pageContext.request.contextPath}/book/listing">Gestion des livres</a></li>
 			  <li><br/></li>

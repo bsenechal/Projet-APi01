@@ -17,7 +17,7 @@
 			</div>	
 						
 			<ul class="list-group">
-			  <li class="list-group-item"><a href="${pageContext.request.contextPath}/admin/addUser"><span class="glyphicon glyphicon-plus"></span> Ajouter un utilisateur</a></li>
+			  <li class="list-group-item"><a href="${pageContext.request.contextPath}/admin/user/addUser"><span class="glyphicon glyphicon-plus"></span> Ajouter un utilisateur</a></li>
 			</ul>	
 			
 			<c:if test="${!empty listUsers}">
@@ -41,8 +41,8 @@
 							<td>${user.telephone}</td>
 							<td>${user.creationDate}</td>
 							<td>${user.role.libelle}</td>
-							<td><a href="<c:url value='/admin/edit/${user.idUser}' />" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-							<td><a href="<c:url value='/admin/remove/${user.idUser}' />" ><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
+							<td><a href="<c:url value='/admin/user/edit/${user.idUser}' />" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+							<td><a href="<c:url value='/admin/user/remove/${user.idUser}' />" ><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
 						</tr>
 					</c:forEach>
 				  </table>

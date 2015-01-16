@@ -19,30 +19,34 @@
 				</h1>
 			</div>	
 			
-   			<form:form commandName="user" class="form-horizontal" role="form" action="${url}">
+   			<form:form commandName="user" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/user/save">
 		   		<form:input path="idUser" type="hidden" name="idUser" value="${user.idUser}" />
 					<div id="emailDiv" class="form-group">
 						<label for="labelEmail" class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-10">
 							<form:input path="email" type="email" class="form-control" id="email" placeholder="Email"/>
+							<form:errors path="email" cssClass="error"/>
 						</div>
 					</div>
 					<div id="nomDiv" class="form-group">
 						<label for="labelNom" class="col-sm-2 control-label">Nom</label>
 						<div class="col-sm-10">
 							<form:input path="lastname" type="text" class="form-control" id="nom" placeholder="Nom"/>
+							<form:errors path="lastname" cssClass="error"/>
 						</div>
 					</div>
 					<div id="prenomDiv" class="form-group">
 						<label for="labelPrenom" class="col-sm-2 control-label">Prénom</label>
 						<div class="col-sm-10">
 							<form:input path="firstname" type="text" class="form-control" id="prenom" placeholder="Prénom"/>
+							<form:errors path="firstname" cssClass="error"/>
 						</div>
 					</div>
 					<div id="telephoneDiv" class="form-group">
 						<label for="labelTelephone" class="col-sm-2 control-label">Téléphone</label>
 						<div class="col-sm-10">
-							<form:input path="telephone" type="text" class="form-control" id="telephone" placeholder="Téléphone"/>
+							<form:input path="telephone" type="number" class="form-control" id="telephone" placeholder="Téléphone"/>
+						    <form:errors path="telephone" cssClass="error"/>
 						</div>
 					</div>
 					<div id="roleDiv" class="form-group">
@@ -64,12 +68,14 @@
 						<label for="labelPass" class="col-sm-2 control-label">Mot de passe</label>
 						<div class="col-sm-10">
 							<form:input path="password" type="password" class="form-control" id="password" placeholder="Mot de passe" />
+						    <form:errors path="password" cssClass="error"/>
 						</div>
 					</div>
 					<div id="confirmationDiv" class="form-group">
 						<label for="labelConfirm" class="col-sm-2 control-label">Confirmation</label>
 						<div class="col-sm-10">
 							<form:input path="confirmation" type="password" class="form-control" id="confirmation" placeholder="Confirmation"/>
+						    <form:errors path="confirmation" cssClass="error"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -85,7 +91,7 @@
 			</form:form>
 			<nav>
 			  <ul class="pager">
-			    <li><a href="${pageContext.request.contextPath}/admin/users">Précédent</a></li>
+			    <li><a href="${pageContext.request.contextPath}/admin/user/list">Précédent</a></li>
 			  </ul>
 			</nav>
 		</div>

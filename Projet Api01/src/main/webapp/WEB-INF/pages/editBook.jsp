@@ -19,35 +19,40 @@
 			</div>	
 
 			<div class="container-fluid">
-				<form:form commandName="book" id="book-form" class="form-horizontal" role="form" action="${url}">
+				<form:form commandName="book" id="book-form" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/book/save">
 					<div id="titleDiv" class="form-group">
 						<label for="title" class="col-sm-2 control-label">Title</label>
 						<div class="col-sm-10">
 							<form:input path="title" type="text" class="form-control" id="title" placeholder="${book.title}"/>
+						    <form:errors path="title" cssClass="error"/>
 						</div>
 					</div>
 					<div id="autorDiv" class="form-group">			    
 						<label  for="autor" class="col-sm-2 control-label">Author</label>
 						<div class="col-sm-10">
-						<form:input path="autor" type="text" class="form-control" id="autor" placeholder="${book.autor}"/>
+							<form:input path="autor" type="text" class="form-control" id="autor" placeholder="${book.autor}"/>
+							<form:errors path="autor" cssClass="error"/>
 						</div>
 					</div>
 					<div id="typeDiv" class="form-group">			    
 						<label for="type" class="col-sm-2 control-label">Type</label>
 						<div class="col-sm-10">
-						<form:input path="type" type="text" class="form-control" id="type" placeholder="${book.type}"/>
+							<form:input path="type" type="text" class="form-control" id="type" placeholder="${book.type}"/>
+							<form:errors path="type" cssClass="error"/>
 						</div>
 					</div>
 					<div id="imageDiv" class="form-group">			    
 						<label for="image" class="col-sm-2 control-label">Image</label>
 						<div class="col-sm-10">
-						<form:input path="image" type="file" class="form-control" id="image" placeholder="${book.image}"/>
+							<form:input path="image" type="file" class="form-control" id="image" placeholder="${book.image}"/>
+							<form:errors path="image" cssClass="error"/>
 						</div>
 					</div>
 					<div id="descriptionDiv" class="form-group">			    
 						<label for="description" class="col-sm-2 control-label">Description</label>
 						<div class="col-sm-10">
-						<form:input path="description" type="textarea" class="form-control" id="description" placeholder="${book.type}"/>
+							<form:input path="description" type="textarea" class="form-control" id="description" placeholder="${book.type}"/>
+							<form:errors path="description" cssClass="error"/>
 						</div>
 					</div>
 					

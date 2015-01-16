@@ -6,46 +6,46 @@ import com.utc.api01.dao.GeneriqueDao;
 
 public class GeneriqueServiceImpl<T> implements GeneriqueService<T> {
 
-	private GeneriqueDao<T> dao;
-	
-	public GeneriqueServiceImpl(Class<T> tClass) {
-		super();
-	}
-	
-	public GeneriqueServiceImpl() {
-		super();
-	}
-	
-	public void setDao(GeneriqueDao<T> dao) {
-		this.dao = dao;
-	}
-	
-	public GeneriqueDao<T> getDao() {
-		return dao;
-	}
-	
-	@Override
-	public void add(T u) {
-		this.dao.add(u);	
-	}
+    private GeneriqueDao<T> dao;
 
-	@Override
-	public void update(T u) {
-		this.dao.update(u);	
-	}
+    public GeneriqueServiceImpl(Class<T> tClass) {
+        super();
+    }
 
-	@Override
-	public List<T> list() {
-		return this.dao.list();
-	}
+    public GeneriqueServiceImpl() {
+        super();
+    }
 
-	@Override
-	public T getById(int id) {
-		return this.dao.getById(id);
-	}
+    public void setDao(GeneriqueDao<T> dao) {
+        this.dao = dao;
+    }
 
-	@Override
-	public void remove(int id) {
-		this.dao.remove(id);
-	}
+    public GeneriqueDao<T> getDao() {
+        return dao;
+    }
+
+    @Override
+    public void add(T u) {
+        this.dao.add(u);
+    }
+
+    @Override
+    public void update(T u) {
+        this.dao.update(u);
+    }
+
+    @Override
+    public List<T> list() {
+        return this.dao.list();
+    }
+
+    @Override
+    public T getById(int id) {
+        return this.dao.getById(id);
+    }
+
+    @Override
+    public void remove(int id) {
+        this.dao.remove(id);
+    }
 }
