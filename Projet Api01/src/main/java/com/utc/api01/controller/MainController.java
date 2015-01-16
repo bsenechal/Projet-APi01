@@ -22,90 +22,95 @@ import com.utc.api01.service.GeneriqueService;
 
 @Controller
 public class MainController {
-	private GeneriqueService<Book> bookService;
+    private GeneriqueService<Book> bookService;
 
-	@Autowired(required=true)
-	@Qualifier(value="bookService")
-	public void setUserService(GeneriqueService<Book> us){
-		this.bookService = us;
-	}
-	
-	@RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
-	public String defaultPage(Model model) {
-		model.addAttribute("listBook", this.bookService.list());
-		return "index";
-	}
+    @Autowired(required = true)
+    @Qualifier(value = "bookService")
+    public void setUserService(GeneriqueService<Book> us) {
+        this.bookService = us;
+    }
 
-	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
-	public ModelAndView adminPage() {
+    @RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
+    public String defaultPage(Model model) {
+        model.addAttribute("listBook", this.bookService.list());
+        return "index";
+    }
 
-		ModelAndView model = new ModelAndView();
+    @RequestMapping(value = "/admin**", method = RequestMethod.GET)
+    public ModelAndView adminPage() {
 
-		model.setViewName("admin");
-		return model;
-	}
-	
-	@RequestMapping(value = "/monCompte", method = RequestMethod.GET)
-	public ModelAndView monCompte() {
+        ModelAndView model = new ModelAndView();
 
-		ModelAndView model = new ModelAndView();
+        model.setViewName("admin");
+        return model;
+    }
 
-		model.setViewName("monCompte");
-		return model;
-	}
+    @RequestMapping(value = "/monCompte", method = RequestMethod.GET)
+    public ModelAndView monCompte() {
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout, HttpServletRequest request) {
+        ModelAndView model = new ModelAndView();
 
-		ModelAndView model = new ModelAndView();
-		if (error != null) {
-			model.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));			
-		}
-		
-		if (logout != null) {
-			model.addObject("msg", "Vous avez correctement été déconnecté.");
-		}
-		model.setViewName("login");
+        model.setViewName("monCompte");
+        return model;
+    }
 
-		return model;
-	}
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView login(
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "logout", required = false) String logout,
+            HttpServletRequest request) {
 
-	// customize the error message
-	private String getErrorMessage(HttpServletRequest request, String key) {
+        ModelAndView model = new ModelAndView();
+        if (error != null) {
+            model.addObject("error",
+                    getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
+        }
 
-		Exception exception = (Exception) request.getSession().getAttribute(key);
+        if (logout != null) {
+            model.addObject("msg", "Vous avez correctement été déconnecté.");
+        }
+        model.setViewName("login");
 
-		String error = "";
-		if (exception instanceof BadCredentialsException) {
-			error = "L'adresse email n'est pas correcte";
-		} else if (exception instanceof LockedException) {
-			error = exception.getMessage();
-		} else {
-			error = "L'adresse email et le mot de passe de correspondent pas !";
-		}
+        return model;
+    }
 
-		return error;
-	}
+    // customize the error message
+    private String getErrorMessage(HttpServletRequest request, String key) {
 
-	// for 403 access denied page
-	@RequestMapping(value = "/403", method = RequestMethod.GET)
-	public ModelAndView accesssDenied() {
+        Exception exception = (Exception) request.getSession()
+                .getAttribute(key);
 
-		ModelAndView model = new ModelAndView();
+        String error = "";
+        if (exception instanceof BadCredentialsException) {
+            error = "L'adresse email n'est pas correcte";
+        } else if (exception instanceof LockedException) {
+            error = exception.getMessage();
+        } else {
+            error = "L'adresse email et le mot de passe de correspondent pas !";
+        }
 
-		// check if user is login
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        return error;
+    }
 
-			model.addObject("username", userDetail.getUsername());
+    // for 403 access denied page
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public ModelAndView accesssDenied() {
 
-		}
+        ModelAndView model = new ModelAndView();
 
-		model.setViewName("403");
-		return model;
+        // check if user is login
+        Authentication auth = SecurityContextHolder.getContext()
+                .getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            UserDetails userDetail = (UserDetails) auth.getPrincipal();
 
-	}
+            model.addObject("username", userDetail.getUsername());
+
+        }
+
+        model.setViewName("403");
+        return model;
+
+    }
 
 }

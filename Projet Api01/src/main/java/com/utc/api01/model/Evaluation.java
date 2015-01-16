@@ -10,77 +10,81 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table( name = "EVALUATION" )
+@Table(name = "EVALUATION")
 public class Evaluation {
-	
-	@Id
-	@GenericGenerator(name="IDEVAL", strategy = "INCREMENT")
-	private int idEval;
-	
-	@Column(name="status")
-	private int status;
-	
-	@ManyToOne
-	@JoinColumn(name="FKBOOK")
-	private Book book;
-	
-	@ManyToOne
-	@JoinColumn(name="FKUSER")
-	private User user;
 
-	/**
-	 * @return the idEval
-	 */
-	public int getIdEval() {
-		return idEval;
-	}
+    @Id
+    @GenericGenerator(name = "IDEVAL", strategy = "INCREMENT")
+    private int idEval;
 
-	/**
-	 * @param idEval the idEval to set
-	 */
-	public void setIdEval(int idEval) {
-		this.idEval = idEval;
-	}
+    @Column(name = "status")
+    private int status;
 
-	/**
-	 * @return the status
-	 */
-	public int getStatus() {
-		return status;
-	}
+    @ManyToOne
+    @JoinColumn(name = "FKBOOK")
+    private Book book;
 
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    @ManyToOne
+    @JoinColumn(name = "FKUSER")
+    private User user;
 
-	/**
-	 * @return the book
-	 */
-	public Book getBook() {
-		return book;
-	}
+    /**
+     * @return the idEval
+     */
+    public int getIdEval() {
+        return idEval;
+    }
 
-	/**
-	 * @param book the book to set
-	 */
-	public void setBook(Book book) {
-		this.book = book;
-	}
+    /**
+     * @param idEval
+     *            the idEval to set
+     */
+    public void setIdEval(int idEval) {
+        this.idEval = idEval;
+    }
 
-	/**
-	 * @return the user
-	 */
-	public User getUser() {
-		return user;
-	}
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
 
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(User user) {
-		this.user = user;
-	}
+    /**
+     * @param status
+     *            the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the book
+     */
+    public Book getBook() {
+        return book;
+    }
+
+    /**
+     * @param book
+     *            the book to set
+     */
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * @param user
+     *            the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

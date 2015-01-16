@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.utc.api01.dao.GeneriqueDao;
 
-public class GeneriqueServiceImpl<MaClasse> implements GeneriqueService<MaClasse> {
+public class GeneriqueServiceImpl<T> implements GeneriqueService<T> {
 
-	private GeneriqueDao<MaClasse> dao;
+	private GeneriqueDao<T> dao;
 	
-	public GeneriqueServiceImpl(Class<MaClasse> tClass) {
+	public GeneriqueServiceImpl(Class<T> tClass) {
 		super();
 	}
 	
@@ -16,31 +16,31 @@ public class GeneriqueServiceImpl<MaClasse> implements GeneriqueService<MaClasse
 		super();
 	}
 	
-	public void setDao(GeneriqueDao<MaClasse> dao) {
+	public void setDao(GeneriqueDao<T> dao) {
 		this.dao = dao;
 	}
 	
-	public GeneriqueDao<MaClasse> getDao() {
+	public GeneriqueDao<T> getDao() {
 		return dao;
 	}
 	
 	@Override
-	public void add(MaClasse u) {
+	public void add(T u) {
 		this.dao.add(u);	
 	}
 
 	@Override
-	public void update(MaClasse u) {
+	public void update(T u) {
 		this.dao.update(u);	
 	}
 
 	@Override
-	public List<MaClasse> list() {
+	public List<T> list() {
 		return this.dao.list();
 	}
 
 	@Override
-	public MaClasse getById(int id) {
+	public T getById(int id) {
 		return this.dao.getById(id);
 	}
 

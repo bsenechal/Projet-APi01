@@ -8,76 +8,80 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table( name = "QUESTIONS" )
+@Table(name = "QUESTIONS")
 public class Question {
 
-	@Id
-	@GenericGenerator(name="IDQUESTIONS", strategy = "INCREMENT")
-	@Column(name = "IDQUESTIONS")
-	private int idQuestion;
-	
-	@Column(name = "libelle")
-	private String libelle;
-	
-	@Column(name = "valMax")
-	private Integer valMax;
-	
-	@Column(name = "ponderation")
-	private Integer ponderation;
+    @Id
+    @GenericGenerator(name = "IDQUESTIONS", strategy = "INCREMENT")
+    @Column(name = "IDQUESTIONS")
+    private int idQuestion;
 
-	/**
-	 * @return the idQuestion
-	 */
-	public int getIdQuestion() {
-		return idQuestion;
-	}
+    @Column(name = "libelle")
+    private String libelle;
 
-	/**
-	 * @param idQuestion the idQuestion to set
-	 */
-	public void setIdQuestion(int idQuestion) {
-		this.idQuestion = idQuestion;
-	}
+    @Column(name = "valMax")
+    private Integer valMax;
 
-	/**
-	 * @return the libelle
-	 */
-	public String getLibelle() {
-		return libelle;
-	}
+    @Column(name = "ponderation")
+    private Integer ponderation;
 
-	/**
-	 * @param libelle the libelle to set
-	 */
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
-	}
+    /**
+     * @return the idQuestion
+     */
+    public int getIdQuestion() {
+        return idQuestion;
+    }
 
-	/**
-	 * @return the valMax
-	 */
-	public Integer getValMax() {
-		return valMax;
-	}
+    /**
+     * @param idQuestion
+     *            the idQuestion to set
+     */
+    public void setIdQuestion(int idQuestion) {
+        this.idQuestion = idQuestion;
+    }
 
-	/**
-	 * @param valMax the valMax to set
-	 */
-	public void setValMax(Integer valMax) {
-		this.valMax = valMax;
-	}
+    /**
+     * @return the libelle
+     */
+    public String getLibelle() {
+        return libelle;
+    }
 
-	/**
-	 * @return the ponderation
-	 */
-	public Integer getPonderation() {
-		return ponderation;
-	}
+    /**
+     * @param libelle
+     *            the libelle to set
+     */
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
 
-	/**
-	 * @param ponderation the ponderation to set
-	 */
-	public void setPonderation(Integer ponderation) {
-		this.ponderation = ponderation;
-	}
+    /**
+     * @return the valMax
+     */
+    public Integer getValMax() {
+        return valMax;
+    }
+
+    /**
+     * @param valMax
+     *            the valMax to set
+     */
+    public void setValMax(Integer valMax) {
+        this.valMax = valMax;
+    }
+
+    /**
+     * @return the ponderation
+     */
+    public Integer getPonderation() {
+        return ponderation;
+    }
+
+    /**
+     * @param ponderation
+     *            the ponderation to set
+     */
+    public void setPonderation(Integer ponderation) {
+        this.ponderation = ponderation;
+    }
 }

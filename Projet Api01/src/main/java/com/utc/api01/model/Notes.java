@@ -10,79 +10,82 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table( name = "NOTES" )
+@Table(name = "NOTES")
 public class Notes {
-	
-	@Id
-	@GenericGenerator(name="IDQUESTIONS", strategy = "INCREMENT")
-	private int idNotes;
-	
-	@Column(name="note")
-	private int note;
 
-	@ManyToOne
-	@JoinColumn(name="FKEVAL")
-	private Evaluation evaluation;
-	
-	@ManyToOne
-	@JoinColumn(name="FKQUESTION")
-	private Question question;
+    @Id
+    @GenericGenerator(name = "IDQUESTIONS", strategy = "INCREMENT")
+    private int idNotes;
 
-	/**
-	 * @return the idNotes
-	 */
-	public int getIdNotes() {
-		return idNotes;
-	}
+    @Column(name = "note")
+    private int note;
 
-	/**
-	 * @param idNotes the idNotes to set
-	 */
-	public void setIdNotes(int idNotes) {
-		this.idNotes = idNotes;
-	}
+    @ManyToOne
+    @JoinColumn(name = "FKEVAL")
+    private Evaluation evaluation;
 
-	/**
-	 * @return the note
-	 */
-	public int getNote() {
-		return note;
-	}
+    @ManyToOne
+    @JoinColumn(name = "FKQUESTION")
+    private Question question;
 
-	/**
-	 * @param note the note to set
-	 */
-	public void setNote(int note) {
-		this.note = note;
-	}
+    /**
+     * @return the idNotes
+     */
+    public int getIdNotes() {
+        return idNotes;
+    }
 
-	/**
-	 * @return the evaluation
-	 */
-	public Evaluation getEvaluation() {
-		return evaluation;
-	}
+    /**
+     * @param idNotes
+     *            the idNotes to set
+     */
+    public void setIdNotes(int idNotes) {
+        this.idNotes = idNotes;
+    }
 
-	/**
-	 * @param evaluation the evaluation to set
-	 */
-	public void setEvaluation(Evaluation evaluation) {
-		this.evaluation = evaluation;
-	}
+    /**
+     * @return the note
+     */
+    public int getNote() {
+        return note;
+    }
 
-	/**
-	 * @return the question
-	 */
-	public Question getQuestion() {
-		return question;
-	}
+    /**
+     * @param note
+     *            the note to set
+     */
+    public void setNote(int note) {
+        this.note = note;
+    }
 
-	/**
-	 * @param question the question to set
-	 */
-	public void setQuestion(Question question) {
-		this.question = question;
-	}
-	
-	
+    /**
+     * @return the evaluation
+     */
+    public Evaluation getEvaluation() {
+        return evaluation;
+    }
+
+    /**
+     * @param evaluation
+     *            the evaluation to set
+     */
+    public void setEvaluation(Evaluation evaluation) {
+        this.evaluation = evaluation;
+    }
+
+    /**
+     * @return the question
+     */
+    public Question getQuestion() {
+        return question;
+    }
+
+    /**
+     * @param question
+     *            the question to set
+     */
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
 }
