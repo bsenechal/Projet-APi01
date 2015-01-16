@@ -27,4 +27,62 @@ public class Notes {
 	@ManyToOne
 	@JoinColumn(name="FKQUESTION")
 	private Question question;
+
+	/**
+	 * @return the idNotes
+	 */
+	public int getIdNotes() {
+		return idNotes;
+	}
+
+	/**
+	 * @param idNotes the idNotes to set
+	 */
+	public void setIdNotes(int idNotes) {
+		this.idNotes = idNotes;
+	}
+
+	/**
+	 * @return the note
+	 */
+	public int getNote() {
+		return note;
+	}
+
+	/**
+	 * @param note the note to set
+	 */
+	public void setNote(int note) {
+		this.note = note;
+	}
+
+	/**
+	 * @return the evaluation
+	 */
+	public Evaluation getEvaluation() {
+		return evaluation;
+	}
+
+	/**
+	 * @param evaluation the evaluation to set
+	 */
+	public void setEvaluation(Evaluation evaluation) {
+		this.evaluation = evaluation;
+	}
+
+	/**
+	 * @return the question
+	 */
+	public Question getQuestion() {
+		return question;
+	}
+
+	/**
+	 * @param question the question to set
+	 */
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+	
+	
 }

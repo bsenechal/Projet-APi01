@@ -16,7 +16,12 @@
 
 			<ul class="list-group">
 			  <li class="list-group-item"><a href="${pageContext.request.contextPath}/admin/users">Gestion des utilisateurs</a></li>
+			  <li><br/></li>
 			  <li class="list-group-item"><a href="${pageContext.request.contextPath}/book/listing">Gestion des livres</a></li>
+			  <li><br/></li>
+			  <li class="list-group-item"><a href="${pageContext.request.contextPath}/admin/evaluations">Gestion des évaluations</a></li>
+			  <li><br/></li>
+			  <li class="list-group-item"><a href="${pageContext.request.contextPath}/admin/questions">Gestion des questions des évaluations</a></li>
 			</ul>
 		</div>
 		<jsp:include page="footer.jsp"/>
