@@ -8,13 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity
@@ -25,47 +20,99 @@ public class User {
     private int idUser;
 
     @Column(name = "PASSWORD")
-    @Size(min = 6, max = 15)
+//    @NotNull(message="TOTO !!!!!")
+//    @Size(min = 6, max = 15)
     private String password;
 
     @Column(name = "ENABLED")
-    @NotEmpty
+//    @NotNull
     private boolean enabled;
 
     @Column(name = "FIRSTNAME")
-    @NotEmpty
+//    @NotNull
     private String firstname;
 
     @Column(name = "LASTNAME")
-    @NotEmpty
+//    @NotNull
     private String lastname;
 
     @Column(name = "EMAIL")
-    @NotEmpty
-    @Email
+//    @NotNull
+//    @Email
     private String email;
 
     @Column(name = "TELEPHONE")
-    @NotEmpty
-    @Min(10)
+//    @NotNull
     private Integer telephone;
 
     @Column(name = "CREATION_DATE")
+//    @NotNull
     private String creationDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FKROLE")
+//    @NotNull
     private Role role;
 
     @Transient
-    @NotEmpty
+//    @NotNull
     private int roleUser;
 
     @Transient
-    @NotEmpty
-    @Size(min = 6, max = 15)
+//    @NotNull
     private String confirmation;
-  
+    
+    /**
+     * @param idUser
+     * @param password
+     * @param enabled
+     * @param firstname
+     * @param lastname
+     * @param email
+     * @param telephone
+     * @param creationDate
+     * @param role
+     * @param roleUser
+     * @param confirmation
+     */
+    public User(int idUser, String password, boolean enabled, String firstname,
+            String lastname, String email, Integer telephone,
+            String creationDate, Role role, int roleUser, String confirmation) {
+        super();
+        this.idUser = idUser;
+        this.password = password;
+        this.enabled = enabled;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.telephone = telephone;
+        this.creationDate = creationDate;
+        this.role = role;
+        this.roleUser = roleUser;
+        this.confirmation = confirmation;
+    }
+
+    
+    /**
+     * @param password
+     * @param enabled
+     * @param email
+     */
+    public User(String password, boolean enabled, String email) {
+        super();
+        this.password = password;
+        this.enabled = enabled;
+        this.email = email;
+    }
+
+
+    /**
+     * 
+     */
+    public User() {
+        super();
+    }
+
     /**
      * @return the roleUser
      */

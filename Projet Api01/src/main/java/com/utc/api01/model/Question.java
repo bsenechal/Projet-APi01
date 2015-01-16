@@ -23,32 +23,7 @@ public class Question {
     private Integer valMax;
 
     @Column(name = "ponderation")
-    private int ponderation;
-    
-    
-
-    /**
-     * @param idQuestion
-     * @param libelle
-     * @param valMax
-     * @param ponderation
-     */
-    public Question(int idQuestion, String libelle, Integer valMax,
-            Integer ponderation) {
-        super();
-        this.idQuestion = idQuestion;
-        this.libelle = libelle;
-        this.valMax = valMax;
-        this.ponderation = ponderation;
-    }
-
-    /**
-     * 
-     */
-    public Question() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+    private Integer ponderation;
 
     /**
      * @return the idQuestion

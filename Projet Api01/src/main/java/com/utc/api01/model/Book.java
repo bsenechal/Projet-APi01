@@ -5,10 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "BOOK")
@@ -19,22 +17,15 @@ public class Book {
     private int idBook;
 
     @Column(name = "title")
-    @NotEmpty
-    @Size(max = 45)
     private String title;
 
     @Column(name = "autor")
-    @NotEmpty
-    @Size(max = 45)
     private String autor;
 
     @Column(name = "type")
-    @NotEmpty
-    @Size(max = 45)
     private String type;
 
     @Column(name = "description")
-    @NotEmpty
     private String description;
 
     @Column(name = "image")
