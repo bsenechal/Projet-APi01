@@ -31,6 +31,45 @@ public class Book {
     @Column(name = "image")
     @Lob
     private byte[] image;
+    
+    
+
+    /**
+     * @param idBook
+     * @param title
+     * @param autor
+     * @param type
+     * @param description
+     * @param image
+     */
+    public Book(int idBook, String title, String autor, String type,
+            String description, byte[] image) {
+        super();
+        this.idBook = idBook;
+        this.title = title;
+        this.autor = autor;
+        this.type = type;
+        this.description = description;
+        this.image = image;
+    }
+    
+    public Book(int idBook, String title, String autor, String type,
+            String description) {
+        super();
+        this.idBook = idBook;
+        this.title = title;
+        this.autor = autor;
+        this.type = type;
+        this.description = description;
+    }    
+
+    /**
+     * 
+     */
+    public Book() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
     /**
      * @return the image

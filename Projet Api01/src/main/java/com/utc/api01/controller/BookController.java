@@ -1,6 +1,7 @@
 package com.utc.api01.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,7 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.utc.api01.matching.MatchFounder;
 import com.utc.api01.model.Book;
+import com.utc.api01.model.Evaluation;
+import com.utc.api01.model.Notes;
+import com.utc.api01.model.Question;
+import com.utc.api01.model.User;
 import com.utc.api01.service.GeneriqueService;
 
 @Controller
@@ -83,5 +89,33 @@ public class BookController {
     public String removeBook(@PathVariable("idBook") int id) {
         this.bookService.remove(id);
         return REDIRECT_LISTING;
+    }
+    
+    @RequestMapping("/book/match")
+    public String matchBook(Model model) {
+        ArrayList<Book> bookList = new ArrayList<Book>();
+        ArrayList<Question> questionList = new ArrayList<Question>();
+        ArrayList<Notes> noteList = new ArrayList<Notes>();
+        ArrayList<Evaluation> evaluationList = new ArrayList<Evaluation>();
+        
+        bookList.add(new Book(10,"test4","autor","type","description"));
+        bookList.add(new Book(11,"test","autor2","type2","description"));
+        bookList.add(new Book(12,"test8","autor","type","description"));
+        
+        questionList.add(new Question(01,"question1",5,1));
+        questionList.add(new Question(02,"question2",5,1));
+        questionList.add(new Question(03,"question3",5,1));
+        questionList.add(new Question(04,"question4",5,1));
+        
+        evaluationList.add(new Evaluation(01,0,bookList.get(0),new User()));
+        evaluationList.add(new Evaluation(02,0,bookList.get(0),new User()));
+        
+        noteList.add(new Notes(01,5,evaluationList.get(0),questionList.get(0)));
+        
+        MatchFounder matchfounder = new MatchFounder(bookList, questionList, noteList, evaluationList);
+        Book conseille = matchfounder.matchFounding();
+        model.addAttribute("book",conseille);
+
+        return "bookProposition";
     }
 }

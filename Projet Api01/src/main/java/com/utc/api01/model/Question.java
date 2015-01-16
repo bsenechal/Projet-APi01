@@ -20,10 +20,35 @@ public class Question {
     private String libelle;
 
     @Column(name = "valMax")
-    private Integer valMax;
+    private int valMax;
 
     @Column(name = "ponderation")
-    private Integer ponderation;
+    private int ponderation;
+    
+    
+
+    /**
+     * @param idQuestion
+     * @param libelle
+     * @param valMax
+     * @param ponderation
+     */
+    public Question(int idQuestion, String libelle, Integer valMax,
+            Integer ponderation) {
+        super();
+        this.idQuestion = idQuestion;
+        this.libelle = libelle;
+        this.valMax = valMax;
+        this.ponderation = ponderation;
+    }
+
+    /**
+     * 
+     */
+    public Question() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
     /**
      * @return the idQuestion

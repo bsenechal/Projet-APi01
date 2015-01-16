@@ -29,6 +29,27 @@ public class Notes {
     private Question question;
 
     /**
+     * @param idNotes
+     * @param note
+     * @param evaluation
+     * @param question
+     */
+    public Notes(int idNotes, int note, Evaluation evaluation, Question question) {
+        super();
+        this.idNotes = idNotes;
+        this.note = note;
+        this.evaluation = evaluation;
+        this.question = question;
+    }
+
+    /**
+     * 
+     */
+    public Notes() {
+        super();
+    }
+
+    /**
      * @return the idNotes
      */
     public int getIdNotes() {
