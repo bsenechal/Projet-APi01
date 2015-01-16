@@ -29,6 +29,28 @@ public class Evaluation {
     private User user;
 
     /**
+     * 
+     */
+    public Evaluation() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+    /**
+     * @param idEval
+     * @param status
+     * @param book
+     * @param user
+     */
+    public Evaluation(int idEval, int status, Book book, User user) {
+        super();
+        this.idEval = idEval;
+        this.status = status;
+        this.book = book;
+        this.user = user;
+    }
+
+    /**
      * @return the idEval
      */
     public int getIdEval() {
