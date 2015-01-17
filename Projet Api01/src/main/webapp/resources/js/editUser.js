@@ -1,41 +1,38 @@
+$(document).ready(function () {
 
-$('#title').change(function(){
-	verif('#title', '#titleDiv');	
+    $('#user-form').validate({ // initialize the plugin
+        rules: {
+        	email: {
+                required: true,
+                email: true,
+                minlength: 5,
+                maxlength: 45
+            },
+            lastname: {
+                required: true,
+                minlength: 5,
+                maxlength: 45
+            },
+            firstname: {
+                required: true,
+                minlength: 5,
+                maxlength: 45
+            },
+            telephone: {
+                required: true,
+                number: true,
+                minlength: 10
+            },
+            password: {
+                required: true,
+                minlength: 6
+            },
+            confirmation: {
+                required: true,
+                minlength: 6,
+                equalTo: "#password"
+            }      
+        }
+    });
+
 });
-
-$( "#title" ).focusout(function() {
-	verif('#title', '#titleDiv');
-});
-
-$('#autor').change(function(){
-	verif('#autor', '#autorDiv');	
-});
-
-$( "#autor" ).focusout(function() {
-	verif('#autor', '#autorDiv');
-});
-
-$('#type').change(function(){
-	verif('#type', '#typeDiv');	
-});
-
-$( "#type" ).focusout(function() {
-	verif('#type', '#typeDiv');
-});
-
-$('#image').change(function(){
-	verif('#image', '#imageDiv');	
-});
-
-$( "#image" ).focusout(function() {
-	verif('#image', '#imageDiv');
-});
-
-$('#description').change(function(){
-	verif('#description', '#descriptionDiv');	
-});
-
-$( "#description" ).focusout(function() {
-	verif('#description', '#descriptionDiv');
-});
-

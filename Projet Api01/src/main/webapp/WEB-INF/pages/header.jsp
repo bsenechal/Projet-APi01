@@ -10,7 +10,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/images/fav-icon.png" />
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-		</script>
 		<!----webfonts---->
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 		<!----//webfonts---->
@@ -19,6 +18,10 @@
   		<!-- //Global CSS for the page and tiles -->
 		<!---start-click-drop-down-menu----->
 		<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/additional-methods.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/messages_fr.min.js"></script>
+		
         <!----start-dropdown--->
          <script type="text/javascript">
 			var $ = jQuery.noConflict();
@@ -75,7 +78,6 @@
 											  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 											</form>
 										</li></c:if>
-										<div class="clear"> </div>
 									</ul>
 								</div>
 								<a class="boxclose" id="boxclose"> <span> </span></a>

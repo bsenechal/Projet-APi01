@@ -17,7 +17,7 @@
 					<div class="col-md-6 col-md-offset-3">.
 						<div class="jumbotron">
 							<div class="container-fluid">
-								<form name='loginForm' action="<c:url value='/j_spring_security_check' />" method='POST'>
+								<form id="login-form" name='loginForm' action="<c:url value='/j_spring_security_check' />" method='POST'>
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								  <div id="emailDiv" class="form-group">
 								    <label for="inputEmail">Email</label>

@@ -37,7 +37,12 @@
 					</c:forEach>
 				  </table>
 				</div>
-			</c:if>    
+			</c:if>
+			<nav>
+              <ul class="pager">
+                <li><a href="${pageContext.request.contextPath}/admin">Précédent</a></li>
+              </ul>
+            </nav>      
     	</div>
     	<jsp:include page="footer.jsp"/>
   	</div>

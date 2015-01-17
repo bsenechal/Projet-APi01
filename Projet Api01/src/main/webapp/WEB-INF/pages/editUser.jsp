@@ -19,7 +19,7 @@
 				</h1>
 			</div>	
 			
-   			<form:form commandName="user" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/user/save">
+   			<form:form commandName="user" id="user-form" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/user/save">
 		   		<form:input path="idUser" type="hidden" name="idUser" value="${user.idUser}" />
 					<div id="emailDiv" class="form-group">
 						<label for="labelEmail" class="col-sm-2 control-label">Email</label>
@@ -99,5 +99,5 @@
 	</div>
 </div>
 </body>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/editBook.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/editUser.js"></script>
 </html>

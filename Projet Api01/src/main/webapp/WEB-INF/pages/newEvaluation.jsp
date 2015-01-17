@@ -18,13 +18,13 @@
 			<h2>${book.title}</h2>
 			<p>${book.description}</p>
 			<div class="container-fluid">
-					<form:form id="question-form" class="form-horizontal" action="${pageContext.request.contextPath}/evaluation/save/${book.idBook}" method="POST" modelAttribute="questionWrapper">
+					<form:form id="evaluation-form" class="form-horizontal" action="${pageContext.request.contextPath}/evaluation/save/${book.idBook}" method="POST" modelAttribute="questionWrapper">
 
 					    <c:forEach items="${questionWrapper.questionList}" var="quest" varStatus="i">
 					       <div class="form-group">        
                                <label  for="libelle" class="col-sm-2 control-label">${quest.libelle}</label>
 					           <div class="col-sm-1">
-						           <form:input class="form-control" path="questionList[${i.index}].note" type="number"/>
+						           <form:input name="note" class="form-control" path="questionList[${i.index}].note" type="number"/>
 						           <form:hidden path="questionList[${i.index}].idQuestions"/>
 					           </div>
 					       </div>
@@ -40,3 +40,5 @@
     	<jsp:include page="footer.jsp"/>
   	</div>
  </div>	
+ 
+ <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/editEvaluation.js"></script>

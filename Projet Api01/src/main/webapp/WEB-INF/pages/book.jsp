@@ -39,7 +39,14 @@
 						</c:forEach>
 					</table>
 				</div>
-			</c:if> 
+			</c:if>
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<nav>
+	              <ul class="pager">
+	                <li><a href="${pageContext.request.contextPath}/admin">Précédent</a></li>
+	              </ul>
+	            </nav> 
+            </sec:authorize>
 		</div>
 		<jsp:include page="footer.jsp"/>
 	</div>
