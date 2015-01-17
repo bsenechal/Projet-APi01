@@ -6,6 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,6 +20,8 @@ public class Notes {
     private int idNotes;
 
     @Column(name = "note")
+    @Min(0)
+    @Max(5)
     private int note;
 
     @ManyToOne

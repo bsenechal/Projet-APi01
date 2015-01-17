@@ -24,8 +24,6 @@ import com.utc.api01.service.GeneriqueService;
 public class UserController {
     private static final String JSP_USER = "user";
     private static final String REDIRECT_EDITUSER = "editUser";
-    private static final String REDIRECT_ADMIN = "admin";
-    private static final String REDIRECT_USERS = "users";
     private static final String MSG_ADD_SUCCESS = "L'utilisateur a correctement été ajouté.";
     private static final String MSG_EDIT_SUCCESS = "L'utilisateur a correctement été modifié.";
     private static final String MSG_SUPPR_SUCCESS = "L'utilisateur a correctement été supprimé.";
@@ -63,6 +61,7 @@ public class UserController {
         model.addObject("msg", MSG_SUPPR_SUCCESS);
         model.setViewName(JSP_USER);
         this.userService.remove(id);
+        model.addObject("listUsers", this.userService.list());
         return model;
     }
 
@@ -85,7 +84,7 @@ public class UserController {
             model.addObject("listRole", roleService.list());
             model.setViewName(REDIRECT_EDITUSER);
         } else {
-            model.setViewName(REDIRECT_ADMIN);
+            model.setViewName(JSP_USER);
             u.setRole(this.roleService.getById(u.getRoleUser()));
             
             if (u.getIdUser() != 0) {
@@ -96,6 +95,7 @@ public class UserController {
                 model.addObject("msg", MSG_ADD_SUCCESS);
                 this.userService.add(u);
             }
+            model.addObject("listUsers", this.userService.list());
         }
         return model;
     }

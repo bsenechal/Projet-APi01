@@ -11,7 +11,8 @@
 							<div class="single-page-artical">
 								<div class="artical-content">
 									<img src="${pageContext.request.contextPath}/imageDisplay/${book.idBook}">
-									<h3><a href="#">${book.title}</a></h3>
+									<h3>${book.title}</h3>
+									<h5><a href="${pageContext.request.contextPath}/evaluation/new/${book.idBook}"><span class="glyphicon glyphicon-star"></span> Noter ce livre <span class="glyphicon glyphicon-star"></span></a></h5>
 									<p>${book.description}</p>
 									</div>
 		  						 <div class="clear"> </div>

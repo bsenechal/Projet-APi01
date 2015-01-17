@@ -99,6 +99,20 @@
     	</constructor-arg>
 	</bean>
 	
+    <bean id="noteDao" class="com.utc.api01.dao.GeneriqueDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+        <constructor-arg>
+            <value>com.utc.api01.model.Notes</value>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="noteService" class="com.utc.api01.service.GeneriqueServiceImpl">
+        <property name="dao" ref="noteDao"></property>
+        <constructor-arg>
+            <value>com.utc.api01.model.Notes</value>
+        </constructor-arg>
+    </bean>	
+    
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>

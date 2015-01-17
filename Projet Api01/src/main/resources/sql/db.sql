@@ -8,15 +8,15 @@ CREATE TABLE `book` (
   `description` varchar(45) NOT NULL,
   `image` blob,
   PRIMARY KEY (`idBook`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `questions` (
-  `idQuestions` int(11) NOT NULL,
+  `idQuestions` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(45) NOT NULL,
   `valMax` int(11) NOT NULL DEFAULT '5',
   `ponderation` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idQuestions`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `role` (
   `idrole` int(11) NOT NULL,
@@ -37,10 +37,10 @@ CREATE TABLE `user` (
   PRIMARY KEY (`idUser`),
   KEY `role_idx` (`fkrole`),
   CONSTRAINT `fkrole` FOREIGN KEY (`fkrole`) REFERENCES `role` (`idrole`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
-CREATE TABLE `evalutation` (
-  `idEval` int(11) NOT NULL,
+CREATE TABLE `evaluation` (
+  `idEval` int(11) NOT NULL AUTO_INCREMENT,
   `Status` int(11) NOT NULL DEFAULT '0',
   `fkBook` int(11) NOT NULL,
   `fkUser` int(11) NOT NULL,
@@ -49,18 +49,17 @@ CREATE TABLE `evalutation` (
   KEY `fkUser_idx` (`fkUser`),
   CONSTRAINT `fkBook` FOREIGN KEY (`fkBook`) REFERENCES `book` (`idBook`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkUser` FOREIGN KEY (`fkUser`) REFERENCES `user` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `notes` (
-  `idnotes` int(11) NOT NULL,
+  `idnotes` int(11) NOT NULL AUTO_INCREMENT,
   `fkEval` int(11) NOT NULL,
   `fkQuestion` int(11) NOT NULL,
   `note` int(11) NOT NULL,
   PRIMARY KEY (`idnotes`),
   KEY `fkEval_idx` (`fkEval`),
   KEY `fkQuestion_idx` (`fkQuestion`),
-  CONSTRAINT `fkEval` FOREIGN KEY (`fkEval`) REFERENCES `evalutation` (`idEval`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fkEval` FOREIGN KEY (`fkEval`) REFERENCES `evaluation` (`idEval`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkQuestion` FOREIGN KEY (`fkQuestion`) REFERENCES `questions` (`idQuestions`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 

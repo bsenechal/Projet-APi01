@@ -35,8 +35,8 @@
 							<td>${quest.libelle}</td>
 							<td>${quest.valMax}</td>
 							<td>${quest.ponderation}</td>
-							<td><a href="<c:url value='/admin/questions/edit/${quest.idQuestion}' />" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-							<td><a href="<c:url value='/admin/questions/remove/${quest.idQuestion}' />" ><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
+							<td><a href="<c:url value='/admin/questions/edit/${quest.idQuestions}' />" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+							<td><a href="<c:url value='/admin/questions/remove/${quest.idQuestions}' />" ><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
 						</tr>
 					</c:forEach>
 				  </table>

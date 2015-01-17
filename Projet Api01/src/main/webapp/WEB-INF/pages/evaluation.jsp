@@ -15,12 +15,8 @@
 			<div class="page-header">
 				<h1>Gestion des evaluations</h1>
 			</div>	
-						
-			<ul class="list-group">
-			  <li class="list-group-item"><a href="${pageContext.request.contextPath}/admin/addUser"><span class="glyphicon glyphicon-plus"></span> Ajouter un utilisateur</a></li>
-			</ul>	
-			
-			<c:if test="${!empty listEval}">
+							
+			<c:if test="${!empty listEvals}">
 				<div class="table-responsive">
 				  <table class="table">
 				    <tr>
