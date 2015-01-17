@@ -48,4 +48,9 @@ public class GeneriqueServiceImpl<T> implements GeneriqueService<T> {
     public void remove(int id) {
         this.dao.remove(id);
     }
+
+    @Override
+    public T getByCriteria(String criteria, String value) {
+        return this.dao.getByCriteria(criteria, value);
+    }
 }

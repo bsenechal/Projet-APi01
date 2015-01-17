@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 
 public class GeneriqueDaoImpl<T> implements GeneriqueDao<T> {
 
@@ -57,6 +58,16 @@ public class GeneriqueDaoImpl<T> implements GeneriqueDao<T> {
         if (null != c) {
             session.delete(c);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public T getByCriteria(String criteria, String value) {
+        Session session = this.sessionFactory.getCurrentSession();
+        T cats = (T) session.createCriteria(this.tClass)
+                .add( Restrictions.eq(criteria, value ) )
+                .uniqueResult();
+        return cats;
     }
 
 }

@@ -47,7 +47,7 @@ public class MatchFounder {
         this.bookList = bookList;
         this.questionList = questionList;
         this.noteList = noteList;
-        evaluationList = evaluationList;
+        this.evaluationList = evaluationList;
     }
     /**
      * @return the bookList
@@ -95,7 +95,7 @@ public class MatchFounder {
      * @param evaluationList the evaluationList to set
      */
     public void setEvaluationList(ArrayList<Evaluation> evaluationList) {
-        evaluationList = evaluationList;
+        this.evaluationList = evaluationList;
     }
     
     private void setMapEvalAndQuestionRank(){

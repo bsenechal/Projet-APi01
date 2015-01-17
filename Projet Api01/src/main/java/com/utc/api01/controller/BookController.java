@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,10 @@ import com.utc.api01.service.GeneriqueService;
 public class BookController {
 
     private GeneriqueService<Book> bookService;
+    private GeneriqueService<Question> questionService;
+    private GeneriqueService<User> userService;
+    private GeneriqueService<Notes> noteService;
+    
     private static final String REDIRECT_DETAILBOOK = "detailBook";
     private static final String REDIRECT_EDITBOOK = "editBook";
     private static final String REDIRECT_LISTING = "listing";
@@ -36,12 +41,31 @@ public class BookController {
     private static final String MSG_EDIT_SUCCESS = "Le livre a correctement été modifié.";
     private static final String MSG_SUPPR_SUCCESS = "Le livre a correctement été supprimé.";
     private static final String REDIRECT_ADMIN = "admin";
+    private static final String REDIRECT_LOGIN = "login";
     private static final String JSP_BOOK = "book";
     
     @Autowired(required = true)
     @Qualifier(value = "bookService")
-    public void setUserService(GeneriqueService<Book> us) {
+    public void setBookService(GeneriqueService<Book> us) {
         this.bookService = us;
+    }
+    
+    @Autowired(required = true)
+    @Qualifier(value = "questionService")
+    public void setQuestionService(GeneriqueService<Question> us) {
+        this.questionService = us;
+    }
+    
+    @Autowired(required = true)
+    @Qualifier(value = "userService")
+    public void setUserService(GeneriqueService<User> us) {
+        this.userService = us;
+    }
+    
+    @Autowired(required = true)
+    @Qualifier(value = "noteService")
+    public void setNoteService(GeneriqueService<Notes> us) {
+        this.noteService = us;
     }
 
     @RequestMapping(value = "/book/detail/{idBook}", method = RequestMethod.GET)
@@ -112,29 +136,51 @@ public class BookController {
     
     @RequestMapping("/book/match")
     public String matchBook(Model model) {
-        ArrayList<Book> bookList = new ArrayList<Book>();
-        ArrayList<Question> questionList = new ArrayList<Question>();
-        ArrayList<Notes> noteList = new ArrayList<Notes>();
-        ArrayList<Evaluation> evaluationList = new ArrayList<Evaluation>();
+        ArrayList<Book> bookList = (ArrayList<Book>) this.bookService.list();
+        ArrayList<Question> questionList = (ArrayList<Question>) this.questionService.list();
         
-        bookList.add(new Book(10,"test4","autor","type","description"));
-        bookList.add(new Book(11,"test","autor2","type2","description"));
-        bookList.add(new Book(12,"test8","autor","type","description"));
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userName;
         
-        questionList.add(new Question(01,"question1",5,1));
-        questionList.add(new Question(02,"question2",5,1));
-        questionList.add(new Question(03,"question3",5,1));
-        questionList.add(new Question(04,"question4",5,1));
-        
-        evaluationList.add(new Evaluation(01,0,bookList.get(0),new User()));
-        evaluationList.add(new Evaluation(02,0,bookList.get(0),new User()));
-        
-        noteList.add(new Notes(01,5,evaluationList.get(0),questionList.get(0)));
-        
-        MatchFounder matchfounder = new MatchFounder(bookList, questionList, noteList, evaluationList);
-        Book conseille = matchfounder.matchFounding();
-        model.addAttribute("book",conseille);
+        if (principal instanceof org.springframework.security.core.userdetails.User){
+            userName = ((org.springframework.security.core.userdetails.User) principal).getUsername();
+            User user = this.userService.getByCriteria("email", userName);
+            
+            ArrayList<Notes> noteList = getNoteByUser(user, (ArrayList<Notes>)this.noteService.list());
+            ArrayList<Evaluation> evaluationList = getEvaluationByNote(noteList);
+            
+//            bookList.add(new Book(10,"test4","autor","type","description"));
+//            bookList.add(new Book(11,"test","autor2","type2","description"));
+//            bookList.add(new Book(12,"test8","autor","type","description"));
+//            
+//            questionList.add(new Question(01,"question1",5,1));
+//            questionList.add(new Question(02,"question2",5,1));
+//            questionList.add(new Question(03,"question3",5,1));
+//            questionList.add(new Question(04,"question4",5,1));
+//            
+//            evaluationList.add(new Evaluation(01,0,bookList.get(0),new User()));
+//            evaluationList.add(new Evaluation(02,0,bookList.get(0),new User()));
+//            
+//            noteList.add(new Notes(01,5,evaluationList.get(0),questionList.get(0)));
+            
+            MatchFounder matchfounder = new MatchFounder(bookList, questionList, noteList, evaluationList);
+            Book conseille = matchfounder.matchFounding();
+            model.addAttribute("book",conseille);
 
-        return "bookProposition";
+            return "bookProposition";
+            
+        }else return REDIRECT_LOGIN;  
+    }
+    
+    public ArrayList<Notes> getNoteByUser(User user, ArrayList<Notes> notes){
+        ArrayList<Notes> res = new ArrayList<Notes>();
+        for(Notes n : notes) if(n.getEvaluation().getUser().getIdUser() == user.getIdUser()) res.add(n);     
+        return res;
+    }
+    
+    public ArrayList<Evaluation> getEvaluationByNote(ArrayList<Notes> notes){
+        ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
+        for(Notes n : notes) evaluations.add(n.getEvaluation());
+        return evaluations;
     }
 }

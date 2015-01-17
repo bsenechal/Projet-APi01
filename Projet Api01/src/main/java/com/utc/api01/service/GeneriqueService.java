@@ -11,6 +11,8 @@ public interface GeneriqueService<T> {
     public List<T> list();
 
     public T getById(int id);
+    
+    public T getByCriteria(String criteria, String value);
 
     public void remove(int id);
 
