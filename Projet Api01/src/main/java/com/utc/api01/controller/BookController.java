@@ -40,7 +40,6 @@ public class BookController {
     private static final String MSG_ADD_SUCCESS = "Le livre a correctement été ajouté.";
     private static final String MSG_EDIT_SUCCESS = "Le livre a correctement été modifié.";
     private static final String MSG_SUPPR_SUCCESS = "Le livre a correctement été supprimé.";
-    private static final String REDIRECT_ADMIN = "admin";
     private static final String REDIRECT_LOGIN = "login";
     private static final String JSP_BOOK = "book";
     
@@ -108,6 +107,7 @@ public class BookController {
         model.addObject("msg", MSG_SUPPR_SUCCESS);
         model.setViewName(JSP_BOOK);
         this.bookService.remove(id);
+        model.addObject("listBooks", this.bookService.list());
         return REDIRECT_LISTING;
     }
     
@@ -121,7 +121,7 @@ public class BookController {
             }
             model.setViewName(REDIRECT_EDITBOOK);
         } else {
-            model.setViewName(REDIRECT_ADMIN);
+            model.setViewName(JSP_BOOK);
             
             if (b.getIdBook() != 0) {
                 model.addObject("msg", MSG_EDIT_SUCCESS);
@@ -130,6 +130,7 @@ public class BookController {
                 model.addObject("msg", MSG_ADD_SUCCESS);
                 this.bookService.add(b);
             }
+            model.addObject("listBooks", this.bookService.list());
         }
         return model;
     }

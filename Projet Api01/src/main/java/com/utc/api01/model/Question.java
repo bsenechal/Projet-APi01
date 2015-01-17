@@ -4,8 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "QUESTIONS")
@@ -13,19 +18,27 @@ public class Question {
 
     @Id
     @GenericGenerator(name = "IDQUESTIONS", strategy = "INCREMENT")
-    @Column(name = "IDQUESTIONS")
-    private int idQuestion;
+    private int idQuestions;
 
     @Column(name = "libelle")
+    @NotEmpty
+    @Size(max = 45)
     private String libelle;
 
     @Column(name = "valMax")
+    @Min(0)
+    @Max(10)
     private int valMax;
 
     @Column(name = "ponderation")
+    @Min(0)
+    @Max(10)
     private int ponderation;
     
-    
+    @Transient
+    @Min(0)
+    @Max(5)
+    private int note;
 
     /**
      * @param idQuestion
@@ -33,10 +46,10 @@ public class Question {
      * @param valMax
      * @param ponderation
      */
-    public Question(int idQuestion, String libelle, Integer valMax,
+    public Question(int idQuestions, String libelle, Integer valMax,
             Integer ponderation) {
         super();
-        this.idQuestion = idQuestion;
+        this.idQuestions = idQuestions;
         this.libelle = libelle;
         this.valMax = valMax;
         this.ponderation = ponderation;
@@ -47,22 +60,21 @@ public class Question {
      */
     public Question() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /**
-     * @return the idQuestion
+     * @return the idQuestions
      */
-    public int getIdQuestion() {
-        return idQuestion;
+    public int getIdQuestions() {
+        return idQuestions;
     }
 
     /**
-     * @param idQuestion
+     * @param idQuestions
      *            the idQuestion to set
      */
-    public void setIdQuestion(int idQuestion) {
-        this.idQuestion = idQuestion;
+    public void setIdQuestions(int idQuestions) {
+        this.idQuestions = idQuestions;
     }
 
     /**
@@ -109,4 +121,35 @@ public class Question {
     public void setPonderation(Integer ponderation) {
         this.ponderation = ponderation;
     }
+
+    /**
+     * @return the note
+     */
+    public int getNote() {
+        return note;
+    }
+
+    /**
+     * @param note the note to set
+     */
+    public void setNote(int note) {
+        this.note = note;
+    }
+
+    /**
+     * @param valMax the valMax to set
+     */
+    public void setValMax(int valMax) {
+        this.valMax = valMax;
+    }
+
+    /**
+     * @param ponderation the ponderation to set
+     */
+    public void setPonderation(int ponderation) {
+        this.ponderation = ponderation;
+    }
+
+   
+    
 }

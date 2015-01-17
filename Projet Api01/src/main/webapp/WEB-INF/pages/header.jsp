@@ -69,7 +69,7 @@
 										<li><a href="${pageContext.request.contextPath}/book/listing">Livres</a></li>
 										<sec:authorize access="hasRole('ROLE_ADMIN')"><li><a href="${pageContext.request.contextPath}/admin">Administration</a></li></sec:authorize>
 										<c:if test="${pageContext['request'].userPrincipal != null}"><li>
-											<c:url var="logoutUrl" value="j_spring_security_logout"/>
+											<c:url var="logoutUrl" value="/j_spring_security_logout"/>
 											<form action="${logoutUrl}" method="post">
 											  <input type="submit" class="btn btn-primary" value="Log out" />
 											  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

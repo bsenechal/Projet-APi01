@@ -12,39 +12,42 @@
 			<div class="page-header">
 				<h1>
 					<c:choose>
-						<c:when test="${question.idQuestion == 0}">Ajout d'une question</c:when>
+						<c:when test="${question.idQuestions == 0}">Ajout d'une question</c:when>
 						<c:otherwise>Modification d'une question</c:otherwise>
 					</c:choose>
 				</h1>	
 			</div>	
 
 			<div class="container-fluid">
-				<form:form commandName="question" id="question-form" class="form-horizontal" role="form" action="${url}">
+				<form:form commandName="question" id="question-form" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/questions/save">
 					<div id="titleDiv" class="form-group">
 						<label for="title" class="col-sm-2 control-label">Titre</label>
 						<div class="col-sm-10">
 							<form:input path="libelle" type="text" class="form-control" id="title" placeholder="Titre"/>
+							<form:errors path="libelle" cssClass="error"/>
 						</div>
 					</div>
 					<div id="noteDiv" class="form-group">			    
 						<label  for="note" class="col-sm-2 control-label">Note max</label>
 						<div class="col-sm-10">
-						<form:input path="valMax" type="number" class="form-control" id="note" placeholder="Note max"/>
+						  <form:input path="valMax" type="number" class="form-control" id="note" placeholder="Note max"/>
+						  <form:errors path="valMax" cssClass="error"/>
 						</div>
 					</div>
 					<div id="importanceDiv" class="form-group">			    
 						<label  for="note" class="col-sm-2 control-label">Importance</label>
 						<div class="col-sm-10">
-						<form:input path="ponderation" type="number" class="form-control" id="importance" placeholder="Importance de la question"/>
+						  <form:input path="ponderation" type="number" class="form-control" id="importance" placeholder="Importance de la question"/>
+						  <form:errors path="ponderation" cssClass="error"/>
 						</div>
 					</div>
 					
-					<form:hidden path="idQuestion"/>
+					<form:hidden path="idQuestions"/>
 					
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="submit" class="btn btn-primary">
 							<c:choose>
-								<c:when test="${question.idQuestion == 0}">Ajouter</c:when>
+								<c:when test="${question.idQuestions == 0}">Ajouter</c:when>
 								<c:otherwise>Sauvegarder</c:otherwise>
 							</c:choose>
 						</button>

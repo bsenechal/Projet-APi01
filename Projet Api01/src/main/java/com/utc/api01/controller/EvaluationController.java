@@ -1,124 +1,127 @@
 package com.utc.api01.controller;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.utc.api01.model.Book;
 import com.utc.api01.model.Evaluation;
+import com.utc.api01.model.Notes;
 import com.utc.api01.model.Question;
+import com.utc.api01.model.QuestionWrapper;
+import com.utc.api01.model.User;
 import com.utc.api01.service.GeneriqueService;
 
 @Controller
 public class EvaluationController {
-    private GeneriqueService<Evaluation> evalService;
     private GeneriqueService<Question> questionService;
-    private static final String REDIRECT_EVALUATION = "evaluation";
-    private static final String REDIRECT_QUESTION = "question";
-    private static final String REDIRECT_EDITQUESTION = "editQuestion";
+    private GeneriqueService<Evaluation> evalService;
+    private GeneriqueService<User> userService;
+    private GeneriqueService<Book> bookService;
+    private GeneriqueService<Notes> noteService;
+    private static final String JSP_EVALUATION = "evaluation";
+    private static final String JSP_NEWEVALUATION = "newEvaluation";
+    private static final String JSP_DETAILBOOK = "detailBook";
+    private static final String MSG_ADD_SUCCESS = "Votre évaluation a bien été prise en compte.";
+    private static final String MSG_SUPPR_SUCCESS = "L'évaluation a correctement été supprimée.";
     
     @Autowired(required = true)
     @Qualifier(value = "evalService")
     public void setEvaluationService(GeneriqueService<Evaluation> e) {
         this.evalService = e;
     }
-
+    
     @Autowired(required = true)
     @Qualifier(value = "questionService")
     public void setQuestionService(GeneriqueService<Question> q) {
         this.questionService = q;
     }
+    
+    @Autowired(required = true)
+    @Qualifier(value = "userService")
+    public void setUserService(GeneriqueService<User> us) {
+        this.userService = us;
+    }
+    
+    @Autowired(required = true)
+    @Qualifier(value = "bookService")
+    public void setBookService(GeneriqueService<Book> us) {
+        this.bookService = us;
+    }
+    
+    @Autowired(required = true)
+    @Qualifier(value = "noteService")
+    public void setNoteService(GeneriqueService<Notes> n) {
+        this.noteService = n;
+    }
+    
+    @RequestMapping("/admin/evaluation/remove/{idEval}")
+    public ModelAndView remove(@PathVariable("idEval") int idEval) {
+        ModelAndView model = new ModelAndView();
+        model.addObject("msg", MSG_SUPPR_SUCCESS);
+        model.setViewName(JSP_EVALUATION);
+        
+        for (Notes n : this.noteService.list()){
+            if (n.getEvaluation().getIdEval() == idEval){
+                this.noteService.remove(n.getIdNotes());
+            }
+        }
+        
+        this.evalService.remove(idEval);
+        model.addObject("listEvals", this.evalService.list());
+        return model;
+    }
 
     @RequestMapping(value = "/admin/evaluations", method = RequestMethod.GET)
     public String listEvaluations(Model model) {
         model.addAttribute("listEvals", this.evalService.list());
-        return REDIRECT_EVALUATION;
+        return JSP_EVALUATION;
     }
 
-    @RequestMapping("/admin/evaluation/remove/{idEval}")
-    public String removeEval(@PathVariable("idEval") int id) {
-
-        this.evalService.remove(id);
-        return REDIRECT_EVALUATION;
+    @RequestMapping(value = "/evaluation/new/{idBook}", method = RequestMethod.GET)
+    public String newEval(@PathVariable("idBook") int idBook, Model model) {
+        model.addAttribute("questionWrapper", new QuestionWrapper(this.questionService.list()));
+        model.addAttribute("book", this.bookService.getById(idBook));
+        return JSP_NEWEVALUATION;
     }
-
-    @RequestMapping(value = "/admin/questions", method = RequestMethod.GET)
-    public String listQuestions(Model model) {
-        model.addAttribute("listQuestions", this.questionService.list());
-        return REDIRECT_QUESTION;
-    }
-
-    @RequestMapping("/admin/questions/remove/{idQuest}")
-    public String removeQuestion(@PathVariable("idQuest") int id) {
-
-        this.questionService.remove(id);
-        return REDIRECT_QUESTION;
-    }
-
-    @RequestMapping(value = "/admin/questions/addQuestion", method = RequestMethod.GET)
-    public String addUser(Model model) {
-        model.addAttribute("question", new Question());
-        model.addAttribute("url", "addQuestion/save");
-        return REDIRECT_EDITQUESTION;
-    }
-
-    @RequestMapping(value = "/admin/questions/addQuestion/save", method = RequestMethod.POST)
-    public ModelAndView saveQuestion(@ModelAttribute("question") Question q) {
+    
+    @RequestMapping(value = "/evaluation/save/{idBook}", method = RequestMethod.POST)
+    public ModelAndView newEval(@Valid @ModelAttribute("notesWrapper") QuestionWrapper questionWrapper, @PathVariable("idBook") int idBook, BindingResult result) {
         ModelAndView model = new ModelAndView();
-
-        model = validateQuestion(q, model, true);
-
-        return model;
-    }
-
-    @RequestMapping("/admin/questions/edit/{idQuestion}")
-    public String editQuestion(@PathVariable("idQuestion") int id, Model model) {
-        model.addAttribute("question", this.questionService.getById(id));
-        model.addAttribute("url", "save");
-        return REDIRECT_EDITQUESTION;
-    }
-
-    @RequestMapping(value = "/admin/questions/edit/save", method = RequestMethod.POST)
-    public ModelAndView saveEditQuestion(@ModelAttribute("question") Question q) {
-        ModelAndView model = new ModelAndView();
-
-        model = validateQuestion(q, model, false);
-
-        return model;
-    }
-
-    private ModelAndView validateQuestion(Question q, ModelAndView model,
-            boolean add) {
-        model.setViewName("editQuestion");
-//        IntegerValidator integerValidator = new IntegerValidator();
-//
-//        if (q.getLibelle() == null || q.getPonderation() == null
-//                || q.getValMax() == null) {
-//            model.addObject("error", "Vous devez remplir tous les champs !");
-//        } 
-//        else if (!integerValidator.isInRange(q.getValMax(), 0, 10)) {
-//            model.addObject("error",
-//                    "La valeur de la note doit être comprise entre 0 et 10");
-//        } else if (!integerValidator.isInRange(q.getPonderation(), 0, 10)) {
-//            model.addObject("error",
-//                    "La valeur de l'importance de la question doit être comprise entre 0 et 10");
-//        } else {
-//            if (add) {
-//                this.questionService.add(q);
-//                model.addObject("msg", "La question a correctement été ajoutée");
-//            } else {
-//                this.questionService.update(q);
-//                model.addObject("msg",
-//                        "La question a correctement été modifiée");
-//            }
-//            model.setViewName("admin");
-//        }
-
+        
+        // ========================> A CHANGER <==========================
+        int idUser = 1;
+        //================================================================
+        
+        
+        if (result.hasErrors()) {
+            questionWrapper.setQuestionList(this.questionService.list());
+            model.addObject("questionWrapper", questionWrapper);
+            model.setViewName(JSP_NEWEVALUATION);
+        } else {
+            this.evalService.add(new Evaluation(0,0, this.bookService.getById(idBook), this.userService.getById(idUser)));
+            
+            List<Evaluation> listEval = this.evalService.list();
+            
+            for (Question quest : questionWrapper.getQuestionList()){
+                this.noteService.add(new Notes(0, quest.getNote(), listEval.get(listEval.size() - 1), this.questionService.getById(quest.getIdQuestions())));
+            }
+            model.addObject("book", this.bookService.getById(idBook));
+            model.addObject("msg", MSG_ADD_SUCCESS);
+            model.setViewName(JSP_DETAILBOOK);
+        }
+        
         return model;
     }
 

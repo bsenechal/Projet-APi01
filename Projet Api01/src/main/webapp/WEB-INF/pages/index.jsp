@@ -22,9 +22,7 @@
 				        		<p>${book.description}</p>
 			        		</div>
 			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
+			        			<a href="${pageContext.request.contextPath}/evaluation/new/${book.idBook}"><center><span class="glyphicon glyphicon-star"></span> Noter ce livre <span class="glyphicon glyphicon-star"></span></center></a>
 			        			<div class="clear"> </div>
 			        		</div>
 			        	</div>

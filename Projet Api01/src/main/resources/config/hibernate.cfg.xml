@@ -17,6 +17,8 @@
 		<mapping class="com.utc.api01.model.Role" />
         <mapping class="com.utc.api01.model.User" />
         <mapping class="com.utc.api01.model.Book" />
-
+        <mapping class="com.utc.api01.model.Question" />
+        <mapping class="com.utc.api01.model.Evaluation" />
+        <mapping class="com.utc.api01.model.Notes" />
 		</session-factory>
 </hibernate-configuration>

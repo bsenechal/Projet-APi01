@@ -144,7 +144,7 @@ public class MatchFounder {
         
         for(Question q : questionList){
             for(Question aq : hightQuestion){
-                if(aq.getIdQuestion() == q.getIdQuestion()){
+                if(aq.getIdQuestions() == q.getIdQuestions()){
                     float prct = prctQuestion.get(q);
                     prctQuestion.put(q,prct+1);
                     //hightQuestion.remove(aq);
@@ -176,7 +176,7 @@ public class MatchFounder {
         
         ArrayList<Book> bookForBestQuestion = new ArrayList<Book>();
         for(Notes n : noteList){
-            if(n.getQuestion().getIdQuestion() == bestQuestion.getIdQuestion()){
+            if(n.getQuestion().getIdQuestions() == bestQuestion.getIdQuestions()){
                 bookForBestQuestion.add(n.getEvaluation().getBook());
             }
         }
