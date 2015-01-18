@@ -160,24 +160,6 @@ public class BookController {
         return REDIRECT_LOGIN;
     }
     
-    @RequestMapping("/book/myBook")
-    public String myBook(Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userName;
-        
-        if (principal instanceof org.springframework.security.core.userdetails.User){
-            userName = ((org.springframework.security.core.userdetails.User) principal).getUsername();
-            User user = this.userService.getByCriteria("email", userName);
-            
-            ArrayList<Notes> noteList = getNoteByUser(user, (ArrayList<Notes>)this.noteService.list());
-            model.addAttribute("notes",noteList);
-            
-            return REDIRECT_MYBOOK;
-        }
-       
-        return REDIRECT_LOGIN;
-    }
-    
     @RequestMapping(value = "/admin/book/save", method = RequestMethod.POST)
     public ModelAndView save(@ModelAttribute("book") Book b,
             @RequestParam("file") MultipartFile file) {
