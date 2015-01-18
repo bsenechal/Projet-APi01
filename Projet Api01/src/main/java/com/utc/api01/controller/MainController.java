@@ -18,19 +18,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.utc.api01.model.Book;
+import com.utc.api01.model.Role;
+import com.utc.api01.model.User;
 import com.utc.api01.service.GeneriqueService;
 
 @Controller
 public class MainController {
     private GeneriqueService<Book> bookService;
+    private GeneriqueService<User> userService;
     private static final String MSG_DECONNECTION = "Vous avez correctement été déconnecté.";
+    private static final String JSP_MONCOMPTE = "monCompte";
 
     @Autowired(required = true)
     @Qualifier(value = "bookService")
-    public void setUserService(GeneriqueService<Book> us) {
+    public void setBookService(GeneriqueService<Book> us) {
         this.bookService = us;
     }
-
+    
+    @Autowired(required = true)
+    @Qualifier(value = "userService")
+    public void setUserService(GeneriqueService<User> us) {
+        this.userService = us;
+    }
+    
     @RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
     public String defaultPage(Model model) {
         model.addAttribute("listBook", this.bookService.list());
@@ -47,12 +57,15 @@ public class MainController {
     }
 
     @RequestMapping(value = "/monCompte", method = RequestMethod.GET)
-    public ModelAndView monCompte() {
-
-        ModelAndView model = new ModelAndView();
-
-        model.setViewName("monCompte");
-        return model;
+    public ModelAndView monCompte(Model model) {
+        ModelAndView m = new ModelAndView();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof org.springframework.security.core.userdetails.User){
+            String userName = ((org.springframework.security.core.userdetails.User) principal).getUsername();
+            m.addObject("user", this.userService.getByCriteria("email", userName));
+        }
+        m.setViewName(JSP_MONCOMPTE);
+        return m;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

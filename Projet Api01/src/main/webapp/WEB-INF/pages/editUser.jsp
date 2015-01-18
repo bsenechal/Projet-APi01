@@ -21,6 +21,7 @@
 			
    			<form:form commandName="user" id="user-form" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/user/save">
 		   		<form:input path="idUser" type="hidden" name="idUser" value="${user.idUser}" />
+		   		<form:input path="creationDate" type="hidden" name="creationDate" value="${user.creationDate}" />
 					<div id="emailDiv" class="form-group">
 						<label for="labelEmail" class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-10">
