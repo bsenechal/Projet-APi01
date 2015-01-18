@@ -1,21 +1,32 @@
 package com.utc.api01.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.utc.api01.matching.MatchFounder;
@@ -112,15 +123,16 @@ public class BookController {
     }
     
     @RequestMapping(value = "/admin/book/save", method = RequestMethod.POST)
-    public ModelAndView save(@Valid @ModelAttribute("book") Book b, BindingResult result) {
+    public ModelAndView save(@ModelAttribute("book") Book b,
+            @RequestParam("file") MultipartFile file) {
         ModelAndView model = new ModelAndView();
        
-        if (result.hasErrors()) {
-            if (b.getIdBook() != 0){
-                model.addObject("book", b);
-            }
-            model.setViewName(REDIRECT_EDITBOOK);
-        } else {
+//        if (result.hasErrors()) {
+//            if (b.getIdBook() != 0){
+//                model.addObject("book", b);
+//            }
+//            model.setViewName(REDIRECT_EDITBOOK);
+//        } else {
             model.setViewName(JSP_BOOK);
             
             if (b.getIdBook() != 0) {
@@ -128,11 +140,24 @@ public class BookController {
                 this.bookService.update(b);
             } else {
                 model.addObject("msg", MSG_ADD_SUCCESS);
+                System.out.println("----------------------------------------------");
+                System.out.println("----------------------------------------------");
+                System.out.println("----------------------------------------------");
+                //System.out.println(result.getFieldValue("image").toString());
+                try {
+                    b.setImage(file.getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(b.getImage().length);
+                System.out.println(b.getImage().toString());
+                System.out.println("----------------------------------------------");
+                System.out.println("----------------------------------------------");
                 this.bookService.add(b);
             }
             model.addObject("listBooks", this.bookService.list());
-        }
-        return model;
+        //}
+            return model;
     }
     
     @RequestMapping("/book/match")
@@ -171,6 +196,13 @@ public class BookController {
             return "bookProposition";
             
         }else return REDIRECT_LOGIN;  
+    }
+    
+    @InitBinder
+    protected void initBinder(HttpServletRequest request,
+        ServletRequestDataBinder binder) throws ServletException {
+            binder.registerCustomEditor(byte[].class,
+                new ByteArrayMultipartFileEditor());
     }
     
     public ArrayList<Notes> getNoteByUser(User user, ArrayList<Notes> notes){

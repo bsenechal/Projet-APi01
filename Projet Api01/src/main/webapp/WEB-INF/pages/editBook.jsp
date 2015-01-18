@@ -1,5 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page session="true"%>
 
 <jsp:include page="header.jsp"/>
@@ -19,7 +21,7 @@
 			</div>	
 
 			<div class="container-fluid">
-				<form:form commandName="book" id="book-form" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/book/save">
+				<form:form commandName="book" id="book-form" class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/admin/book/save?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 					<div id="titleDiv" class="form-group">
 						<label for="title" class="col-sm-2 control-label">Title</label>
 						<div class="col-sm-10">
@@ -44,8 +46,7 @@
 					<div id="imageDiv" class="form-group">			    
 						<label for="image" class="col-sm-2 control-label">Image</label>
 						<div class="col-sm-10">
-							<form:input path="image" type="file" class="form-control" id="image" placeholder="${book.image}"/>
-							<form:errors path="image" cssClass="error"/>
+							<input type="file" name="file" id="file" placeholder="${book.image}"/>
 						</div>
 					</div>
 					<div id="descriptionDiv" class="form-group">			    

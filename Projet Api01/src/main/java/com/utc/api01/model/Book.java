@@ -37,8 +37,8 @@ public class Book {
     @NotEmpty
     private String description;
 
-    @Column(name = "image")
-    @Lob
+    @Column(name = "image", columnDefinition="blob", length = 16777215)
+    @Lob()
     private byte[] image;
     
     
