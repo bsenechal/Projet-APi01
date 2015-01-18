@@ -1,16 +1,15 @@
+$(document).ready(function () {
 
-$('#email').change(function(){
-	verif('#email', '#emailDiv');	
-});
-
-$( "#email" ).focusout(function() {
-	verif('#email', '#emailDiv');
-});
-
-$('#password').change(function(){
-	verif('#password', '#passwordDiv');	
-});
-
-$( "#password" ).focusout(function() {
-	verif('#password', '#passwordDiv');
+    $('#login-form').validate({ // initialize the plugin
+        rules: {
+        	username: {
+                required: true,
+                email : true
+            },
+            password: {
+                required: true,
+                minlength: 6
+            }
+        }
+    });
 });

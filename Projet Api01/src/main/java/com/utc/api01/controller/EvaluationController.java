@@ -96,6 +96,13 @@ public class EvaluationController {
         return JSP_NEWEVALUATION;
     }
     
+    @RequestMapping(value = "/admin/evaluation/edit/{idBook}", method = RequestMethod.GET)
+    public String editEval(@PathVariable("idBook") int idBook, Model model) {
+        model.addAttribute("questionWrapper", new QuestionWrapper(this.questionService.list()));
+        model.addAttribute("book", this.bookService.getById(idBook));
+        return JSP_NEWEVALUATION;
+    }
+    
     @RequestMapping(value = "/evaluation/save/{idBook}", method = RequestMethod.POST)
     public ModelAndView newEval(@Valid @ModelAttribute("notesWrapper") QuestionWrapper questionWrapper, @PathVariable("idBook") int idBook, BindingResult result) {
         ModelAndView model = new ModelAndView();

@@ -39,7 +39,7 @@ import com.utc.api01.service.GeneriqueService;
 
 @Controller
 public class BookController {
-
+    private GeneriqueService<Evaluation> evalService;
     private GeneriqueService<Book> bookService;
     private GeneriqueService<Question> questionService;
     private GeneriqueService<User> userService;
@@ -77,6 +77,12 @@ public class BookController {
     public void setNoteService(GeneriqueService<Notes> us) {
         this.noteService = us;
     }
+    
+    @Autowired(required = true)
+    @Qualifier(value = "evalService")
+    public void setEvaluationService(GeneriqueService<Evaluation> e) {
+        this.evalService = e;
+    }
 
     @RequestMapping(value = "/book/detail/{idBook}", method = RequestMethod.GET)
     public String detailBook(@PathVariable("idBook") int idBook, Model model) {
@@ -113,11 +119,18 @@ public class BookController {
     }
 
     @RequestMapping("/admin/book/remove/{idBook}")
-    public String removeBook(@PathVariable("idBook") int id) {
+    public String removeBook(@PathVariable("idBook") int idBook) {
         ModelAndView model = new ModelAndView();
         model.addObject("msg", MSG_SUPPR_SUCCESS);
         model.setViewName(JSP_BOOK);
-        this.bookService.remove(id);
+        
+        for (Evaluation e : this.evalService.list()){
+            if (e.getBook().getIdBook() == idBook){
+                this.evalService.remove(e.getIdEval());
+            }
+        }
+        
+        this.bookService.remove(idBook);
         model.addObject("listBooks", this.bookService.list());
         return REDIRECT_LISTING;
     }
