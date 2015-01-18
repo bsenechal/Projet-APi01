@@ -142,7 +142,7 @@ public class BookController {
         return model;
     }
     
-    @RequestMapping("/book/myBook")
+    @RequestMapping(value = "/book/myBook", method = RequestMethod.GET)
     public String myBook(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userName;

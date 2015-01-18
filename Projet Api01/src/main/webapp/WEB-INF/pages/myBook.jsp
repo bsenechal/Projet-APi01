@@ -1,36 +1,52 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@page session="true"%>
 
-    <c:if test="${!empty notes}">
-       <div class="table-responsive">
-           <table class="table">
-               <tr>
-                   <th><b>Titre</b></th>
-                   <th><b>Auteur</b></th>
-                   <th><b>Type</b></th>
-                   <th></th>
-                   <sec:authorize access="hasRole('ROLE_ADMIN')"><th></th></sec:authorize>
-               </tr>
-               <c:forEach items="${notes}" var="note">
-                   <tr>
-                       <td>${note.evaluation.book.title}</td>
-                       <td>${note.evaluation.book.autor}</td>
-                       <td>${note.evaluation.book.type}</td>
-                   </tr>
-               </c:forEach>
-           </table>
-       </div>
-   </c:if>
+<jsp:include page="header.jsp"/>
 
+<div class="content">
+    <div class="wrap">
+        <div class="single-page">
+            <jsp:include page="messages.jsp"/>
+            
+            <div class="page-header">
+                <h1>Mes livres</h1>
+            </div>  
+
+		    <c:if test="${!empty notes}">
+		       <div class="table-responsive">
+		       <c:set var="prec" value="init"/>
+		             <c:forEach items="${notes}" var="note">
+	                            <c:if test="${prec != note.evaluation.book.title}">
+	                               <div class="media">
+			                            <br/>
+			                            <a class="media-left media-top" href="detail/${note.evaluation.book.idBook}">
+			                                <img src="${pageContext.request.contextPath}/imageDisplay/${note.evaluation.book.idBook}">
+			                            </a>
+			                            <div class="media-body">
+			                            
+			                               <h3 class="media-heading">${note.evaluation.book.title}</h3>
+			                               ${fn:substring(note.evaluation.book.description, 0, 400)}... <a href="detail/${note.evaluation.book.idBook}">Plus</a>
+		
+			                            </div>
+	                               </div>
+                                
+                               <c:set var="prec" value="${note.evaluation.book.title}"/>
+                             <br />
+                             </c:if>
+                             <ul class="list-group">
+                                  <li class="list-group-item">
+                                     <a href="#"><strong>${note.question.libelle}    </strong></a><c:forEach begin="0" end="${note.note}" varStatus="loop"><span class="glyphicon glyphicon-star"></span> </c:forEach>
+                                  </li>
+                             </ul>
+					</c:forEach>
+		       </div>
+		   </c:if>  
+        </div>
+   </div>
+</div>
 </body>
 </html>

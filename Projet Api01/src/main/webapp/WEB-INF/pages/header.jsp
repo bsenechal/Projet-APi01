@@ -69,9 +69,13 @@
 								<div class="menu_box_list">
 									<ul>
 										<li><a href="${pageContext.request.contextPath}/">Accueil</a></li>
-										<c:if test="${pageContext['request'].userPrincipal != null}"><li><a href="${pageContext.request.contextPath}/book/listing">Livres</a></li></c:if>
+										<c:if test="${pageContext['request'].userPrincipal != null}">
+										  <li><a href="${pageContext.request.contextPath}/book/listing">Livres</a></li>
+										  <li><a href="${pageContext.request.contextPath}/book/myBook">Mes livres</a></li>
+										</c:if>
 										<sec:authorize access="hasRole('ROLE_ADMIN')"><li><a href="${pageContext.request.contextPath}/admin">Administration</a></li></sec:authorize>
-										<c:if test="${pageContext['request'].userPrincipal != null}"><li>
+										<c:if test="${pageContext['request'].userPrincipal != null}">
+										<li>
 											<c:url var="logoutUrl" value="/j_spring_security_logout"/>
 											<form action="${logoutUrl}" method="post">
 											  <input type="submit" class="btn btn-primary" value="Deconnexion" />
