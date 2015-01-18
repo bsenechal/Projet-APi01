@@ -19,7 +19,6 @@
 			<p>${book.description}</p>
 			<div class="container-fluid">
 					<form:form id="evaluation-form" class="form-horizontal" action="${pageContext.request.contextPath}/evaluation/save/${book.idBook}" method="POST" modelAttribute="questionWrapper">
-                        <form:hidden path="edit"/>
 					    <c:forEach items="${questionWrapper.questionList}" var="quest" varStatus="i">
 					       <div class="form-group">        
                                <label  for="libelle" class="col-sm-4 control-label">${quest.libelle}</label>

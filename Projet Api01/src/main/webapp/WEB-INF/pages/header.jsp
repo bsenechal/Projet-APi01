@@ -71,7 +71,8 @@
 										<li><a href="${pageContext.request.contextPath}/">Accueil</a></li>
 										<c:if test="${pageContext['request'].userPrincipal != null}">
 										  <li><a href="${pageContext.request.contextPath}/book/listing">Livres</a></li>
-										  <li><a href="${pageContext.request.contextPath}/book/myBook">Mes livres</a></li>
+										  <li><a href="${pageContext.request.contextPath}/book/myBook">Mes evaluations</a></li>
+										  <li><a href="${pageContext.request.contextPath}/book/match">Suggestions</a></li>
 										</c:if>
 										<sec:authorize access="hasRole('ROLE_ADMIN')"><li><a href="${pageContext.request.contextPath}/admin">Administration</a></li></sec:authorize>
 										<c:if test="${pageContext['request'].userPrincipal != null}">

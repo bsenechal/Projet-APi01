@@ -19,7 +19,7 @@
 				</h1>
 			</div>	
 			
-   			<form:form commandName="user" id="user-form" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/user/save">
+   			<form:form commandName="user" id="user-form" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/user/save?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 		   		<form:input path="idUser" type="hidden" name="idUser" value="${user.idUser}" />
 		   		<form:input path="creationDate" type="hidden" name="creationDate" value="${user.creationDate}" />
 					<div id="emailDiv" class="form-group">
@@ -64,7 +64,12 @@
 							</select>
 						</div>
 					</div>		
-					
+					<div id="avatarDiv" class="form-group">              
+                        <label for="avatar" class="col-sm-2 control-label">Avatar</label>
+                        <div class="col-sm-10">
+                            <input type="file" name="file" id="file" placeholder="${user.avatar}"/>
+                        </div>
+                    </div>
 					<div id="passwordDiv" class="form-group">
 						<label for="labelPass" class="col-sm-2 control-label">Mot de passe</label>
 						<div class="col-sm-10">

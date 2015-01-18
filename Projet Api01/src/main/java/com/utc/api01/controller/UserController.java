@@ -1,22 +1,29 @@
 package com.utc.api01.controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.utc.api01.mail.ApplicationMailer;
@@ -95,8 +102,16 @@ public class UserController {
         }else return REDIRECT_ACCUEIL;
     }
     
+    @RequestMapping(value = "/avatarDisplay/{idUser}", method = RequestMethod.GET)
+    public void showAvatar(@PathVariable("idUser") Integer idUser,
+            HttpServletResponse response) throws IOException {
+        response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+        response.getOutputStream().write(this.userService.getById(idUser).getAvatar());
+        response.getOutputStream().close();
+    }
+    
     @RequestMapping(value = "/admin/user/save", method = RequestMethod.POST)
-    public ModelAndView save(@Valid @ModelAttribute("user") User u, BindingResult result,HttpServletRequest request) {
+    public ModelAndView save(@Valid @ModelAttribute("user") User u, @RequestParam("file") MultipartFile file, BindingResult result) throws IOException {
         ModelAndView model = new ModelAndView();
        
         if (result.hasErrors()) {
@@ -136,11 +151,19 @@ public class UserController {
                         + Newligne + "Votre identifiant : " + u.getEmail() 
                         + Newligne + "Votre mot de passe : " + u.getPassword()
                         , u.getEmail());
-                
+                u.setAvatar(file.getBytes());
                 this.userService.add(u);
             }
             model.addObject("listUsers", this.userService.list());
         }
         return model;
     }
+    
+    @InitBinder
+    protected void initBinder(HttpServletRequest request,
+        ServletRequestDataBinder binder) throws ServletException {
+            binder.registerCustomEditor(byte[].class,
+                new ByteArrayMultipartFileEditor());
+    }
+    
 }

@@ -117,7 +117,7 @@ public class EvaluationController {
     }
     
     @RequestMapping(value = "/evaluation/save/{idBook}", method = RequestMethod.POST)
-    public ModelAndView newEval(@Valid @ModelAttribute("notesWrapper") QuestionWrapper questionWrapper, @PathVariable("idBook") int idBook, BindingResult result, Model m) {
+    public ModelAndView newEval(@Valid @ModelAttribute("notesWrapper") QuestionWrapper questionWrapper, @PathVariable("idBook") int idBook, BindingResult result) {
         ModelAndView model = new ModelAndView();
         
         if (result.hasErrors()) {

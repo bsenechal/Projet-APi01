@@ -1,7 +1,6 @@
 package com.utc.api01.controller;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -169,7 +168,7 @@ public class BookController {
     @RequestMapping(value = "/book/save", method = RequestMethod.POST)
     public ModelAndView save(@ModelAttribute("book") Book b,
             @RequestParam("file") MultipartFile file,
-            BindingResult result) {
+            BindingResult result) throws IOException {
         ModelAndView model = new ModelAndView();
        
         if (result.hasErrors()) {
@@ -185,11 +184,9 @@ public class BookController {
                 this.bookService.update(b);
             } else {
                 model.addObject("msg", MSG_ADD_SUCCESS);
-                try {
-                    b.setImage(file.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                b.setImage(file.getBytes());
+
                 this.bookService.add(b);
             }
             model.addObject("listBooks", this.bookService.list());

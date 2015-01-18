@@ -1,7 +1,5 @@
 package com.utc.api01.controller;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +12,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.utc.api01.model.Book;
-import com.utc.api01.model.Role;
 import com.utc.api01.model.User;
 import com.utc.api01.service.GeneriqueService;
 
@@ -62,7 +56,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/monCompte", method = RequestMethod.GET)
-    public ModelAndView monCompte(Model model) {
+    public ModelAndView monCompte() {
         ModelAndView m = new ModelAndView();
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof org.springframework.security.core.userdetails.User){
