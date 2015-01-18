@@ -1,12 +1,19 @@
 CREATE DATABASE `projet_api01` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
+drop table `notes`;
+drop table `questions`;
+drop table `evaluation`;
+drop table `book`;
+drop table `user`;
+drop table `role`;
+
 CREATE TABLE `book` (
   `idBook` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) NOT NULL,
   `autor` varchar(45) NOT NULL,
   `type` varchar(45) NOT NULL,
   `description` varchar(45) NOT NULL,
-  `image` blob,
+  `image` mediumblob,
   PRIMARY KEY (`idBook`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
