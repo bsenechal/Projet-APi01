@@ -1,5 +1,6 @@
 package com.utc.api01.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -99,7 +100,18 @@ public class EvaluationController {
     
     @RequestMapping(value = "/admin/evaluation/edit/{idBook}", method = RequestMethod.GET)
     public String editEval(@PathVariable("idBook") int idBook, Model model) {
-        model.addAttribute("questionWrapper", new QuestionWrapper(this.questionService.list()));
+        
+        List<Question> listQuestion = new ArrayList<Question>();
+        
+        for(Notes n : this.noteService.list()){
+            if (n.getEvaluation().getBook().getIdBook() == idBook){
+                n.getQuestion().setNote(n.getNote());
+                listQuestion.add(n.getQuestion());
+            }
+        }
+       
+        
+        model.addAttribute("questionWrapper", new QuestionWrapper(listQuestion));
         model.addAttribute("book", this.bookService.getById(idBook));
         return JSP_NEWEVALUATION;
     }
