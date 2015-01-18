@@ -106,6 +106,15 @@ public class BookController {
         model.addAttribute("listBooks", this.bookService.list());
         return JSP_BOOK;
     }
+    
+    @RequestMapping("/book/found/{title}")
+    public String foundUser(@PathVariable("title") String title, Model model) {
+        Book b = this.bookService.getByCriteria("title", title);
+        if(b != null){
+            model.addAttribute("book", b);
+            return "redirect:/book/detail/"+b.getIdBook();
+        }else return "redirect:/book/listing";
+    }
 
     @RequestMapping(value = "/book/new", method = RequestMethod.GET)
     public String newBook(Model model) {
