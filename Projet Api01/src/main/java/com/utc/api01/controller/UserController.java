@@ -3,10 +3,13 @@ package com.utc.api01.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.utc.api01.mail.ApplicationMailer;
 import com.utc.api01.model.Role;
 import com.utc.api01.model.User;
 import com.utc.api01.service.GeneriqueService;
@@ -31,6 +35,13 @@ public class UserController {
     private static final String MSG_SUPPR_SUCCESS = "L'utilisateur a correctement été supprimé.";
     private GeneriqueService<User> userService;
     private GeneriqueService<Role> roleService;
+    private ApplicationContext _applicationContext;
+    
+    @Autowired(required = true)
+    @Qualifier(value = "applicationContext")
+    public void setApplicationContext(ApplicationContext applicationContext){
+        this._applicationContext = applicationContext;
+    }
 
     @Autowired(required = true)
     @Qualifier(value = "userService")
@@ -85,7 +96,7 @@ public class UserController {
     }
     
     @RequestMapping(value = "/admin/user/save", method = RequestMethod.POST)
-    public ModelAndView save(@Valid @ModelAttribute("user") User u, BindingResult result) {
+    public ModelAndView save(@Valid @ModelAttribute("user") User u, BindingResult result,HttpServletRequest request) {
         ModelAndView model = new ModelAndView();
        
         if (result.hasErrors()) {
@@ -100,10 +111,32 @@ public class UserController {
             
             if (u.getIdUser() != 0) {
                 model.addObject("msg", MSG_EDIT_SUCCESS);
+                 
+                //Get the mailer instance
+                ApplicationMailer mailer = (ApplicationMailer) _applicationContext.getBean("mailService");
+         
+                //Send a pre-configured mail
+                String Newligne=System.getProperty("line.separator"); 
+                mailer.sendPreConfiguredMail("Mise à jour de votre compte " + u.getFirstname() 
+                        + Newligne + "Votre identifiant : " + u.getEmail() 
+                        + Newligne + "Votre mot de passe : " + u.getPassword()
+                        , u.getEmail());
+                
                 this.userService.update(u);
             } else {
                 u.setCreationDate(new SimpleDateFormat("YYYY-MM-DD").format(new Date()));
                 model.addObject("msg", MSG_ADD_SUCCESS);
+                
+              //Get the mailer instance
+                ApplicationMailer mailer = (ApplicationMailer) _applicationContext.getBean("mailService");
+         
+                //Send a pre-configured mail
+                String Newligne=System.getProperty("line.separator"); 
+                mailer.sendPreConfiguredMail("Bienvenue sur The Book " + u.getFirstname() 
+                        + Newligne + "Votre identifiant : " + u.getEmail() 
+                        + Newligne + "Votre mot de passe : " + u.getPassword()
+                        , u.getEmail());
+                
                 this.userService.add(u);
             }
             model.addObject("listUsers", this.userService.list());

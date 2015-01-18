@@ -33,4 +33,5 @@
 	        <beans:property name="maxInMemorySize" value="16777215"></beans:property> <!-- 1MB -->
 	 
 	    </beans:bean>
+	    
 </beans:beans>

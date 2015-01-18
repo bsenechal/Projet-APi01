@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -28,7 +29,7 @@ public class User {
     private String password;
 
     @Column(name = "ENABLED")
-    @NotEmpty
+    @NotNull
     private boolean enabled;
 
     @Column(name = "FIRSTNAME")
@@ -45,7 +46,7 @@ public class User {
     private String email;
 
     @Column(name = "TELEPHONE")
-    @NotEmpty
+    @NotNull
     @Min(10)
     private Integer telephone;
 
@@ -57,7 +58,7 @@ public class User {
     private Role role;
 
     @Transient
-    @NotEmpty
+    @NotNull
     private int roleUser;
 
     @Transient
