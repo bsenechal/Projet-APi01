@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -19,7 +20,7 @@
 			        		<div class="post-basic-info">
 				        		<h3><a href="#">${book.title}</a></h3>
 				        		<span><a href="#"><label> </label>${book.type}</a></span>
-				        		<p>${book.description}</p>
+				        		<p>${fn:substring(book.description, 0, 150)}... <a href="book/detail/${book.idBook}">Plus</a></p>
 			        		</div>
 			        		<c:if test="${pageContext['request'].userPrincipal != null}">
 				        		<div class="post-info-rate-share">
@@ -79,7 +80,6 @@
 		          // Get the first then items from the grid, clone them, and add them to the bottom of the grid
 		          var $items = $('li', $tiles),
 		              $firstTen = $items.slice(0, 10);
-		          $tiles.append($firstTen.clone());
 		
 		          applyLayout();
 		        }

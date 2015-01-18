@@ -22,7 +22,7 @@
 
 					    <c:forEach items="${questionWrapper.questionList}" var="quest" varStatus="i">
 					       <div class="form-group">        
-                               <label  for="libelle" class="col-sm-2 control-label">${quest.libelle}</label>
+                               <label  for="libelle" class="col-sm-4 control-label">${quest.libelle}</label>
 					           <div class="col-sm-1">
 						           <form:input name="note" class="form-control" path="questionList[${i.index}].note" type="number"/>
 						           <form:hidden path="questionList[${i.index}].idQuestions"/>

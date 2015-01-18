@@ -28,13 +28,13 @@
 							<th></th>
 							<sec:authorize access="hasRole('ROLE_ADMIN')"><th></th></sec:authorize>
 						</tr>
-						<c:forEach items="${listBooks}" var="boook">
+						<c:forEach items="${listBooks}" var="book">
 							<tr>
-								<td>${boook.title}</td>
-								<td>${boook.autor}</td>
-								<td>${boook.type}</td>
-								<td><a href="<c:url value='/book/edit/${boook.idBook}' />" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-								<sec:authorize access="hasRole('ROLE_ADMIN')"><td><a href="<c:url value='/admin/book/remove/${boook.idBook}' />" ><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td></sec:authorize>
+								<td>${book.title}</td>
+								<td>${book.autor}</td>
+								<td>${book.type}</td>
+								<td><a href="<c:url value='/book/edit/${book.idBook}' />" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+								<sec:authorize access="hasRole('ROLE_ADMIN')"><td><a href="<c:url value='/admin/book/remove/${book.idBook}' />" ><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td></sec:authorize>
 							</tr>
 						</c:forEach>
 					</table>

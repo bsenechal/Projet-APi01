@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -104,29 +105,30 @@ public class EvaluationController {
     }
     
     @RequestMapping(value = "/evaluation/save/{idBook}", method = RequestMethod.POST)
-    public ModelAndView newEval(@Valid @ModelAttribute("notesWrapper") QuestionWrapper questionWrapper, @PathVariable("idBook") int idBook, BindingResult result) {
+    public ModelAndView newEval(@Valid @ModelAttribute("notesWrapper") QuestionWrapper questionWrapper, @PathVariable("idBook") int idBook, BindingResult result, Model m) {
         ModelAndView model = new ModelAndView();
-        
-        // ========================> A CHANGER <==========================
-        int idUser = 1;
-        //================================================================
-        
         
         if (result.hasErrors()) {
             questionWrapper.setQuestionList(this.questionService.list());
             model.addObject("questionWrapper", questionWrapper);
             model.setViewName(JSP_NEWEVALUATION);
         } else {
-            this.evalService.add(new Evaluation(0,0, this.bookService.getById(idBook), this.userService.getById(idUser)));
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (principal instanceof org.springframework.security.core.userdetails.User){
+                String userName = ((org.springframework.security.core.userdetails.User) principal).getUsername();
+                User user = this.userService.getByCriteria("email", userName);
             
-            List<Evaluation> listEval = this.evalService.list();
-            
-            for (Question quest : questionWrapper.getQuestionList()){
-                this.noteService.add(new Notes(0, quest.getNote(), listEval.get(listEval.size() - 1), this.questionService.getById(quest.getIdQuestions())));
+                this.evalService.add(new Evaluation(0,0, this.bookService.getById(idBook), user));
+                
+                List<Evaluation> listEval = this.evalService.list();
+                
+                for (Question quest : questionWrapper.getQuestionList()){
+                    this.noteService.add(new Notes(0, quest.getNote(), listEval.get(listEval.size() - 1), this.questionService.getById(quest.getIdQuestions())));
+                }
+                model.addObject("book", this.bookService.getById(idBook));
+                model.addObject("msg", MSG_ADD_SUCCESS);
+                model.setViewName(JSP_DETAILBOOK);
             }
-            model.addObject("book", this.bookService.getById(idBook));
-            model.addObject("msg", MSG_ADD_SUCCESS);
-            model.setViewName(JSP_DETAILBOOK);
         }
         
         return model;

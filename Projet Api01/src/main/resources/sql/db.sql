@@ -12,10 +12,10 @@ CREATE TABLE `book` (
   `title` varchar(45) NOT NULL,
   `autor` varchar(45) NOT NULL,
   `type` varchar(45) NOT NULL,
-  `description` varchar(45) NOT NULL,
+  `description` varchar(2000) NOT NULL,
   `image` mediumblob,
   PRIMARY KEY (`idBook`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `questions` (
   `idQuestions` int(11) NOT NULL AUTO_INCREMENT,

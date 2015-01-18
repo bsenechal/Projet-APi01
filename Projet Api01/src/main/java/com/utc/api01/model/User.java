@@ -28,7 +28,6 @@ public class User {
     private String password;
 
     @Column(name = "ENABLED")
-    @NotEmpty
     private boolean enabled;
 
     @Column(name = "FIRSTNAME")
@@ -45,8 +44,6 @@ public class User {
     private String email;
 
     @Column(name = "TELEPHONE")
-    @NotEmpty
-    @Min(10)
     private Integer telephone;
 
     @Column(name = "CREATION_DATE")
@@ -57,7 +54,6 @@ public class User {
     private Role role;
 
     @Transient
-    @NotEmpty
     private int roleUser;
 
     @Transient

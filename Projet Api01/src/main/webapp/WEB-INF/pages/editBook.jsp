@@ -52,7 +52,7 @@
 					<div id="descriptionDiv" class="form-group">			    
 						<label for="description" class="col-sm-2 control-label">Description</label>
 						<div class="col-sm-10">
-							<form:input path="description" type="textarea" class="form-control" id="description" placeholder="${book.type}"/>
+							<form:textarea path="description" class="form-control" id="description" placeholder="${book.type}"/>
 							<form:errors path="description" cssClass="error"/>
 						</div>
 					</div>

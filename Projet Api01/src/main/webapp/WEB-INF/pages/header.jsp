@@ -69,12 +69,12 @@
 								<div class="menu_box_list">
 									<ul>
 										<li><a href="${pageContext.request.contextPath}/">Accueil</a></li>
-										<li><a href="${pageContext.request.contextPath}/book/listing">Livres</a></li>
+										<c:if test="${pageContext['request'].userPrincipal != null}"><li><a href="${pageContext.request.contextPath}/book/listing">Livres</a></li></c:if>
 										<sec:authorize access="hasRole('ROLE_ADMIN')"><li><a href="${pageContext.request.contextPath}/admin">Administration</a></li></sec:authorize>
 										<c:if test="${pageContext['request'].userPrincipal != null}"><li>
 											<c:url var="logoutUrl" value="/j_spring_security_logout"/>
 											<form action="${logoutUrl}" method="post">
-											  <input type="submit" class="btn btn-primary" value="Log out" />
+											  <input type="submit" class="btn btn-primary" value="Deconnexion" />
 											  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 											</form>
 										</li></c:if>
@@ -96,7 +96,7 @@
 								<li>
 								<c:choose>
 									<c:when test="${pageContext['request'].userPrincipal != null}"><a href="${pageContext.request.contextPath}/monCompte"><img src="${pageContext.request.contextPath}/resources/images/user-pic.png" title="user-name" /><span><security:authentication property="principal.username"></security:authentication></span></a></c:when>
-									<c:otherwise><button type="submit" class="btn btn-primary" onclick='location.href ="${pageContext.request.contextPath}/login"'>Login</button></c:otherwise>
+									<c:otherwise><button type="submit" class="btn btn-primary" onclick='location.href ="${pageContext.request.contextPath}/login"'>Connexion</button></c:otherwise>
 								</c:choose>
 								</li>
 							</ul>
