@@ -44,6 +44,7 @@ public class BookController {
     private static final String REDIRECT_DETAILBOOK = "detailBook";
     private static final String REDIRECT_MYBOOK = "myBook";
     private static final String REDIRECT_EDITBOOK = "editBook";
+    private static final String REDIRECT_INDEX = "index";
     private static final String MSG_ADD_SUCCESS = "Le livre a correctement été ajouté.";
     private static final String MSG_EDIT_SUCCESS = "Le livre a correctement été modifié.";
     private static final String MSG_SUPPR_SUCCESS = "Le livre a correctement été supprimé.";
@@ -101,13 +102,16 @@ public class BookController {
         return JSP_BOOK;
     }
     
-    @RequestMapping("/book/found/{title}")
-    public String foundUser(@PathVariable("title") String title, Model model) {
-        Book b = this.bookService.getByCriteria("title", title);
-        if(b != null){
-            model.addAttribute("book", b);
-            return "redirect:/book/detail/"+b.getIdBook();
-        }else return "redirect:/book/listing";
+    @RequestMapping(value = "/book/found", method = RequestMethod.GET)
+    public String foundBook(@PathVariable("title") String title) {
+//        String title = (String) request.getParameter("title");
+//        Book b = this.bookService.getByCriteria("title", title);
+//        if(b != null){
+//            ModelAndView model = new ModelAndView();
+//            model.addObject("book", b);
+//            return "redirect:/book/detail/"+b.getIdBook();
+//        }else 
+        return REDIRECT_INDEX;
     }
 
     @RequestMapping(value = "/book/new", method = RequestMethod.GET)
@@ -162,7 +166,7 @@ public class BookController {
         return REDIRECT_LOGIN;
     }
     
-    @RequestMapping(value = "/admin/book/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/book/save", method = RequestMethod.POST)
     public ModelAndView save(@ModelAttribute("book") Book b,
             @RequestParam("file") MultipartFile file,
             BindingResult result) {

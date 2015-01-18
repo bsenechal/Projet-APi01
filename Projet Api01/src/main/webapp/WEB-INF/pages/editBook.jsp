@@ -21,7 +21,7 @@
 			</div>	
 
 			<div class="container-fluid">
-				<form:form commandName="book" id="book-form" class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/admin/book/save?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+				<form:form commandName="book" id="book-form" class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/book/save?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 					<div id="titleDiv" class="form-group">
 						<label for="title" class="col-sm-2 control-label">Title</label>
 						<div class="col-sm-10">

@@ -90,8 +90,9 @@
 					</div> 
 				</div>       	  
 				<div class="top-searchbar">
-					<form>
-						<input type="text" /><input type="submit" value="" />
+					<form method="get" action="${pageContext.request.contextPath}/book/found">
+						<input type="text" name="title" id="title"/>
+						<input type="submit" value=""/>
 					</form>
 				</div>
 					<div class="userinfo">
