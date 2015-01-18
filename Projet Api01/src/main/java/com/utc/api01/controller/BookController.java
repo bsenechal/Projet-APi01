@@ -1,6 +1,7 @@
 package com.utc.api01.controller;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -162,15 +164,16 @@ public class BookController {
     
     @RequestMapping(value = "/admin/book/save", method = RequestMethod.POST)
     public ModelAndView save(@ModelAttribute("book") Book b,
-            @RequestParam("file") MultipartFile file) {
+            @RequestParam("file") MultipartFile file,
+            BindingResult result) {
         ModelAndView model = new ModelAndView();
        
-//        if (result.hasErrors()) {
-//            if (b.getIdBook() != 0){
-//                model.addObject("book", b);
-//            }
-//            model.setViewName(REDIRECT_EDITBOOK);
-//        } else {
+        if (result.hasErrors()) {
+            if (b.getIdBook() != 0){
+                model.addObject("book", b);
+            }
+            model.setViewName(REDIRECT_EDITBOOK);
+        } else {
             model.setViewName(JSP_BOOK);
             
             if (b.getIdBook() != 0) {
@@ -178,23 +181,15 @@ public class BookController {
                 this.bookService.update(b);
             } else {
                 model.addObject("msg", MSG_ADD_SUCCESS);
-                System.out.println("----------------------------------------------");
-                System.out.println("----------------------------------------------");
-                System.out.println("----------------------------------------------");
-                //System.out.println(result.getFieldValue("image").toString());
                 try {
                     b.setImage(file.getBytes());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                System.out.println(b.getImage().length);
-                System.out.println(b.getImage().toString());
-                System.out.println("----------------------------------------------");
-                System.out.println("----------------------------------------------");
                 this.bookService.add(b);
             }
             model.addObject("listBooks", this.bookService.list());
-        //}
+        }
             return model;
     }
     
@@ -212,20 +207,6 @@ public class BookController {
             
             ArrayList<Notes> noteList = getNoteByUser(user, (ArrayList<Notes>)this.noteService.list());
             ArrayList<Evaluation> evaluationList = getEvaluationByNote(noteList);
-            
-//            bookList.add(new Book(10,"test4","autor","type","description"));
-//            bookList.add(new Book(11,"test","autor2","type2","description"));
-//            bookList.add(new Book(12,"test8","autor","type","description"));
-//            
-//            questionList.add(new Question(01,"question1",5,1));
-//            questionList.add(new Question(02,"question2",5,1));
-//            questionList.add(new Question(03,"question3",5,1));
-//            questionList.add(new Question(04,"question4",5,1));
-//            
-//            evaluationList.add(new Evaluation(01,0,bookList.get(0),new User()));
-//            evaluationList.add(new Evaluation(02,0,bookList.get(0),new User()));
-//            
-//            noteList.add(new Notes(01,5,evaluationList.get(0),questionList.get(0)));
             
             MatchFounder matchfounder = new MatchFounder(bookList, questionList, noteList, evaluationList);
             Book conseille = matchfounder.matchFounding();
