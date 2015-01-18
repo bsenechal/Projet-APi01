@@ -5,7 +5,6 @@ import java.util.List;
 public class QuestionWrapper {
     private List<Question> questionList;
 
-    
     /**
      * 
      */

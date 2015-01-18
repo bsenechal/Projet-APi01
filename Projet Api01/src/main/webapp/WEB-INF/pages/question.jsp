@@ -3,8 +3,9 @@
 <%@ taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 
-
 <jsp:include page="header.jsp"/>
+
+<LINK rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap-table.css">
 
 <div class="content">
 	<div class="wrap">
@@ -22,14 +23,16 @@
 			
 			<c:if test="${!empty listQuestions}">
 				<div class="table-responsive">
-				  <table class="table">
-				    <tr>
-						<th><b>Titre</b></th>
-						<th><b>Note maximale</b></th>
-						<th><b>Importance</b></th>
-						<th></th>
-						<th></th>
-					</tr>
+				      <table data-toggle="table" data-query-params="queryParams" data-pagination="true" data-search="true" data-height="519">
+                        <thead>
+						    <tr>
+								<th><b>Titre</b></th>
+								<th><b>Note maximale</b></th>
+								<th><b>Importance</b></th>
+								<th></th>
+								<th></th>
+							</tr>
+					   </thead>
 					<c:forEach items="${listQuestions}" var="quest">
 						<tr>
 							<td>${quest.libelle}</td>
@@ -52,3 +55,6 @@
   	</div>
 </div>
 	
+	
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap-table.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap-table-fr-FR.min.js"></script>  

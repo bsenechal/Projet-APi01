@@ -3,7 +3,10 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@page session="true"%>
 
+
 <jsp:include page="header.jsp"/>
+
+<LINK rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap-table.css">
 
 <div class="content">
 	<div class="wrap">
@@ -20,14 +23,16 @@
 			
 			<c:if test="${!empty listBooks}">
 				<div class="table-responsive">
-					<table class="table">
-						<tr>
-							<th><b>Titre</b></th>
-							<th><b>Auteur</b></th>
-							<th><b>Type</b></th>
-							<th></th>
-							<sec:authorize access="hasRole('ROLE_ADMIN')"><th></th></sec:authorize>
-						</tr>
+					<table data-toggle="table" data-query-params="queryParams" data-pagination="true" data-search="true" data-height="519">
+						<thead>
+							<tr>
+								<th><b>Titre</b></th>
+								<th><b>Auteur</b></th>
+								<th><b>Type</b></th>
+								<th></th>
+								<sec:authorize access="hasRole('ROLE_ADMIN')"><th></th></sec:authorize>
+							</tr>
+						</thead>
 						<c:forEach items="${listBooks}" var="book">
 							<tr>
 								<td>${book.title}</td>
@@ -51,3 +56,6 @@
 		<jsp:include page="footer.jsp"/>
 	</div>
 </div>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap-table.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap-table-fr-FR.min.js"></script>
