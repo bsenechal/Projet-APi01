@@ -1,23 +1,17 @@
 package com.utc.api01.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -48,7 +42,6 @@ public class BookController {
     private static final String REDIRECT_DETAILBOOK = "detailBook";
     private static final String REDIRECT_MYBOOK = "myBook";
     private static final String REDIRECT_EDITBOOK = "editBook";
-    private static final String REDIRECT_LISTING = "listing";
     private static final String MSG_ADD_SUCCESS = "Le livre a correctement été ajouté.";
     private static final String MSG_EDIT_SUCCESS = "Le livre a correctement été modifié.";
     private static final String MSG_SUPPR_SUCCESS = "Le livre a correctement été supprimé.";
@@ -102,7 +95,6 @@ public class BookController {
 
     @RequestMapping(value = "/book/listing", method = RequestMethod.GET)
     public String listBook(Model model) {
-        model.addAttribute("book", new Book());
         model.addAttribute("listBooks", this.bookService.list());
         return JSP_BOOK;
     }
@@ -129,20 +121,43 @@ public class BookController {
     }
 
     @RequestMapping("/admin/book/remove/{idBook}")
-    public String removeBook(@PathVariable("idBook") int idBook) {
+    public ModelAndView removeBook(@PathVariable("idBook") int idBook) {
         ModelAndView model = new ModelAndView();
         model.addObject("msg", MSG_SUPPR_SUCCESS);
         model.setViewName(JSP_BOOK);
         
         for (Evaluation e : this.evalService.list()){
             if (e.getBook().getIdBook() == idBook){
+                for (Notes n : this.noteService.list()){
+                    if (n.getEvaluation().getIdEval() == e.getIdEval()){
+                        this.noteService.remove(n.getIdNotes());
+                    }
+                }
                 this.evalService.remove(e.getIdEval());
             }
         }
         
         this.bookService.remove(idBook);
         model.addObject("listBooks", this.bookService.list());
-        return REDIRECT_LISTING;
+        return model;
+    }
+    
+    @RequestMapping("/book/myBook")
+    public String myBook(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userName;
+        
+        if (principal instanceof org.springframework.security.core.userdetails.User){
+            userName = ((org.springframework.security.core.userdetails.User) principal).getUsername();
+            User user = this.userService.getByCriteria("email", userName);
+            
+            ArrayList<Notes> noteList = getNoteByUser(user, (ArrayList<Notes>)this.noteService.list());
+            model.addAttribute("notes",noteList);
+            
+            return REDIRECT_MYBOOK;
+        }
+       
+        return REDIRECT_LOGIN;
     }
     
     @RequestMapping("/book/myBook")
