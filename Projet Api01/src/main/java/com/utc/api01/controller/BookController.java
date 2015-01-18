@@ -46,6 +46,7 @@ public class BookController {
     private GeneriqueService<Notes> noteService;
     
     private static final String REDIRECT_DETAILBOOK = "detailBook";
+    private static final String REDIRECT_MYBOOK = "myBook";
     private static final String REDIRECT_EDITBOOK = "editBook";
     private static final String REDIRECT_LISTING = "listing";
     private static final String MSG_ADD_SUCCESS = "Le livre a correctement été ajouté.";
@@ -133,6 +134,24 @@ public class BookController {
         this.bookService.remove(idBook);
         model.addObject("listBooks", this.bookService.list());
         return REDIRECT_LISTING;
+    }
+    
+    @RequestMapping("/book/myBook")
+    public String myBook(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userName;
+        
+        if (principal instanceof org.springframework.security.core.userdetails.User){
+            userName = ((org.springframework.security.core.userdetails.User) principal).getUsername();
+            User user = this.userService.getByCriteria("email", userName);
+            
+            ArrayList<Notes> noteList = getNoteByUser(user, (ArrayList<Notes>)this.noteService.list());
+            model.addAttribute("notes",noteList);
+            
+            return REDIRECT_MYBOOK;
+        }
+       
+        return REDIRECT_LOGIN;
     }
     
     @RequestMapping(value = "/admin/book/save", method = RequestMethod.POST)
