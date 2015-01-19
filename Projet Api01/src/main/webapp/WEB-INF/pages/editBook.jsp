@@ -46,7 +46,7 @@
 					<div id="imageDiv" class="form-group">			    
 						<label for="image" class="col-sm-2 control-label">Image</label>
 						<div class="col-sm-10">
-							<input type="file" name="file" id="file" placeholder="${book.image}"/>
+							<input type="file" class="filestyle" data-buttonBefore="true" data-buttonName="btn-primary" name="file" id="file" placeholder="${book.image}"/>
 						</div>
 					</div>
 					<div id="descriptionDiv" class="form-group">			    
@@ -81,4 +81,5 @@
 </div>
 </body>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/editBook.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap-filestyle.min.js"></script>
 </html>

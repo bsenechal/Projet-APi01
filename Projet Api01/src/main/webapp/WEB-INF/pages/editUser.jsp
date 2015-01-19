@@ -67,7 +67,7 @@
 					<div id="avatarDiv" class="form-group">              
                         <label for="avatar" class="col-sm-2 control-label">Avatar</label>
                         <div class="col-sm-10">
-                            <input type="file" name="file" id="file" placeholder="${user.avatar}"/>
+                            <input class="filestyle" data-buttonBefore="true" data-buttonName="btn-primary" type="file" name="file" id="file" placeholder="${user.avatar}"/>
                         </div>
                     </div>
 					<div id="passwordDiv" class="form-group">
@@ -106,4 +106,5 @@
 </div>
 </body>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/editUser.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap-filestyle.min.js"></script>
 </html>
