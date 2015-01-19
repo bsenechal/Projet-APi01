@@ -102,15 +102,14 @@ public class BookController {
     }
     
     @RequestMapping(value = "/book/found", method = RequestMethod.GET)
-    public String foundBook(@PathVariable("title") String title) {
-//        String title = (String) request.getParameter("title");
-//        Book b = this.bookService.getByCriteria("title", title);
-//        if(b != null){
-//            ModelAndView model = new ModelAndView();
-//            model.addObject("book", b);
-//            return "redirect:/book/detail/"+b.getIdBook();
-//        }else 
-        return REDIRECT_INDEX;
+    public String foundBook(@RequestParam("title") String title,Model model) {
+        Book b = this.bookService.getByCriteria("title", title);
+        if(b != null){
+            return "redirect:/book/detail/"+b.getIdBook();
+        }else{ 
+            model.addAttribute("listBooks",this.bookService.list());
+            return "redirect:/";
+        }
     }
 
     @RequestMapping(value = "/book/new", method = RequestMethod.GET)
