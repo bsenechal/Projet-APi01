@@ -83,6 +83,7 @@ public class BookController {
     @RequestMapping(value = "/book/detail/{idBook}", method = RequestMethod.GET)
     public String detailBook(@PathVariable("idBook") int idBook, Model model) {
         model.addAttribute("book", this.bookService.getById(idBook));
+        if(!this.noteService.list().isEmpty()) model.addAttribute("notes", getNoteByBook((ArrayList<Notes>) this.noteService.list(), idBook));
         return REDIRECT_DETAILBOOK;
     }
 
@@ -234,5 +235,17 @@ public class BookController {
         ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
         for(Notes n : notes) evaluations.add(n.getEvaluation());
         return evaluations;
+    }
+    
+    public ArrayList<Evaluation> getEvaluationByBook(ArrayList<Evaluation> eval, int idBook){
+        ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
+        for(Evaluation e : eval) if(e.getBook().getIdBook() == idBook) evaluations.add(e);
+        return evaluations;
+    }
+    
+    public ArrayList<Notes> getNoteByBook(ArrayList<Notes> notes, int idBook){
+        ArrayList<Notes> res = new ArrayList<Notes>();
+        for(Notes n : notes) if(n.getEvaluation().getBook().getIdBook() == idBook) res.add(n);     
+        return res;
     }
 }
