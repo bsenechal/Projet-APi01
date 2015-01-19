@@ -39,7 +39,7 @@
                              </c:if>
                              <ul class="list-group">
                                   <li class="list-group-item">
-                                     <a href="#"><strong>${note.question.libelle}    </strong></a><c:forEach begin="0" end="${note.note}" varStatus="loop"><span class="glyphicon glyphicon-star"></span> </c:forEach>
+                                     <a href="#"><strong>${note.question.libelle}    </strong></a><c:forEach begin="1" end="${note.note}" varStatus="loop"><span class="glyphicon glyphicon-star"></span> </c:forEach>
                                   </li>
                              </ul>
 					</c:forEach>
