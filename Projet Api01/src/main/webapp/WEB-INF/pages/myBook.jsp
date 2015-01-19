@@ -13,7 +13,7 @@
             <jsp:include page="messages.jsp"/>
             
             <div class="page-header">
-                <h1>Mes livres</h1>
+                <h1>Mes évaluations</h1>
             </div>  
 
 		    <c:if test="${!empty notes}">

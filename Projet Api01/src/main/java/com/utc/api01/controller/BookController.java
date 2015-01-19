@@ -183,6 +183,9 @@ public class BookController {
             
             if (b.getIdBook() != 0) {
                 model.addObject("msg", MSG_EDIT_SUCCESS);
+                if (b.getImage() == null){
+                    b.setImage(this.bookService.getById(b.getIdBook()).getImage());
+                }
                 this.bookService.update(b);
             } else {
                 model.addObject("msg", MSG_ADD_SUCCESS);

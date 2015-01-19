@@ -145,6 +145,10 @@ public class UserController {
                         + newligne + "Votre mot de passe : " + u.getPassword()
                         , u.getEmail());
                 
+                if (u.getAvatar() == null){
+                    u.setAvatar(this.userService.getById(u.getIdUser()).getAvatar());
+                }
+                
                 this.userService.update(u);
             } else {
                 u.setCreationDate(new SimpleDateFormat("YYYY-MM-DD").format(new Date()));
