@@ -2,6 +2,7 @@ package com.utc.api01.matching;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.utc.api01.model.Book;
@@ -11,23 +12,23 @@ import com.utc.api01.model.Question;
 
 public class MatchFounder {
     
-    private ArrayList<Book> bookList;
-    private ArrayList<Question> questionList;
-    private ArrayList<Notes> noteList;
-    private ArrayList<Evaluation> evaluationList;
+    private List<Book> bookList;
+    private List<Question> questionList;
+    private List<Notes> noteList;
+    private List<Evaluation> evaluationList;
     
-    ArrayList<Question> hightQuestion;
-    ArrayList<Question> mediumQuestion;
-    ArrayList<Question> lowQuestion;
+    List<Question> hightQuestion;
+    List<Question> mediumQuestion;
+    List<Question> lowQuestion;
     
-    ArrayList<Book> hightBook;
-    ArrayList<Book> mediumBook;
-    ArrayList<Book> lowBook;
+    List<Book> hightBook;
+    List<Book> mediumBook;
+    List<Book> lowBook;
     
     String bestType;
     String bestAutor;
     
-    private Map<Integer,ArrayList<Notes>> mapEval;
+    private Map<Integer,List<Notes>> mapEval;
     Map<Question,Float> prctQuestion;
     
     private static final int HIGHT_RANGE = 4;
@@ -40,9 +41,9 @@ public class MatchFounder {
      * @param noteList
      * @param evaluationList
      */
-    public MatchFounder(ArrayList<Book> bookList,
-            ArrayList<Question> questionList, ArrayList<Notes> noteList,
-            ArrayList<Evaluation> evaluationList) {
+    public MatchFounder(List<Book> bookList,
+            List<Question> questionList, List<Notes> noteList,
+            List<Evaluation> evaluationList) {
         super();
         this.bookList = bookList;
         this.questionList = questionList;
@@ -52,63 +53,63 @@ public class MatchFounder {
     /**
      * @return the bookList
      */
-    public ArrayList<Book> getBookList() {
+    public List<Book> getBookList() {
         return bookList;
     }
     /**
      * @param bookList the bookList to set
      */
-    public void setBookList(ArrayList<Book> bookList) {
+    public void setBookList(List<Book> bookList) {
         this.bookList = bookList;
     }
     /**
      * @return the questionList
      */
-    public ArrayList<Question> getQuestionList() {
+    public List<Question> getQuestionList() {
         return questionList;
     }
     /**
      * @param questionList the questionList to set
      */
-    public void setQuestionList(ArrayList<Question> questionList) {
+    public void setQuestionList(List<Question> questionList) {
         this.questionList = questionList;
     }
     /**
      * @return the noteList
      */
-    public ArrayList<Notes> getNoteList() {
+    public List<Notes> getNoteList() {
         return noteList;
     }
     /**
      * @param noteList the noteList to set
      */
-    public void setNoteList(ArrayList<Notes> noteList) {
+    public void setNoteList(List<Notes> noteList) {
         this.noteList = noteList;
     }
     /**
      * @return the evaluationList
      */
-    public ArrayList<Evaluation> getEvaluationList() {
+    public List<Evaluation> getEvaluationList() {
         return evaluationList;
     }
     /**
      * @param evaluationList the evaluationList to set
      */
-    public void setEvaluationList(ArrayList<Evaluation> evaluationList) {
+    public void setEvaluationList(List<Evaluation> evaluationList) {
         this.evaluationList = evaluationList;
     }
     
     private void setMapEvalAndQuestionRank(){
         
-        mapEval = new HashMap<Integer,ArrayList<Notes>>();
+        mapEval = new HashMap<Integer,List<Notes>>();
         hightQuestion = new ArrayList<Question>();
         mediumQuestion = new ArrayList<Question>();
         lowQuestion = new ArrayList<Question>();
         
         
-        ArrayList<Notes> lowRange = new ArrayList<Notes>();
-        ArrayList<Notes> mediumRange = new ArrayList<Notes>();
-        ArrayList<Notes> hightRange = new ArrayList<Notes>();
+        List<Notes> lowRange = new ArrayList<Notes>();
+        List<Notes> mediumRange = new ArrayList<Notes>();
+        List<Notes> hightRange = new ArrayList<Notes>();
         
         for(Notes note : noteList){
             if(note.getNote() >= HIGHT_RANGE){
@@ -147,7 +148,6 @@ public class MatchFounder {
                 if(aq.getIdQuestions() == q.getIdQuestions()){
                     float prct = prctQuestion.get(q);
                     prctQuestion.put(q,prct+1);
-                    //hightQuestion.remove(aq);
                 }
             }
         }
@@ -174,14 +174,9 @@ public class MatchFounder {
         //Ici best question est la question ayant le plus souvent reçu une bonne note
         //On récupére la liste des livres concernant cette question
         
-        ArrayList<Book> bookForBestQuestion = new ArrayList<Book>();
-        for(Notes n : noteList){
-            if(n.getQuestion().getIdQuestions() == bestQuestion.getIdQuestions()){
-                bookForBestQuestion.add(n.getEvaluation().getBook());
-            }
-        }
+        List<Book> bookForBestQuestion = getbookForBestQuestion(noteList,bestQuestion);
         
-        ArrayList<String> auteurList = new ArrayList<String>();
+        List<String> auteurList = new ArrayList<String>();
         for(Book book : bookForBestQuestion){
             if(auteurPrct.containsKey(book.getAutor())){
                 Float tmp = auteurPrct.get(book.getAutor());
@@ -192,7 +187,7 @@ public class MatchFounder {
             }
         }
         
-        ArrayList<String> typeList = new ArrayList<String>();
+        List<String> typeList = new ArrayList<String>();
         for(Book book : bookForBestQuestion){
             if(typePrct.containsKey(book.getType())){
                 Float tmp = typePrct.get(book.getType());
@@ -204,26 +199,10 @@ public class MatchFounder {
         }
         
         //On récupére le meilleur Auteur et le meilleur Type
-        bestAutor = "";
-        Float tmpMaxAutor = (float) -3000;
-        bestType = "";
-        Float tmpMaxType = (float) -3000;
+
+        getBestAutor(auteurList, auteurPrct);
         
-        for(String autor:auteurList){
-            float a = auteurPrct.get(autor);
-            if(a>tmpMaxAutor){
-                bestAutor = autor;
-                tmpMaxAutor = a;
-            }
-        }
-        
-        for(String type:auteurList){
-            float a = auteurPrct.get(type);
-            if(a>tmpMaxType){
-                bestAutor = type;
-                tmpMaxType = a;
-            }
-        }
+        getBestType(auteurList, auteurPrct);
         
         //Ici on posséde l'auteur et le type le plus présent lorsque l'utilisateur 
         //a mis une bonne note a cette question max
@@ -236,20 +215,17 @@ public class MatchFounder {
         
         for(Book b : bookList){
             if(b.getAutor().equals(autor)){
-                for(Notes n : noteList){
-                    if(n.getEvaluation().getBook().getIdBook() == b.getIdBook()){
-                        readed = true;
-                        break;
-                    }
-                }
+                readed = isReaded(noteList, b);
                 if(!readed){
                     return b;
-                } readed = false;
+                } 
+                readed = false;
             }
         }
         
         return bookList.get(0);
     }
+    
     
     public Book matchFounding(){
        
@@ -267,9 +243,50 @@ public class MatchFounder {
         //Pour le moment on cherche seulement un livre de même auteur
         //Lorsqu'il y a apprentissage il faut faire une proposition auteur/type
         //Ensuite attendre l'evaluation et déduire une influence préçise
-        Book conseille = foundBook(bestAutor);
-        
-        return conseille;
+        return foundBook(bestAutor);
     }
 
+    private List<Book> getbookForBestQuestion(List<Notes> noteList, Question bestQuestion){
+        List<Book> bookForBestQuestion = new ArrayList<Book>();
+            for(Notes n : noteList){
+                if(n.getQuestion().getIdQuestions() == bestQuestion.getIdQuestions()){
+                    bookForBestQuestion.add(n.getEvaluation().getBook());
+                }
+            }
+        return bookForBestQuestion;
+    }
+    
+    private void getBestAutor(List<String> auteurList, Map<String,Float> auteurPrct) {
+        bestAutor = "";
+        Float tmpMaxAutor = (float) -3000;
+        for(String autor:auteurList){
+            float a = auteurPrct.get(autor);
+            if(a>tmpMaxAutor){
+                bestAutor = autor;
+                tmpMaxAutor = a;
+            }
+        }
+    }
+    
+    private void getBestType(List<String> auteurList, Map<String,Float> auteurPrct) {
+        bestType = "";
+        Float tmpMaxType = (float) -3000;
+        
+        for(String type:auteurList){
+            float a = auteurPrct.get(type);
+            if(a>tmpMaxType){
+                bestAutor = type;
+                tmpMaxType = a;
+            }
+        }
+    }
+    
+    private boolean isReaded(List<Notes> noteList, Book b) {
+        for(Notes n : noteList){
+            if(n.getEvaluation().getBook().getIdBook() == b.getIdBook()){
+                return true;
+            }
+        }
+        return false;
+    }
 }

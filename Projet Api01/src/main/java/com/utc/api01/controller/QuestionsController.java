@@ -23,6 +23,7 @@ public class QuestionsController {
     private GeneriqueService<Notes> noteService;
     private static final String REDIRECT_EDITQUESTION = "editQuestion";
     private static final String JSP_QUESTION = "question";
+    private static final String LIST_QUESTIONS = "listQuestions";
     private static final String MSG_ADD_SUCCESS = "La question a correctement été ajoutée.";
     private static final String MSG_EDIT_SUCCESS = "La question a correctement été modifiée.";
     private static final String MSG_SUPPR_SUCCESS = "La question a correctement été supprimée.";
@@ -41,7 +42,7 @@ public class QuestionsController {
     
     @RequestMapping(value = "/admin/questions", method = RequestMethod.GET)
     public String listQuestions(Model model) {
-        model.addAttribute("listQuestions", this.questionService.list());
+        model.addAttribute(LIST_QUESTIONS, this.questionService.list());
         return JSP_QUESTION;
     }
 
@@ -58,19 +59,19 @@ public class QuestionsController {
         }
         
         this.questionService.remove(idQuest);
-        model.addObject("listQuestions", this.questionService.list());
+        model.addObject(LIST_QUESTIONS, this.questionService.list());
         return model;
     }
 
     @RequestMapping(value = "/admin/questions/addQuestion", method = RequestMethod.GET)
     public String addUser(Model model) {
-        model.addAttribute("question", new Question());
+        model.addAttribute(JSP_QUESTION, new Question());
         return REDIRECT_EDITQUESTION;
     }
 
     @RequestMapping("/admin/questions/edit/{idQuestion}")
     public String editQuestion(@PathVariable("idQuestion") int id, Model model) {
-        model.addAttribute("question", this.questionService.getById(id));
+        model.addAttribute(JSP_QUESTION, this.questionService.getById(id));
         return REDIRECT_EDITQUESTION;
     }
 
@@ -80,7 +81,7 @@ public class QuestionsController {
        
         if (result.hasErrors()) {
             if (q.getIdQuestions() != 0){
-                model.addObject("question", q);
+                model.addObject(JSP_QUESTION, q);
             }
             model.setViewName(REDIRECT_EDITQUESTION);
         } else {
@@ -93,7 +94,7 @@ public class QuestionsController {
                 model.addObject("msg", MSG_ADD_SUCCESS);
                 this.questionService.add(q);
             }
-            model.addObject("listQuestions", this.questionService.list());
+            model.addObject(LIST_QUESTIONS, this.questionService.list());
         }
         return model;
     }

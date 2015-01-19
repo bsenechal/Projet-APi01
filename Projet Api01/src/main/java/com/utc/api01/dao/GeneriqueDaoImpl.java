@@ -64,10 +64,7 @@ public class GeneriqueDaoImpl<T> implements GeneriqueDao<T> {
     @Override
     public T getByCriteria(String criteria, String value) {
         Session session = this.sessionFactory.getCurrentSession();
-        T cats = (T) session.createCriteria(this.tClass)
-                .add( Restrictions.eq(criteria, value ) )
-                .uniqueResult();
-        return cats;
+        return (T) session.createCriteria(this.tClass).add( Restrictions.eq(criteria, value )).uniqueResult();
     }
 
 }

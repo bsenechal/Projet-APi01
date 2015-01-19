@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -37,17 +36,19 @@ public class UserController {
     private static final String REDIRECT_EDITUSER = "editUser";
     private static final String REDIRECT_ACCUEIL = "index";
     private static final String REDIRECT_VIEWUSER = "viewUser";
+    private static final String REDIRECT_LISTUSERS = "listUsers";
+    private static final String LIST_ROLE = "listRole";
     private static final String MSG_ADD_SUCCESS = "L'utilisateur a correctement été ajouté.";
     private static final String MSG_EDIT_SUCCESS = "L'utilisateur a correctement été modifié.";
     private static final String MSG_SUPPR_SUCCESS = "L'utilisateur a correctement été supprimé.";
     private GeneriqueService<User> userService;
     private GeneriqueService<Role> roleService;
-    private ApplicationContext _applicationContext;
+    private ApplicationContext applicationContext;
     
     @Autowired(required = true)
     @Qualifier(value = "applicationContext")
     public void setApplicationContext(ApplicationContext applicationContext){
-        this._applicationContext = applicationContext;
+        this.applicationContext = applicationContext;
     }
 
     @Autowired(required = true)
@@ -64,14 +65,14 @@ public class UserController {
 
     @RequestMapping(value = "/admin/user/list", method = RequestMethod.GET)
     public String listUsers(Model model) {
-        model.addAttribute("listUsers", this.userService.list());
+        model.addAttribute(REDIRECT_LISTUSERS, this.userService.list());
         return JSP_USER;
     }
 
     @RequestMapping(value = "/admin/user/addUser", method = RequestMethod.GET)
     public String addUser(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("listRole", roleService.list());
+        model.addAttribute(LIST_ROLE, roleService.list());
         return REDIRECT_EDITUSER;
     }
 
@@ -81,7 +82,7 @@ public class UserController {
         model.addObject("msg", MSG_SUPPR_SUCCESS);
         model.setViewName(JSP_USER);
         this.userService.remove(id);
-        model.addObject("listUsers", this.userService.list());
+        model.addObject(REDIRECT_LISTUSERS, this.userService.list());
         return model;
     }
 
@@ -89,7 +90,7 @@ public class UserController {
     public String editUser(@PathVariable("idUser") int idUser, Model model) {
         User u = this.userService.getById(idUser);
         model.addAttribute("user", u);
-        model.addAttribute("listRole", roleService.list());
+        model.addAttribute(LIST_ROLE, roleService.list());
         return REDIRECT_EDITUSER;
     }
     
@@ -118,7 +119,7 @@ public class UserController {
             if (u.getIdUser() != 0){
                 model.addObject("user", u);
             }
-            model.addObject("listRole", roleService.list());
+            model.addObject(LIST_ROLE, roleService.list());
             model.setViewName(REDIRECT_EDITUSER);
         } else {
             model.setViewName(JSP_USER);
@@ -128,13 +129,13 @@ public class UserController {
                 model.addObject("msg", MSG_EDIT_SUCCESS);
                  
                 //Get the mailer instance
-                ApplicationMailer mailer = (ApplicationMailer) _applicationContext.getBean("mailService");
+                ApplicationMailer mailer = (ApplicationMailer) applicationContext.getBean("mailService");
          
                 //Send a pre-configured mail
-                String Newligne=System.getProperty("line.separator"); 
+                String newligne=System.getProperty("line.separator"); 
                 mailer.sendPreConfiguredMail("Mise à jour de votre compte " + u.getFirstname() 
-                        + Newligne + "Votre identifiant : " + u.getEmail() 
-                        + Newligne + "Votre mot de passe : " + u.getPassword()
+                        + newligne + "Votre identifiant : " + u.getEmail() 
+                        + newligne + "Votre mot de passe : " + u.getPassword()
                         , u.getEmail());
                 
                 this.userService.update(u);
@@ -143,25 +144,24 @@ public class UserController {
                 model.addObject("msg", MSG_ADD_SUCCESS);
                 
               //Get the mailer instance
-                ApplicationMailer mailer = (ApplicationMailer) _applicationContext.getBean("mailService");
+                ApplicationMailer mailer = (ApplicationMailer) applicationContext.getBean("mailService");
          
                 //Send a pre-configured mail
-                String Newligne=System.getProperty("line.separator"); 
+                String newligne=System.getProperty("line.separator"); 
                 mailer.sendPreConfiguredMail("Bienvenue sur The Book " + u.getFirstname() 
-                        + Newligne + "Votre identifiant : " + u.getEmail() 
-                        + Newligne + "Votre mot de passe : " + u.getPassword()
+                        + newligne + "Votre identifiant : " + u.getEmail() 
+                        + newligne + "Votre mot de passe : " + u.getPassword()
                         , u.getEmail());
                 u.setAvatar(file.getBytes());
                 this.userService.add(u);
             }
-            model.addObject("listUsers", this.userService.list());
+            model.addObject(REDIRECT_LISTUSERS, this.userService.list());
         }
         return model;
     }
     
     @InitBinder
-    protected void initBinder(HttpServletRequest request,
-        ServletRequestDataBinder binder) throws ServletException {
+    protected void initBinder(ServletRequestDataBinder binder) throws ServletException {
             binder.registerCustomEditor(byte[].class,
                 new ByteArrayMultipartFileEditor());
     }

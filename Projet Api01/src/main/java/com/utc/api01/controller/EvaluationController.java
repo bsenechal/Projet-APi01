@@ -37,6 +37,7 @@ public class EvaluationController {
     private static final String JSP_DETAILBOOK = "detailBook";
     private static final String MSG_ADD_SUCCESS = "Votre évaluation a bien été prise en compte.";
     private static final String MSG_SUPPR_SUCCESS = "L'évaluation a correctement été supprimée.";
+    private static final String QUESTION_WRAPPER = "questionWrapper";
     
     @Autowired(required = true)
     @Qualifier(value = "evalService")
@@ -93,7 +94,7 @@ public class EvaluationController {
 
     @RequestMapping(value = "/evaluation/new/{idBook}", method = RequestMethod.GET)
     public String newEval(@PathVariable("idBook") int idBook, Model model) {
-        model.addAttribute("questionWrapper", new QuestionWrapper(this.questionService.list()));
+        model.addAttribute(QUESTION_WRAPPER, new QuestionWrapper(this.questionService.list()));
         model.addAttribute("book", this.bookService.getById(idBook));
         return JSP_NEWEVALUATION;
     }
@@ -111,7 +112,7 @@ public class EvaluationController {
         }
        
         
-        model.addAttribute("questionWrapper", new QuestionWrapper(listQuestion));
+        model.addAttribute(QUESTION_WRAPPER, new QuestionWrapper(listQuestion));
         model.addAttribute("book", this.bookService.getById(idBook));
         return JSP_NEWEVALUATION;
     }
@@ -122,7 +123,7 @@ public class EvaluationController {
         
         if (result.hasErrors()) {
             questionWrapper.setQuestionList(this.questionService.list());
-            model.addObject("questionWrapper", questionWrapper);
+            model.addObject(QUESTION_WRAPPER, questionWrapper);
             model.setViewName(JSP_NEWEVALUATION);
         } else {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -2,9 +2,9 @@ package com.utc.api01.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +43,14 @@ public class BookController {
     private static final String REDIRECT_DETAILBOOK = "detailBook";
     private static final String REDIRECT_MYBOOK = "myBook";
     private static final String REDIRECT_EDITBOOK = "editBook";
-    private static final String REDIRECT_INDEX = "index";
     private static final String MSG_ADD_SUCCESS = "Le livre a correctement été ajouté.";
     private static final String MSG_EDIT_SUCCESS = "Le livre a correctement été modifié.";
     private static final String MSG_SUPPR_SUCCESS = "Le livre a correctement été supprimé.";
+    private static final String MSG_BOOK_NOT_FOUND = "Le livre n'existe pas encore. Mais vous pouvez l'ajouter :)";
     private static final String REDIRECT_LOGIN = "login";
     private static final String JSP_BOOK = "book";
+    private static final String LIST_BOOK = "listBooks";
+    
     
     @Autowired(required = true)
     @Qualifier(value = "bookService")
@@ -83,7 +85,9 @@ public class BookController {
     @RequestMapping(value = "/book/detail/{idBook}", method = RequestMethod.GET)
     public String detailBook(@PathVariable("idBook") int idBook, Model model) {
         model.addAttribute("book", this.bookService.getById(idBook));
-        if(!this.noteService.list().isEmpty()) model.addAttribute("notes", getNoteByBook((ArrayList<Notes>) this.noteService.list(), idBook));
+        if(!this.noteService.list().isEmpty()) {
+            model.addAttribute("notes", getNoteByBook((List<Notes>) this.noteService.list(), idBook));
+        }
         return REDIRECT_DETAILBOOK;
     }
 
@@ -98,7 +102,7 @@ public class BookController {
 
     @RequestMapping(value = "/book/listing", method = RequestMethod.GET)
     public String listBook(Model model) {
-        model.addAttribute("listBooks", this.bookService.list());
+        model.addAttribute(LIST_BOOK, this.bookService.list());
         return JSP_BOOK;
     }
     
@@ -108,8 +112,10 @@ public class BookController {
         if(b != null){
             return "redirect:/book/detail/"+b.getIdBook();
         }else{ 
-            model.addAttribute("listBooks",this.bookService.list());
-            return "redirect:/";
+            model.addAttribute(LIST_BOOK,this.bookService.list());
+            model.addAttribute("book", new Book());
+            model.addAttribute("msg", MSG_BOOK_NOT_FOUND);
+            return REDIRECT_EDITBOOK;
         }
     }
 
@@ -133,17 +139,13 @@ public class BookController {
         
         for (Evaluation e : this.evalService.list()){
             if (e.getBook().getIdBook() == idBook){
-                for (Notes n : this.noteService.list()){
-                    if (n.getEvaluation().getIdEval() == e.getIdEval()){
-                        this.noteService.remove(n.getIdNotes());
-                    }
-                }
+                removeNotes(e);
                 this.evalService.remove(e.getIdEval());
             }
         }
         
         this.bookService.remove(idBook);
-        model.addObject("listBooks", this.bookService.list());
+        model.addObject(LIST_BOOK, this.bookService.list());
         return model;
     }
     
@@ -156,7 +158,7 @@ public class BookController {
             userName = ((org.springframework.security.core.userdetails.User) principal).getUsername();
             User user = this.userService.getByCriteria("email", userName);
             
-            ArrayList<Notes> noteList = getNoteByUser(user, (ArrayList<Notes>)this.noteService.list());
+            List<Notes> noteList = getNoteByUser(user, (List<Notes>)this.noteService.list());
             model.addAttribute("notes",noteList);
             
             return REDIRECT_MYBOOK;
@@ -189,15 +191,15 @@ public class BookController {
 
                 this.bookService.add(b);
             }
-            model.addObject("listBooks", this.bookService.list());
+            model.addObject(LIST_BOOK, this.bookService.list());
         }
             return model;
     }
     
     @RequestMapping("/book/match")
     public String matchBook(Model model) {
-        ArrayList<Book> bookList = (ArrayList<Book>) this.bookService.list();
-        ArrayList<Question> questionList = (ArrayList<Question>) this.questionService.list();
+        List<Book> bookList = (List<Book>) this.bookService.list();
+        List<Question> questionList = (List<Question>) this.questionService.list();
         
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userName;
@@ -206,8 +208,8 @@ public class BookController {
             userName = ((org.springframework.security.core.userdetails.User) principal).getUsername();
             User user = this.userService.getByCriteria("email", userName);
             
-            ArrayList<Notes> noteList = getNoteByUser(user, (ArrayList<Notes>)this.noteService.list());
-            ArrayList<Evaluation> evaluationList = getEvaluationByNote(noteList);
+            List<Notes> noteList = getNoteByUser(user, this.noteService.list());
+            List<Evaluation> evaluationList = getEvaluationByNote(noteList);
             
             MatchFounder matchfounder = new MatchFounder(bookList, questionList, noteList, evaluationList);
             Book conseille = matchfounder.matchFounding();
@@ -219,33 +221,54 @@ public class BookController {
     }
     
     @InitBinder
-    protected void initBinder(HttpServletRequest request,
-        ServletRequestDataBinder binder) throws ServletException {
+    protected void initBinder(ServletRequestDataBinder binder) throws ServletException {
             binder.registerCustomEditor(byte[].class,
                 new ByteArrayMultipartFileEditor());
     }
     
-    public ArrayList<Notes> getNoteByUser(User user, ArrayList<Notes> notes){
-        ArrayList<Notes> res = new ArrayList<Notes>();
-        for(Notes n : notes) if(n.getEvaluation().getUser().getIdUser() == user.getIdUser()) res.add(n);     
+    public List<Notes> getNoteByUser(User user, List<Notes> notes){
+        List<Notes> res = new ArrayList<Notes>();
+        for(Notes n : notes) {
+            if(n.getEvaluation().getUser().getIdUser() == user.getIdUser()) {
+                res.add(n);     
+            }
+        }
         return res;
     }
     
-    public ArrayList<Evaluation> getEvaluationByNote(ArrayList<Notes> notes){
-        ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
-        for(Notes n : notes) evaluations.add(n.getEvaluation());
+    public List<Evaluation> getEvaluationByNote(List<Notes> notes){
+        List<Evaluation> evaluations = new ArrayList<Evaluation>();
+        for(Notes n : notes) {
+            evaluations.add(n.getEvaluation());
+        }
         return evaluations;
     }
     
-    public ArrayList<Evaluation> getEvaluationByBook(ArrayList<Evaluation> eval, int idBook){
-        ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
-        for(Evaluation e : eval) if(e.getBook().getIdBook() == idBook) evaluations.add(e);
+    public List<Evaluation> getEvaluationByBook(List<Evaluation> eval, int idBook){
+        List<Evaluation> evaluations = new ArrayList<Evaluation>();
+        for(Evaluation e : eval) {
+            if(e.getBook().getIdBook() == idBook) {
+                evaluations.add(e);
+            }
+        }
         return evaluations;
     }
     
-    public ArrayList<Notes> getNoteByBook(ArrayList<Notes> notes, int idBook){
-        ArrayList<Notes> res = new ArrayList<Notes>();
-        for(Notes n : notes) if(n.getEvaluation().getBook().getIdBook() == idBook) res.add(n);     
+    public List<Notes> getNoteByBook(List<Notes> notes, int idBook){
+        List<Notes> res = new ArrayList<Notes>();
+        for(Notes n : notes) {
+            if(n.getEvaluation().getBook().getIdBook() == idBook) {
+                res.add(n);     
+            }
+        }
         return res;
+    }
+    
+    private void removeNotes(Evaluation e){
+        for (Notes n : this.noteService.list()){
+            if (n.getEvaluation().getIdEval() == e.getIdEval()){
+                this.noteService.remove(n.getIdNotes());
+            }
+        }
     }
 }
