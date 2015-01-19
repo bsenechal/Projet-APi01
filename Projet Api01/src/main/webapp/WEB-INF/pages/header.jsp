@@ -56,6 +56,7 @@
 			<!---start-header---->
 			<div class="header">
 				<div class="wrap">
+				
 				<div class="logo">
 					<a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/resources/images/logo.png" title="Le book" /></a>
 				</div>
@@ -101,7 +102,7 @@
 							<ul>
 								<li>
 								<c:choose>
-									<c:when test="${pageContext['request'].userPrincipal != null}"><a href="${pageContext.request.contextPath}/monCompte"><img src="${pageContext.request.contextPath}/resources/images/user-pic.png" title="user-name" /><span><security:authentication property="principal.username"></security:authentication></span></a></c:when>
+									<c:when test="${pageContext['request'].userPrincipal != null}"><a href="${pageContext.request.contextPath}/monCompte"><img src="${pageContext.request.contextPath}/avatarDisplay/"><span><security:authentication property="principal.username"></security:authentication></span></a></c:when>
 									<c:otherwise><button type="submit" class="btn btn-primary" onclick='location.href ="${pageContext.request.contextPath}/login"'>Connexion</button></c:otherwise>
 								</c:choose>
 								</li>

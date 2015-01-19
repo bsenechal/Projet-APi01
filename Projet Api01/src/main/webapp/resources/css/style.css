@@ -177,6 +177,9 @@ a.boxclose{
 	width: 20%;
 	margin-top: 0.3em;
 }
+.userinfo img{
+    max-width:4em;
+}
 .user ul li{
 	display:inline-block;
 }

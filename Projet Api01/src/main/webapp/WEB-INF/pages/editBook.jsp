@@ -30,7 +30,7 @@
 						</div>
 					</div>
 					<div id="autorDiv" class="form-group">			    
-						<label  for="autor" class="col-sm-2 control-label">Author</label>
+						<label  for="autor" class="col-sm-2 control-label">Auteur</label>
 						<div class="col-sm-10">
 							<form:input path="autor" type="text" class="form-control" id="autor" placeholder="${book.autor}"/>
 							<form:errors path="autor" cssClass="error"/>

@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -103,12 +104,18 @@ public class UserController {
         }else return REDIRECT_ACCUEIL;
     }
     
-    @RequestMapping(value = "/avatarDisplay/{idUser}", method = RequestMethod.GET)
-    public void showAvatar(@PathVariable("idUser") Integer idUser,
-            HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/avatarDisplay/", method = RequestMethod.GET)
+    public void showAvatar(HttpServletResponse response) throws IOException {
+        String userName;
+    
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof org.springframework.security.core.userdetails.User){
+            userName = ((org.springframework.security.core.userdetails.User) principal).getUsername();
+            
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-        response.getOutputStream().write(this.userService.getById(idUser).getAvatar());
+        response.getOutputStream().write(this.userService.getByCriteria("email", userName).getAvatar());
         response.getOutputStream().close();
+        }
     }
     
     @RequestMapping(value = "/admin/user/save", method = RequestMethod.POST)
