@@ -34,6 +34,8 @@ public class EvaluationController {
     private GeneriqueService<Notes> noteService;
     private static final String JSP_EVALUATION = "evaluation";
     private static final String JSP_NEWEVALUATION = "newEvaluation";
+    private static final String JSP_MYBOOK = "myBook";
+    private static final int ROLE_ADMIN = 1;
     private static final String JSP_DETAILBOOK = "detailBook";
     private static final String MSG_ADD_SUCCESS = "Votre évaluation a bien été prise en compte.";
     private static final String MSG_SUPPR_SUCCESS = "L'évaluation a correctement été supprimée.";
@@ -69,18 +71,26 @@ public class EvaluationController {
         this.noteService = n;
     }
     
-    @RequestMapping("/admin/evaluation/remove/{idEval}")
+    @RequestMapping("/evaluation/remove/{idEval}")
     public ModelAndView remove(@PathVariable("idEval") int idEval) {
         ModelAndView model = new ModelAndView();
         model.addObject("msg", MSG_SUPPR_SUCCESS);
-        model.setViewName(JSP_EVALUATION);
         
-        for (Notes n : this.noteService.list()){
-            if (n.getEvaluation().getIdEval() == idEval){
-                this.noteService.remove(n.getIdNotes());
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof org.springframework.security.core.userdetails.User){
+            User user = this.userService.getByCriteria("email", ((org.springframework.security.core.userdetails.User) principal).getUsername());
+            
+            if (user.getRole().getIdRole() == ROLE_ADMIN){
+                model.setViewName(JSP_EVALUATION);
+            } else {
+                model.setViewName(JSP_MYBOOK);
+            }
+            for (Notes n : this.noteService.list()){
+                if (n.getEvaluation().getIdEval() == idEval){
+                    this.noteService.remove(n.getIdNotes());
+                }
             }
         }
-        
         this.evalService.remove(idEval);
         model.addObject("listEvals", this.evalService.list());
         return model;
@@ -94,8 +104,25 @@ public class EvaluationController {
 
     @RequestMapping(value = "/evaluation/new/{idBook}", method = RequestMethod.GET)
     public String newEval(@PathVariable("idBook") int idBook, Model model) {
+        
         model.addAttribute(QUESTION_WRAPPER, new QuestionWrapper(this.questionService.list()));
         model.addAttribute("book", this.bookService.getById(idBook));
+        
+        
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof org.springframework.security.core.userdetails.User){
+            
+            User user = this.userService.getByCriteria("email", ((org.springframework.security.core.userdetails.User) principal).getUsername());
+            List<Evaluation> listEvaluation = this.evalService.list();
+            
+            for (Evaluation eval : listEvaluation){
+                if (eval.getUser().getIdUser() == user.getIdUser() && eval.getBook().getIdBook() == idBook){
+                    model.addAttribute("dejaEdit", true);
+                    model.addAttribute("idEval", eval.getIdEval());
+                    break;
+                }
+            }
+        }
         return JSP_NEWEVALUATION;
     }
     

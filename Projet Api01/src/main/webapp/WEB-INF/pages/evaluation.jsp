@@ -35,7 +35,7 @@
 							<td>${eval.book.title}</td>
 							<td>${eval.user.email}</td>
 							<td><a href="<c:url value='/admin/evaluation/edit/${eval.book.idBook}' />" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-							<td><a href="<c:url value='/admin/evaluation/remove/${eval.idEval}' />" ><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
+							<td><a href="<c:url value='/evaluation/remove/${eval.idEval}' />" ><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
 						</tr>
 					</c:forEach>
 				  </table>

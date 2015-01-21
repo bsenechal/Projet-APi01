@@ -59,7 +59,7 @@ body{
 }
 .nav-icon{
 	float: left;
-	margin: 0.6% 2% 0 5%;
+	margin: 0.6% 2% 0 2%;
 	width: 4.55%;
 }
 .nav-icon a span{
@@ -174,11 +174,11 @@ a.boxclose{
 /*--userinfo--*/
 .userinfo{
 	float: right;
-	width: 20%;
+	width: 23%;
 	margin-top: 0.3em;
 }
 .userinfo img{
-    max-width:4em;
+    max-width:3.5em;
 }
 .user ul li{
 	display:inline-block;
@@ -782,7 +782,7 @@ span.mail a:hover{
 		display:none;
 	}
 	.nav-icon {
-		margin: 1.2% 2% 0 6%;
+		margin: 1.2% 2% 0 2%;
 	}
 	.artical-content h3 a {
 		font: 400 24px/36px 'Open Sans', sans-serif;
@@ -873,7 +873,7 @@ span.mail a:hover{
 		display:none;
 	}
 	.nav-icon {
-		margin: 1.2% 2% 0 6%;
+		margin: 1.2% 2% 0 2%;
 	}
 	.artical-content h3 a {
 		font: 400 24px/36px 'Open Sans', sans-serif;

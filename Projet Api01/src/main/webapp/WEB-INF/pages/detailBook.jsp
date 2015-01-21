@@ -25,12 +25,12 @@
 								     
 					               <c:set var="prec" value="init"/>
 					                     <c:forEach items="${notes}" var="note">
-					                                <c:if test="${prec != note.evaluation.book.title}">
+					                                <c:if test="${prec != note.evaluation.user.email}">
 					                                   <div class="row">
 					                                        <br/>
 					                                        <div class="col-xs-6 col-md-1">
 						                                        <a href="detail/${note.evaluation.book.idBook}">
-						                                            <img  src="${pageContext.request.contextPath}/avatarDisplay/${note.evaluation.user.idUser}" class="img-circle">
+						                                            <img  src="${pageContext.request.contextPath}/avatarDisplayById/${note.evaluation.user.idUser}" class="img-circle">
 						                                        </a>
 					                                        </div>
 					                                        <div class="col-xs-6 col-md-4">
@@ -38,7 +38,7 @@
 					                                        </div>
 					                                   </div>
 					                                
-					                               <c:set var="prec" value="${note.evaluation.book.title}"/>
+					                               <c:set var="prec" value="${note.evaluation.user.email}"/>
 					                             <br />
 					                             </c:if>
 					                             <ul class="list-group">

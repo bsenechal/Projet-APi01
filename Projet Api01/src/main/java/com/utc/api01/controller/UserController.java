@@ -104,6 +104,13 @@ public class UserController {
         }else return REDIRECT_ACCUEIL;
     }
     
+    @RequestMapping(value = "/avatarDisplayById/{idUser}", method = RequestMethod.GET)
+    public void displayAvatar(@PathVariable("idUser") int idUser, HttpServletResponse response) throws IOException {
+        response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+        response.getOutputStream().write(this.userService.getById(idUser).getAvatar());
+        response.getOutputStream().close();
+    }
+    
     @RequestMapping(value = "/avatarDisplay/", method = RequestMethod.GET)
     public void showAvatar(HttpServletResponse response) throws IOException {
         String userName;
